@@ -146,11 +146,17 @@ npx cap open ios
 | echo     |   ✅    |  ✅  |    ❌    |  ❌ |
 | show     |   ✅    |  🚧  |    ❌    |  ❌ |
 
+For Android features missing:
+
+ - Rotation Portrait to landscape not implemented
+ - Hiding of the Share button on singleTap
+ - Close button when image in fullscreen
+
 For iOS features missing:
 
  - Reading Base64 images
  - Sharing an image
- - Gestures for Zomming in/out
+ - Gestures for Zooming in/out
 
 ## Documentation
 
