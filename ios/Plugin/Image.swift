@@ -7,3 +7,7 @@
 //
 
 import Foundation
+struct Image {
+    let title: String
+    let url: String
+}

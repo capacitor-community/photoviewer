@@ -1,9 +1,7 @@
 package com.getcapacitor.community.media.photoviewer;
 
 import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -13,15 +11,14 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 @CapacitorPlugin(name = "PhotoViewer")
 public class PhotoViewerPlugin extends Plugin {
+
     private static final String TAG = "CapacitorPhotoViewer";
 
     private PhotoViewer implementation;
     private RetHandler rHandler = new RetHandler();
 
-
     @Override
     public void load() {
-
         implementation = new PhotoViewer(getContext(), getBridge());
     }
 
@@ -33,6 +30,7 @@ public class PhotoViewerPlugin extends Plugin {
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
     }
+
     @PluginMethod
     public void show(PluginCall call) {
         final AppCompatActivity activity = this.getActivity();
@@ -54,7 +52,9 @@ public class PhotoViewerPlugin extends Plugin {
 
         try {
             JSObject finalOptions = options;
-            bridge.getActivity().runOnUiThread(
+            bridge
+                .getActivity()
+                .runOnUiThread(
                     () -> {
                         try {
                             implementation.show(images, finalOptions);
@@ -64,13 +64,11 @@ public class PhotoViewerPlugin extends Plugin {
                             rHandler.retResult(call, false, e.getMessage());
                         }
                     }
-            );
-
+                );
         } catch (Exception e) {
             String msg = "Show: " + e.getMessage();
             rHandler.retResult(call, false, msg);
             return;
         }
     }
-
 }

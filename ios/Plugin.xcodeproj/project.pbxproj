@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		03FC29A292ACC40490383A1F /* Pods_Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */; };
 		20C0B05DCFC8E3958A738AF2 /* Pods_PluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6753A823D3815DB436415E3 /* Pods_PluginTests.framework */; };
+		2C767D6C25E79A0A00D0EF42 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D6B25E79A0A00D0EF42 /* Image.swift */; };
+		2C767D7125E79A5A00D0EF42 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D7025E79A5A00D0EF42 /* CollectionViewController.swift */; };
+		2C767D7725E79A7B00D0EF42 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D7625E79A7B00D0EF42 /* CollectionViewCell.swift */; };
+		2C767E2A25E81C4F00D0EF42 /* SliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */; };
+		2C767E2E25E81C6E00D0EF42 /* SliderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */; };
+		2C78E58A25EA700500EA0186 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C78E58925EA700500EA0186 /* Toast.swift */; };
+		2C97285F25E8D4250013ADB3 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C97285E25E8D4250013ADB3 /* Placeholder.swift */; };
 		2F98D68224C9AAE500613A4C /* PhotoViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98D68124C9AAE400613A4C /* PhotoViewer.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
 		50ADFF97201F53D600D50D53 /* PhotoViewerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* PhotoViewerPluginTests.swift */; };
@@ -29,6 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C767D6B25E79A0A00D0EF42 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		2C767D7025E79A5A00D0EF42 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		2C767D7625E79A7B00D0EF42 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewController.swift; sourceTree = "<group>"; };
+		2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewCell.swift; sourceTree = "<group>"; };
+		2C78E58925EA700500EA0186 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		2C97285E25E8D4250013ADB3 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		2F98D68124C9AAE400613A4C /* PhotoViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewer.swift; sourceTree = "<group>"; };
 		3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF88201F53D600D50D53 /* Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +83,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C767D6F25E79A3200D0EF42 /* PhotoGallery */ = {
+			isa = PBXGroup;
+			children = (
+				2C767D7625E79A7B00D0EF42 /* CollectionViewCell.swift */,
+				2C767D7025E79A5A00D0EF42 /* CollectionViewController.swift */,
+			);
+			path = PhotoGallery;
+			sourceTree = "<group>";
+		};
+		2C767E2825E81AF800D0EF42 /* PhotoSlider */ = {
+			isa = PBXGroup;
+			children = (
+				2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */,
+				2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */,
+			);
+			path = PhotoSlider;
+			sourceTree = "<group>";
+		};
+		2C78E58825EA6FEB00EA0186 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2C78E58925EA700500EA0186 /* Toast.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2C97285D25E8D3F80013ADB3 /* PlaceHolder */ = {
+			isa = PBXGroup;
+			children = (
+				2C97285E25E8D4250013ADB3 /* Placeholder.swift */,
+			);
+			path = PlaceHolder;
+			sourceTree = "<group>";
+		};
 		50ADFF7E201F53D600D50D53 = {
 			isa = PBXGroup;
 			children = (
@@ -92,8 +140,13 @@
 		50ADFF8A201F53D600D50D53 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				50E1A94720377CB70090CE1A /* PhotoViewerPlugin.swift */,
+				2C78E58825EA6FEB00EA0186 /* Utils */,
+				2C97285D25E8D3F80013ADB3 /* PlaceHolder */,
+				2C767E2825E81AF800D0EF42 /* PhotoSlider */,
+				2C767D6F25E79A3200D0EF42 /* PhotoGallery */,
+				2C767D6B25E79A0A00D0EF42 /* Image.swift */,
 				2F98D68124C9AAE400613A4C /* PhotoViewer.swift */,
+				50E1A94720377CB70090CE1A /* PhotoViewerPlugin.swift */,
 				50ADFF8B201F53D600D50D53 /* PhotoViewerPlugin.h */,
 				50ADFFA72020EE4F00D50D53 /* PhotoViewerPlugin.m */,
 				50ADFF8C201F53D600D50D53 /* Info.plist */,
@@ -270,11 +323,13 @@
 				"${PODS_ROOT}/Target Support Files/Pods-PluginTests/Pods-PluginTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Capacitor/Capacitor.framework",
 				"${BUILT_PRODUCTS_DIR}/CapacitorCordova/Cordova.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Capacitor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cordova.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -307,8 +362,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E1A94820377CB70090CE1A /* PhotoViewerPlugin.swift in Sources */,
+				2C767E2A25E81C4F00D0EF42 /* SliderViewController.swift in Sources */,
+				2C767D6C25E79A0A00D0EF42 /* Image.swift in Sources */,
+				2C767D7725E79A7B00D0EF42 /* CollectionViewCell.swift in Sources */,
+				2C767E2E25E81C6E00D0EF42 /* SliderViewCell.swift in Sources */,
 				2F98D68224C9AAE500613A4C /* PhotoViewer.swift in Sources */,
 				50ADFFA82020EE4F00D50D53 /* PhotoViewerPlugin.m in Sources */,
+				2C78E58A25EA700500EA0186 /* Toast.swift in Sources */,
+				2C767D7125E79A5A00D0EF42 /* CollectionViewController.swift in Sources */,
+				2C97285F25E8D4250013ADB3 /* Placeholder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

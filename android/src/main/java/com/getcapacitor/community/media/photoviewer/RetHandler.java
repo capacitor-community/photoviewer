@@ -1,11 +1,11 @@
 package com.getcapacitor.community.media.photoviewer;
 
 import android.util.Log;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PluginCall;
 
 public class RetHandler {
+
     private static final String TAG = RetHandler.class.getName();
 
     /**
@@ -33,6 +33,5 @@ public class RetHandler {
             Log.v(TAG, "*** ERROR " + msg);
             call.reject(message);
         }
-
     }
 }
