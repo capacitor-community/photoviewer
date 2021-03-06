@@ -44,18 +44,24 @@ class ScreenSlidePageFragment() : Fragment() {
     lateinit var appId: String
     var bShare: Boolean = true
     var bTitle: Boolean = true
-
+    var maxZoomScale: Double = 3.0
+    var compressionQuality: Double = 0.8
     companion object {
         const val ARG_IMAGE = "image"
         const val ARG_SHARE = "share"
         const val ARG_TITLE = "title"
+        const val ARG_MAXZOOMSCALE = "maxzoomscale"
+        const val ARG_COMPRESSIONQUALITY = "compressionquality"
 
-        fun getInstance(image: Image, bShare: Boolean, bTitle: Boolean): Fragment {
+        fun getInstance(image: Image, bShare: Boolean, bTitle: Boolean,
+                        maxZoomScale: Double, compressionQuality: Double): Fragment {
             val ScreenSlidePageFragment = ScreenSlidePageFragment()
             val bundle = Bundle()
             bundle.putParcelable(ARG_IMAGE, image)
             bundle.putBoolean(ARG_SHARE, bShare)
             bundle.putBoolean(ARG_TITLE, bTitle)
+            bundle.putDouble(ARG_MAXZOOMSCALE, maxZoomScale)
+            bundle.putDouble(ARG_COMPRESSIONQUALITY, compressionQuality)
             ScreenSlidePageFragment.arguments = bundle
             return ScreenSlidePageFragment
         }
@@ -74,16 +80,22 @@ class ScreenSlidePageFragment() : Fragment() {
         image = requireArguments().getParcelable<Image>(ARG_IMAGE)!!
         bShare = requireArguments().getBoolean(ARG_SHARE)
         bTitle = requireArguments().getBoolean(ARG_TITLE)
+        maxZoomScale = requireArguments().getDouble(ARG_MAXZOOMSCALE)
+        compressionQuality = requireArguments().getDouble(ARG_COMPRESSIONQUALITY)
         appContext = this.requireContext()
         appId = appContext.applicationInfo.processName
         Log.d(TAG, ">>>option appliocation id: $appId")
 
         Log.d(TAG, ">>>option bShare: $bShare")
         Log.d(TAG, ">>>option bTitle: $bTitle")
+        Log.d(TAG, ">>>option maxZoomScale: $maxZoomScale")
+        Log.d(TAG, ">>>option compressionQuality: $compressionQuality")
 
         tvGalleryTitle = binding.tvGalleryTitle
         if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
+        ivFullscreenImage.maxZoom = (maxZoomScale).toFloat()
+        ivFullscreenImage.minZoom = (1.0).toFloat()
         tvGalleryTitle.text = image.title
 
         GlideApp.with(appContext)
@@ -171,7 +183,8 @@ class ScreenSlidePageFragment() : Fragment() {
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         try {
                             val out: FileOutputStream = FileOutputStream(tmpImage)
-                            resource.compress(Bitmap.CompressFormat.PNG, 100, out)
+                            val compression = compressionQuality * 100
+                            resource.compress(Bitmap.CompressFormat.PNG, compression.toInt(), out)
                             out.close()
                             tmpImage!!.setReadable(true, false)
                             val toast = Toast.makeText(context!!, " created: $fileName", Toast.LENGTH_SHORT)

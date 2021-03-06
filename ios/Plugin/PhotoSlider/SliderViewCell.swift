@@ -93,42 +93,7 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         singleTapGesture.numberOfTapsRequired = 1
         singleTapGesture.numberOfTouchesRequired = 1
         mImageView.addGestureRecognizer(singleTapGesture)
-
-        let doubleTapRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(handleDoubleTap(_:)))
-        doubleTapRecognizer.numberOfTapsRequired = 2
-        doubleTapRecognizer.numberOfTouchesRequired = 1
-        mImageView.addGestureRecognizer(doubleTapRecognizer)
-
-        singleTapGesture.require(toFail: doubleTapRecognizer)
-        /*
-        let panGesture = UIPanGestureRecognizer(
-            target: self, action: #selector(handlePan(_:)))
-        panGesture.cancelsTouchesInView = false
-        panGesture.delegate = self
-        mImageView.addGestureRecognizer(panGesture)
-        */
-        let pinchRecognizer = UITapGestureRecognizer(
-            target: self, action: #selector(handlePinch(_:)))
-        pinchRecognizer.numberOfTapsRequired = 1
-        pinchRecognizer.numberOfTouchesRequired = 2
-        mImageView.addGestureRecognizer(pinchRecognizer)
-
     }
-    /*
-    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        self._toast.showToast(view: contentView,
-                              message: "Pan not yet implemented",
-                              font: .boldSystemFont(ofSize: 14.0))
-
-    }
-    */
-    @objc func handlePinch(_ recognizer: UITapGestureRecognizer) {
-        self._toast.showToast(view: contentView,
-                              message: "Pinch not yet implemented",
-                              font: .boldSystemFont(ofSize: 14.0))
-    }
-
     @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
 
         if let mDelegate = delegate {
@@ -137,17 +102,4 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             print("No delegate for that cell")
         }
     }
-
-    @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
-        let pointInView = recognizer.location(in: mImageView)
-        self._toast.showToast(view: contentView,
-                              message: "DoubleTap not yet implemented",
-                              font: .boldSystemFont(ofSize: 14.0))
-        zoomInOrOut(at: pointInView)
-    }
-
-    func zoomInOrOut(at point: CGPoint) {
-        print("zoomInOrOut point x: \(point.x) y: \(point.y)")
-    }
-
 }

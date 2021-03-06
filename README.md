@@ -41,6 +41,10 @@ npm install @capacitor-community/photoviewer
 npx cap sync
 ```
 
+### iOS
+
+- in Xcode, open `Info.plist` and add a new Information Property like `Privacy - Photo Library Usage Description` and set a value to `We need to write photos`. This is required to have the `Share`of images working.
+
 ### Android
 
 - open the project `AndroidManifest.xml` and add the following to the application tag
@@ -144,19 +148,13 @@ npx cap open ios
 | Name     | Android | iOS | Electron | Web |
 | :------- | :------ | :-- | :------- | :-- |
 | echo     |   ✅    |  ✅  |    ❌    |  ❌ |
-| show     |   ✅    |  🚧  |    ❌    |  ❌ |
+| show     |   ✅    |  ✅  |    ❌    |  ❌ |
 
-For Android features missing:
+🚧 For Android features missing 🚧
 
  - Rotation Portrait to landscape not implemented
  - Hiding of the Share button on singleTap
  - Close button when image in fullscreen
-
-For iOS features missing:
-
- - Reading Base64 images
- - Sharing an image
- - Gestures for Zooming in/out
 
 ## Documentation
 
@@ -171,6 +169,23 @@ For iOS features missing:
 ## Usage
 
 - [In your Ionic/Vue App](https://github.com/capacitor-community/photoviewer/blob/master/docs/Ionic-Vue-Usage.md)
+
+### Android
+
+- In the Gallery make a `tap` will select the image and go fullscreen
+
+- In Fullscreen 
+    - `double tap` to zoom in and out  
+    - `pinch` with your two fingers
+
+### iOS
+
+- In the Gallery make a `tap` will select the image and go fullscreen
+- In Fulscreen
+    - `tap` will hide the share and exit buttons and open the window for other gestures.
+      - `double tap` to zoom in and out  
+      - `pinch` with your two fingers
+      - `tap` will show the share and exit buttons and leave the window for other gestures.
 
 ## Dependencies
 

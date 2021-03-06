@@ -19,6 +19,9 @@ class SliderViewController: UIViewController {
     private var _selectedPosition: IndexPath?
     private var _isShare: Bool = true
     private var _toast: Toast = Toast()
+    private var _imageViewer: ImageScrollViewController?
+    private var _maxZoomScale: Double = 3
+    private var _compressionQuality: Double = 0.8
 
     // MARK: - Set-up position
 
@@ -56,6 +59,16 @@ class SliderViewController: UIViewController {
                     self._isShare = isShare
                 }
             }
+            if self._options.keys.contains("maxzoomscale") {
+                if let maxZoomScale = self._options["maxzoomscale"] as? Double {
+                    self._maxZoomScale = maxZoomScale
+                }
+            }
+            if self._options.keys.contains("compressionquality") {
+                if let compressionQuality = self._options[""] as? Double {
+                    self._compressionQuality = compressionQuality
+                }
+            }
         }
     }
     lazy var navBar: UINavigationBar = { () -> UINavigationBar in
@@ -86,8 +99,8 @@ class SliderViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bClose.setTitleTextAttributes([NSAttributedString.Key
-                            .foregroundColor: UIColor.white,
-                            NSAttributedString.Key.font: font], for: .normal)
+                                            .foregroundColor: UIColor.white,
+                                           NSAttributedString.Key.font: font], for: .normal)
         }
         bClose.tintColor = .white
         bClose.action = #selector(closeButtonTapped)
@@ -106,8 +119,8 @@ class SliderViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bShare.setTitleTextAttributes([NSAttributedString.Key
-                            .foregroundColor: UIColor.white,
-                            NSAttributedString.Key.font: font], for: .normal)
+                                            .foregroundColor: UIColor.white,
+                                           NSAttributedString.Key.font: font], for: .normal)
         }
         bShare.tintColor = .white
         bShare.action = #selector(shareButtonTapped)
@@ -127,7 +140,6 @@ class SliderViewController: UIViewController {
         mColView.register(SliderViewCell.self, forCellWithReuseIdentifier: SliderViewCell.identifier)
         mColView.dataSource = self
         mColView.delegate = self
-        mColView.backgroundColor = .darkGray
         mColView.isPagingEnabled = true
         return mColView
     }()
@@ -138,32 +150,27 @@ class SliderViewController: UIViewController {
         view.frame.size.width = screenSize.width
         view.frame.size.height = screenSize.height
         view.sizeToFit()
+        view.backgroundColor = .black
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("$$$ in viewDidLoad ")
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("$$$ in viewWillAppear ")
         view.addSubview(collectionView)
         view.addSubview(navBar)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        print("$$$ in viewWillLayoutSubviews ")
-        print(" frame width: \(view.frame.size.width) height \(view.frame.size.height)")
         updateCollectionView()
         updateLayout(view.frame.size)
         self.navBar.frame = CGRect(x: 0, y: 35,
                                    width: view.frame.size.width, height: 64)
     }
     private func updateCollectionView() {
-        print("$$$ in updateCollectionView ")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor
             .constraint(equalTo: view.topAnchor)
@@ -183,7 +190,6 @@ class SliderViewController: UIViewController {
             if let selPos = self._selectedPosition {
                 mPosition = selPos
             }
-            print("mPosition before dispatch \(mPosition)")
             self.collectionView.scrollToItem(at: mPosition,
                                              at: .centeredHorizontally,
                                              animated: false)
@@ -191,10 +197,8 @@ class SliderViewController: UIViewController {
 
     }
     private func updateLayout(_ size: CGSize) {
-        print("$$$ in updateLayout ")
         let cellWidth = size.width
         let cellHeight = size.height
-        print("updateLayout cellWidth: \(cellWidth) cellHeight \(cellHeight)")
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: cellWidth,
                                  height: cellHeight)
@@ -208,14 +212,34 @@ class SliderViewController: UIViewController {
         updateLayout(size)
         self.navBar.frame = CGRect(x: 0, y: 35,
                                    width: view.frame.size.width, height: 64)
+
     }
     @objc func closeButtonTapped() {
         self.dismiss(animated: true, completion: nil)
     }
     @objc func shareButtonTapped() {
-        self._toast.showToast(view: self.view,
-                              message: "Share not yet implemented",
-                              font: .boldSystemFont(ofSize: 14.0))
+        var mPosition = self.position
+        if let selPos = self._selectedPosition {
+            mPosition = selPos
+        }
+        if let imageUrl: String = self.imageList[mPosition.row]["url"] {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFit
+            imageView.clipsToBounds = true
+            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil)
+            if let image = imageView.image {
+                if let data = image.jpegData(compressionQuality:
+                                                CGFloat(_compressionQuality)) {
+                    let avc = UIActivityViewController(activityItems: [data],
+                                                       applicationActivities: [])
+                    present(avc, animated: true)
+                }
+            } else {
+                print("No imgage available")
+            }
+        } else {
+            print("No url available")
+        }
     }
 
 }
@@ -237,6 +261,7 @@ extension SliderViewController: UICollectionViewDataSource {
         let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: SliderViewCell
                                     .identifier, for: indexPath) as? SliderViewCell
+
         if let mCell = cell {
             mCell.options = self.options
             if let imageUrl: String = self.imageList[indexPath.row]["url"] {
@@ -257,7 +282,6 @@ extension SliderViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
     }
-
 }
 extension SliderViewController: UICollectionViewDelegate {
 
@@ -270,18 +294,46 @@ extension SliderViewController: UICollectionViewDelegate {
 
 extension SliderViewController: SliderViewCellDelegate {
     func didShowButtons() {
+        var mPosition = self.position
+        if let selPos = self._selectedPosition {
+            mPosition = selPos
+        }
         if navBar.alpha == 1.0 {
+            if let imageUrl: String = self.imageList[mPosition.row]["url"] {
+                self._imageViewer = ImageScrollViewController()
+                self._imageViewer?.delegate = self
+                self.collectionView.alpha = 0
+                self._imageViewer?.dismissCompletion = {
+                    UIView.animate(withDuration: 0.3) {
+                        self.collectionView.alpha = 1.0
+                        self.navBar.alpha = 1.0
+                    }
+                }
+
+                self._imageViewer?.url = imageUrl
+                self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
+                if let imgViewer = self._imageViewer {
+                    imgViewer.modalPresentationStyle = .overFullScreen
+
+                    self.present(imgViewer, animated: false)
+                } else {
+                    print("no self._imageViewer")
+                }
+            } else {
+                print("No imgage available")
+            }
+
             UIView.animate(withDuration: 0.3) {
                 self.navBar.alpha = 0.0
-            }
-        } else {
-            UIView.animate(withDuration: 0.3) {
-                self.navBar.alpha = 1.0
             }
         }
     }
 }
-
+extension SliderViewController: ImageScrollViewControllerDelegate {
+    func didOneTap() {
+        didShowButtons()
+    }
+}
 extension UICollectionViewFlowLayout {
     override open func shouldInvalidateLayout(forBoundsChange: CGRect) -> Bool {
         return true

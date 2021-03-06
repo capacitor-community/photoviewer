@@ -22,6 +22,8 @@ class GalleryFullscreenFragment: DialogFragment() {
     private var transformer: String = "zoom"
     private var bShare: Boolean = true
     private var bTitle: Boolean = true
+    private var maxZoomScale: Double = 3.0
+    private var compressionQuality: Double = 0.8
     private lateinit var viewPager: ViewPager2
     private lateinit var curTransf: ViewPager2.PageTransformer
     private var options = JSObject()
@@ -38,6 +40,10 @@ class GalleryFullscreenFragment: DialogFragment() {
                 .getString("transformer").toString()
         if(this.options.has("share")) bShare = this.options.getBoolean("share")
         if(this.options.has("title")) bTitle = this.options.getBoolean("title")
+        if(this.options.has("maxzoomscale")) maxZoomScale = this.options
+                                                    .getDouble("maxzoomscale")
+        if(this.options.has("compressionquality")) compressionQuality = this.options
+                .getDouble("compressionquality")
     }
 
     override fun onCreateView(
@@ -71,7 +77,8 @@ class GalleryFullscreenFragment: DialogFragment() {
 
         override fun createFragment(position: Int): Fragment {
             val image: Image = imageList.get(position)
-            return ScreenSlidePageFragment.getInstance(image, bShare, bTitle)
+            return ScreenSlidePageFragment.getInstance(image, bShare, bTitle, maxZoomScale,
+                                                       compressionQuality)
         }
     }
 

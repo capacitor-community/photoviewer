@@ -72,4 +72,12 @@ export interface ViewerOptions {
    * Grid span count (default 3)
    */
   spancount?: number;
+  /**
+   * Max Zoom Scale (default 3)
+   */
+  maxzoomscale?: number;
+  /**
+   * Compression Quality for Sharing Image range [0-1] (default 0.8)
+   */
+  compressionquality?: number;
 }

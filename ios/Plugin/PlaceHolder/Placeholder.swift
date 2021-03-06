@@ -54,9 +54,9 @@ class Placeholder: UIView {
                 // center the label inside the placeholder space
                 _label?.translatesAutoresizingMaskIntoConstraints = false
                 _label?.centerXAnchor.constraint(equalTo: centerXAnchor)
-                                                    .isActive = true
+                    .isActive = true
                 _label?.centerYAnchor.constraint(equalTo: centerYAnchor)
-                                                    .isActive = true
+                    .isActive = true
                 _label?.text =  phtext
                 _label?.font = UIFont.boldSystemFont(ofSize: 20.0)
                 _label?.textColor = phcolor
