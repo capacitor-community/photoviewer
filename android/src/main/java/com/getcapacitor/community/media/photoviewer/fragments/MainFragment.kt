@@ -1,8 +1,11 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 //import android.widget.Toast
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +31,8 @@ class MainFragment : Fragment() , GalleryImageClickListener {
     lateinit var galleryAdapter: GalleryImageAdapter
     var recyclerViewLayoutManager: RecyclerView.LayoutManager? = null
     lateinit var  appContext: Context
+    var mContainer: ViewGroup? = null
+    lateinit var mInflater: LayoutInflater
 
     fun setImageList(imageList: ArrayList<Image>) {
         this.imageList = imageList
@@ -42,22 +47,52 @@ class MainFragment : Fragment() , GalleryImageClickListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, " in onCreateView fragment")
+        mInflater = inflater
+        if (container != null) {
+            mContainer  = container
+            val view: View = initializeView()
+            return view
+        }
+        return null
+    }
+    private fun initializeView(): View {
+        if (mContainer != null) {
+            mContainer?.removeAllViewsInLayout()
+        }
         // Inflate the layout for this fragment
-        val binding = MainFragmentBinding.inflate(inflater, container, false)
+        val binding = MainFragmentBinding.inflate(mInflater, mContainer, false)
         mainFragmentBinding = binding
-
         galleryAdapter = GalleryImageAdapter(imageList)
         galleryAdapter.listener = this
         // init recyclerview
         appContext = this.requireContext()
-        recyclerViewLayoutManager = GridLayoutManager(appContext, spanCount, GridLayoutManager
-                .VERTICAL, false)
+        val orientation: Int = resources.configuration.orientation
+        Log.d(TAG, "orientation: $orientation")
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.d(TAG, "orientation Portrait")
+        } else {
+            Log.d(TAG, "orientation Landscape")
+        }
+        recyclerViewLayoutManager = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            GridLayoutManager(appContext, spanCount, GridLayoutManager.VERTICAL, false)
+        } else {
+            GridLayoutManager(appContext, spanCount + 1,
+                    GridLayoutManager.VERTICAL, false)
+        }
         binding.recyclerView.layoutManager = recyclerViewLayoutManager;
         binding.recyclerView.adapter = galleryAdapter
         galleryAdapter.notifyDataSetChanged()
         Log.d(TAG, "> options: $options")
 
         return binding.root
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        Log.d(TAG, "$$ onConfigurationChanged ${newConfig.orientation}")
+        val view: View = initializeView()
+        mContainer?.addView(view)
+        super.onConfigurationChanged(newConfig)
     }
     override fun onDestroyView() {
         mainFragmentBinding = null

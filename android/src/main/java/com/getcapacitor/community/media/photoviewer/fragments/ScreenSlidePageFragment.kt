@@ -5,19 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
-import android.net.Uri
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -26,17 +23,19 @@ import com.bumptech.glide.request.transition.Transition
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSlidePageBinding
+import com.getcapacitor.community.media.photoviewer.helper.CallbackListener
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
-import com.ortiz.touchview.TouchImageView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
 
-class ScreenSlidePageFragment() : Fragment() {
+
+class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     private val TAG = "ScreenSlidePageFragment"
     lateinit var tvGalleryTitle: TextView
-    lateinit var ivFullscreenImage: TouchImageView
+    lateinit var ivFullscreenImage: ImageView
+    lateinit var rlMenu: RelativeLayout
     lateinit var  appContext: Context
     private var tmpImage: File? = null
     lateinit var binding: FragmentScreenSlidePageBinding
@@ -90,12 +89,12 @@ class ScreenSlidePageFragment() : Fragment() {
         Log.d(TAG, ">>>option bTitle: $bTitle")
         Log.d(TAG, ">>>option maxZoomScale: $maxZoomScale")
         Log.d(TAG, ">>>option compressionQuality: $compressionQuality")
-
+        rlMenu = binding.menuBtns
         tvGalleryTitle = binding.tvGalleryTitle
         if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
-        ivFullscreenImage.maxZoom = (maxZoomScale).toFloat()
-        ivFullscreenImage.minZoom = (1.0).toFloat()
+//        ivFullscreenImage.maxZoom = (maxZoomScale).toFloat()
+//        ivFullscreenImage.minZoom = (1.0).toFloat()
         tvGalleryTitle.text = image.title
 
         GlideApp.with(appContext)
@@ -106,21 +105,38 @@ class ScreenSlidePageFragment() : Fragment() {
         container?.addView(binding.root)
 
         val share: ImageButton = binding.shareBtn
+        val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE
         val clickListener = View.OnClickListener { viewFS ->
             when (viewFS.getId()) {
                 R.id.shareBtn -> {
                     shareImage(image)
                 }
+                R.id.ivFullscreenImage -> {
+                    Log.d(TAG, "click on image")
+                    toggleMenu()
+                    showTouchView()
+                }
+                R.id.closeBtn -> {
+                    Log.d(TAG, "click on close")
+                    closeFragment()
+                }
 
             }
         }
         share.setOnClickListener(clickListener)
+        close.setOnClickListener(clickListener)
+        ivFullscreenImage.setOnClickListener(clickListener)
+
         return binding.root
     }
     override fun onDestroyView() {
         deleteTmpImage()
         super.onDestroyView()
+    }
+
+    override fun onMenuToggle() {
+        toggleMenu()
     }
     private fun deleteTmpImage() {
         if (tmpImage != null) {
@@ -129,6 +145,20 @@ class ScreenSlidePageFragment() : Fragment() {
             tmpImage!!.delete()
         }
 
+    }
+    private fun showTouchView() {
+        val touchViewFragment = TouchViewFragment(this)
+        touchViewFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen)
+        image.url?.let { touchViewFragment.setUrl(it) }
+        activity?.let { touchViewFragment.show(it.supportFragmentManager, "touchview") }
+    }
+    private fun toggleMenu() {
+        rlMenu.isVisible = !rlMenu.isVisible
+    }
+
+    private fun closeFragment() {
+        val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
+        fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
     }
     private fun shareImage(image: Image) {
         if (Build.VERSION.SDK_INT >= 24) {

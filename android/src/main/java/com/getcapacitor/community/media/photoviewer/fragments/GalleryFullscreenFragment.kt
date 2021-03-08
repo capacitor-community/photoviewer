@@ -41,7 +41,7 @@ class GalleryFullscreenFragment: DialogFragment() {
         if(this.options.has("share")) bShare = this.options.getBoolean("share")
         if(this.options.has("title")) bTitle = this.options.getBoolean("title")
         if(this.options.has("maxzoomscale")) maxZoomScale = this.options
-                                                    .getDouble("maxzoomscale")
+                .getDouble("maxzoomscale")
         if(this.options.has("compressionquality")) compressionQuality = this.options
                 .getDouble("compressionquality")
     }
@@ -78,7 +78,7 @@ class GalleryFullscreenFragment: DialogFragment() {
         override fun createFragment(position: Int): Fragment {
             val image: Image = imageList.get(position)
             return ScreenSlidePageFragment.getInstance(image, bShare, bTitle, maxZoomScale,
-                                                       compressionQuality)
+                    compressionQuality)
         }
     }
 

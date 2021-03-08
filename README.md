@@ -2,7 +2,8 @@
 <h3 align="center">PHOTO VIEWER</h3>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <br>
-<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 ALPHA Android and iOS 🚧</strong></p><br>
+<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 BETA  Android and iOS </strong></p>
+<p align="center" style="font-size:50px;color:red"><strong>Web and Electron 🚧</strong></p><br>
 
 <p align="center">
   Capacitor community plugin for Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64.
@@ -150,11 +151,6 @@ npx cap open ios
 | echo     |   ✅    |  ✅  |    ❌    |  ❌ |
 | show     |   ✅    |  ✅  |    ❌    |  ❌ |
 
-🚧 For Android features missing 🚧
-
- - Rotation Portrait to landscape not implemented
- - Hiding of the Share button on singleTap
- - Close button when image in fullscreen
 
 ## Documentation
 
@@ -170,15 +166,8 @@ npx cap open ios
 
 - [In your Ionic/Vue App](https://github.com/capacitor-community/photoviewer/blob/master/docs/Ionic-Vue-Usage.md)
 
-### Android
 
-- In the Gallery make a `tap` will select the image and go fullscreen
-
-- In Fullscreen 
-    - `double tap` to zoom in and out  
-    - `pinch` with your two fingers
-
-### iOS
+### iOS an Android
 
 - In the Gallery make a `tap` will select the image and go fullscreen
 - In Fulscreen
