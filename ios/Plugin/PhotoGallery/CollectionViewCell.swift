@@ -12,6 +12,8 @@ import SDWebImage
 class CollectionViewCell: UICollectionViewCell {
     static let identifier = "CollectionViewCell"
 
+    // MARK: - Set-up Views
+
     private let mImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
@@ -24,6 +26,9 @@ class CollectionViewCell: UICollectionViewCell {
         return placeholder
 
     }()
+
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -38,6 +43,9 @@ class CollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - layoutSubviews
+
     override func layoutSubviews() {
         super.layoutSubviews()
         if #available(iOS 13, *) {
@@ -49,6 +57,9 @@ class CollectionViewCell: UICollectionViewCell {
                                   width: contentView.frame.size.width,
                                   height: contentView.frame.size.height)
     }
+
+    // MARK: - configure
+
     func configure(imageUrl: String) {
         let imgPlaceHolder: UIImage?
         if #available(iOS 13, *) {
@@ -59,6 +70,9 @@ class CollectionViewCell: UICollectionViewCell {
         mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: imgPlaceHolder)
 
     }
+
+    // MARK: - prepareForReuse
+
     override func prepareForReuse() {
         super.prepareForReuse()
         mImageView.image = nil

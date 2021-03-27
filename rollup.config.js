@@ -7,6 +7,7 @@ export default {
       name: 'capacitorPhotoViewer',
       globals: {
         '@capacitor/core': 'capacitorExports',
+        'jeep-photoviewer/loader': 'JeepPhotoviewer',
       },
       sourcemap: true,
       inlineDynamicImports: true,
@@ -18,5 +19,5 @@ export default {
       inlineDynamicImports: true,
     },
   ],
-  external: ['@capacitor/core'],
+  external: ['@capacitor/core', 'jeep-photoviewer/loader'],
 };

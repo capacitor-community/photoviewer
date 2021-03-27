@@ -33,6 +33,7 @@ class Placeholder: UIView {
             self._phtext = newValue
         }
     }
+
     // MARK: - Set-up Placeholder Text Color
 
     var phcolor: UIColor {
@@ -43,6 +44,8 @@ class Placeholder: UIView {
             self._phcolor = newValue
         }
     }
+
+    // MARK: - initialize
 
     private func initialize() {
         if _label == nil {

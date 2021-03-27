@@ -10,10 +10,10 @@ import UIKit
 class Toast {
     func showToast(view: UIView, message: String, font: UIFont) {
 
-        let toastLabel = UILabel(frame: CGRect(x: view.frame.size.width/2 - 75,
-                                               y: view.frame.size.height-100,
-                                               width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        let toastLabel = UILabel(frame: CGRect(x: view.frame.size.width/2 - 100,
+                                               y: view.frame.size.height-120,
+                                               width: 200, height: 50))
+        toastLabel.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         toastLabel.textColor = UIColor.white
         toastLabel.font = font
         toastLabel.textAlignment = .center

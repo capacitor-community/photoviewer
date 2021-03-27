@@ -43,6 +43,9 @@ class ImageScrollViewController: UIViewController {
             self._curZoomScale = newValue
         }
     }
+
+    // MARK: - Set-up Views
+
     lazy var mScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.delegate = self
@@ -59,6 +62,9 @@ class ImageScrollViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+
+    // MARK: - loadView
+
     override func loadView() {
         view = UIView()
         let screenSize: CGRect = UIScreen.main.bounds
@@ -67,11 +73,14 @@ class ImageScrollViewController: UIViewController {
         view.clipsToBounds = true
 
     }
+
+    // MARK: - viewDidLoad
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("$$$ in viewDidLoad ")
-
     }
+
+    // MARK: - viewWillAppear
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,10 +99,16 @@ class ImageScrollViewController: UIViewController {
         mImageView.translatesAutoresizingMaskIntoConstraints = false
         addGestureRecognizers()
     }
+
+    // MARK: - viewWillLayoutSubviews
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         updateScrollView()
     }
+
+    // MARK: - updateScrollView
+
     private func updateScrollView() {
         mImageView.frame = view.bounds
         mScrollView.frame = view.bounds
@@ -147,6 +162,9 @@ class ImageScrollViewController: UIViewController {
         zoomInOrOut(at: pointInView)
     }
 }
+
+// MARK: Zoom Extension
+
 extension ImageScrollViewController: UIScrollViewDelegate {
 
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {

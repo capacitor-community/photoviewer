@@ -1,5 +1,5 @@
 //
-//  SliddrViewCell.swift
+//  SliderViewCell.swift
 //  Plugin
 //
 //  Created by  Quéau Jean Pierre on 25/02/2021.
@@ -36,6 +36,9 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             }
         }
     }
+
+    // MARK: - Set-up Views
+
     lazy var mImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -52,6 +55,9 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18.0)
         return label
     }()
+
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .black
@@ -66,6 +72,9 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - layoutSubviews
+
     override func layoutSubviews() {
         super.layoutSubviews()
         mImageView.frame = CGRect(x: 0, y: 0,
@@ -74,11 +83,17 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         mLabel.frame = CGRect(x: 5, y: mImageView.frame.size.height-100,
                               width: mImageView.frame.size.width-10, height: 100)
     }
+
+    // MARK: - configure
+
     func configure(imageUrl: String, title: String) {
         mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil)
         mLabel.text = title
 
     }
+
+    // MARK: - prepareForReuse
+
     override func prepareForReuse() {
         super.prepareForReuse()
         mImageView.image = nil

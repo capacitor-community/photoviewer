@@ -24,23 +24,24 @@ class CollectionViewController: UIViewController {
     private var _cellWidth: CGFloat = 50
     private var _cellHeight: CGFloat = 50
 
-    lazy var layout: UICollectionViewFlowLayout = { () -> UICollectionViewFlowLayout in
+    lazy var layout: UICollectionViewFlowLayout = { ()
+        -> UICollectionViewFlowLayout in
         let mLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         mLayout.scrollDirection = .vertical
         mLayout.minimumLineSpacing = 1
         mLayout.minimumInteritemSpacing = 1
-        print("layout width: \(view.frame.size.width) height: \(view.frame.size.height)")
         updateLayout(mLayout, size: CGSize(width: view.frame.size.width,
                                            height: view.frame.size.height))
 
-        print("layout cellWidth: \(String(describing: _cellWidth)) cellHeight: \(String(describing: _cellHeight))")
         return mLayout
     }()
 
     lazy var collectionView: UICollectionView = {
         let mColView = UICollectionView(
             frame: .zero, collectionViewLayout: layout)
-        mColView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        mColView.register(
+            CollectionViewCell.self, forCellWithReuseIdentifier:
+                CollectionViewCell.identifier)
         mColView.dataSource = self
         mColView.backgroundColor = .darkGray
 
@@ -75,6 +76,8 @@ class CollectionViewController: UIViewController {
         }
     }
 
+    // MARK: - loadView
+
     override func loadView() {
 
         view = UIView()
@@ -83,10 +86,9 @@ class CollectionViewController: UIViewController {
         view.frame.size.width = screenSize.width
         view.frame.size.height = screenSize.height
         view.sizeToFit()
-        for img in imageList {
-            print("img \(String(describing: img["url"]))")
-        }
     }
+
+    // MARK: - viewDidLoad
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +96,9 @@ class CollectionViewController: UIViewController {
         SDImageCache.shared.clear(with: .all, completion: nil)
 
     }
+
+    // MARK: - viewWillAppear
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.addSubview(collectionView)
@@ -112,10 +117,15 @@ class CollectionViewController: UIViewController {
             .isActive = true
 
     }
+
+    // MARK: - viewWillLayoutSubviews
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         updateLayout(layout, size: view.frame.size)
     }
+
+    // MARK: - updateLayout
 
     private func updateLayout(_ layout: UICollectionViewFlowLayout, size: CGSize) {
         if size.width > size.height {
@@ -134,6 +144,8 @@ class CollectionViewController: UIViewController {
 
     }
 
+    // MARK: - viewWillTransition
+
     override func viewWillTransition(
         to size: CGSize,
         with coordinator: UIViewControllerTransitionCoordinator) {
@@ -151,9 +163,14 @@ class CollectionViewController: UIViewController {
 
     }
 
+    // MARK: - destroyAllGestures
+
     func destroyAllGestures() {
         self.collectionView.gestureRecognizers?.removeAll()
     }
+
+    // MARK: - didSingleTap
+
     @objc
     func didSingleTap(_ recognizer: UITapGestureRecognizer) {
 
@@ -169,6 +186,8 @@ class CollectionViewController: UIViewController {
         showModalSlider(position: index, imageList: imageList, options: options)
     }
 
+    // MARK: - showModalSlider
+
     func showModalSlider(position: IndexPath,
                          imageList: [[String: String]],
                          options: [String: Any]) {
@@ -182,6 +201,9 @@ class CollectionViewController: UIViewController {
         present(sliderVC, animated: true, completion: nil)
     }
 }
+
+// MARK: - Extensions
+
 extension CollectionViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -195,11 +217,11 @@ extension CollectionViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: CollectionViewCell
-                                    .identifier, for: indexPath) as? CollectionViewCell
+                        cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CollectionViewCell
+                .identifier, for: indexPath) as? CollectionViewCell
         if let mCell = cell {
             if let imageUrl = imageList[indexPath.row]["url"] {
                 mCell.configure(imageUrl: imageUrl)

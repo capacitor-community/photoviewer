@@ -2,7 +2,9 @@
 <h2 align="center">API PLUGIN DOCUMENTATION 🚧</h2>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <p align="center">
-  Capacitor community plugin for Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64.
+  Capacitor community plugin for Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64.</p>
+<p align="center">
+  On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.</p>
 
 ## Methods Index
 
@@ -88,14 +90,26 @@ Show the PhotoViewer
 
 #### ViewerOptions
 
-| Prop                     | Type                 | Description                                                                          |
-| ------------------------ | -------------------- | ------------------------------------------------------------------------------------ |
-| **`share`**              | <code>boolean</code> | display the share button (default true)                                              |
-| **`title`**              | <code>boolean</code> | display the image title if any (default true)                                        |
-| **`transformer`**        | <code>string</code>  | transformer Android "zoom", "depth" or "none" (default "zoom")                       |
-| **`spancount`**          | <code>number</code>  | Grid span count (default 3)                                                          |
-| **`maxzoomscale`**       | <code>number</code>  | Max Zoom Scale (default 3)                                                           |
-| **`compressionquality`** | <code>number</code>  | Compression Quality for Sharing <a href="#image">Image</a> range [0-1] (default 0.8) |
+| Prop                     | Type                                                  | Description                                                                          |
+| ------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **`share`**              | <code>boolean</code>                                  | display the share button (default true)                                              |
+| **`title`**              | <code>boolean</code>                                  | display the image title if any (default true)                                        |
+| **`transformer`**        | <code>string</code>                                   | transformer Android "zoom", "depth" or "none" (default "zoom")                       |
+| **`spancount`**          | <code>number</code>                                   | Grid span count (default 3)                                                          |
+| **`maxzoomscale`**       | <code>number</code>                                   | Max Zoom Scale (default 3)                                                           |
+| **`compressionquality`** | <code>number</code>                                   | Compression Quality for Sharing <a href="#image">Image</a> range [0-1] (default 0.8) |
+| **`divid`**              | <code>string</code>                                   | Div HTML Element Id (Web only) (default 'photoviewer-container')                     |
+| **`movieoptions`**       | <code><a href="#movieoptions">MovieOptions</a></code> | Movie Options iOS only                                                               |
+
+
+#### MovieOptions
+
+| Prop            | Type                | Description                                                              |
+| --------------- | ------------------- | ------------------------------------------------------------------------ |
+| **`name`**      | <code>string</code> | Movie Name (default "myMovie") iOS only                                  |
+| **`imagetime`** | <code>number</code> | <a href="#image">Image</a> Time Duration in Seconds (default 3) iOS only |
+| **`mode`**      | <code>string</code> | Movie Mode "portrait" / "landscape" (default "landscape") iOS only       |
+| **`ratio`**     | <code>string</code> | Movie Ratio "4/3" / "16/9" (default "16/9") iOS only                     |
 
 
 #### capShowResult

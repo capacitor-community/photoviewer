@@ -2,11 +2,11 @@
 <h3 align="center">PHOTO VIEWER</h3>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <br>
-<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 BETA  Android and iOS </strong></p>
-<p align="center" style="font-size:50px;color:red"><strong>Web and Electron 🚧</strong></p><br>
+<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 BETA  Android, iOS and Web </strong></p>
+<p align="center" style="font-size:50px;color:red"><strong>Electron 🚧</strong></p><br>
 
 <p align="center">
-  Capacitor community plugin for Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64.
+  Capacitor community plugin for Web and Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64. On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
 </p>
 <br>
 <p align="center">
@@ -44,7 +44,7 @@ npx cap sync
 
 ### iOS
 
-- in Xcode, open `Info.plist` and add a new Information Property like `Privacy - Photo Library Usage Description` and set a value to `We need to write photos`. This is required to have the `Share`of images working.
+- in Xcode, open `Info.plist` and add a new Information Property like `Privacy - Photo Library Usage Description` and set a value to `We need to write photos`. This is required to have the `Share`of images and the `create Movie` working.
 
 ### Android
 
@@ -135,21 +135,35 @@ buildscript {
 
 - Now run `Sync Project with Gradle Files` and you are ready.
 
+### Web, PWA
+
+The plugin works with the companion Stencil component `jeep-photoviewer`.
+It is mandatory to install it
+
+```
+npm install --save-dev jeep-photoviewer@latest
+```
+
+
+### Build your App
+
 When your app is ready
 
 ```bash
 npm run build
 npx cap copy
-npx cap open android
-npx cap open ios
+npx cap copy web
+npx cap open android   // Android
+npx cap open ios       // iOS
+npm run serve          // Web
 ```
 
 ## Supported methods
 
 | Name     | Android | iOS | Electron | Web |
 | :------- | :------ | :-- | :------- | :-- |
-| echo     |   ✅    |  ✅  |    ❌    |  ❌ |
-| show     |   ✅    |  ✅  |    ❌    |  ❌ |
+| echo     |   ✅    |  ✅  |    ❌    |  ✅ |
+| show     |   ✅    |  ✅  |    ❌    |  ✅ |
 
 
 ## Documentation

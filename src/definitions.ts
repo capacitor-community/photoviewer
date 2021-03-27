@@ -80,4 +80,30 @@ export interface ViewerOptions {
    * Compression Quality for Sharing Image range [0-1] (default 0.8)
    */
   compressionquality?: number;
+  /**
+   * Div HTML Element Id (Web only) (default 'photoviewer-container')
+   */
+  divid?: string;
+  /**
+   * Movie Options iOS only
+   */
+  movieoptions?: MovieOptions;
+}
+export interface MovieOptions {
+  /**
+   * Movie Name (default "myMovie") iOS only
+   */
+  name?: string; 
+  /**
+   * Image Time Duration in Seconds (default 3) iOS only
+   */
+  imagetime?: number;
+  /**
+   * Movie Mode "portrait" / "landscape" (default "landscape") iOS only
+   */ 
+  mode?: string;
+  /**
+   * Movie Ratio "4/3" / "16/9" (default "16/9") iOS only
+   */
+  ratio?: string; 
 }

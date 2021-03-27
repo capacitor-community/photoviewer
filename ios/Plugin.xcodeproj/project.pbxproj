@@ -10,6 +10,7 @@
 		03FC29A292ACC40490383A1F /* Pods_Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */; };
 		20C0B05DCFC8E3958A738AF2 /* Pods_PluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6753A823D3815DB436415E3 /* Pods_PluginTests.framework */; };
 		2C0B2E5525F23C1900019F89 /* ImageScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B2E5425F23C1900019F89 /* ImageScrollViewController.swift */; };
+		2C0B8501260E60720038BB95 /* ImagesToVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B8500260E60720038BB95 /* ImagesToVideo.swift */; };
 		2C767D6C25E79A0A00D0EF42 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D6B25E79A0A00D0EF42 /* Image.swift */; };
 		2C767D7125E79A5A00D0EF42 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D7025E79A5A00D0EF42 /* CollectionViewController.swift */; };
 		2C767D7725E79A7B00D0EF42 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767D7625E79A7B00D0EF42 /* CollectionViewCell.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		2C0B2E5425F23C1900019F89 /* ImageScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollViewController.swift; sourceTree = "<group>"; };
+		2C0B8500260E60720038BB95 /* ImagesToVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesToVideo.swift; sourceTree = "<group>"; };
 		2C767D6B25E79A0A00D0EF42 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		2C767D7025E79A5A00D0EF42 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		2C767D7625E79A7B00D0EF42 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */,
 				2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */,
 				2C0B2E5425F23C1900019F89 /* ImageScrollViewController.swift */,
+				2C0B8500260E60720038BB95 /* ImagesToVideo.swift */,
 			);
 			path = PhotoSlider;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				2C767D7725E79A7B00D0EF42 /* CollectionViewCell.swift in Sources */,
 				2C0B2E5525F23C1900019F89 /* ImageScrollViewController.swift in Sources */,
 				2C767E2E25E81C6E00D0EF42 /* SliderViewCell.swift in Sources */,
+				2C0B8501260E60720038BB95 /* ImagesToVideo.swift in Sources */,
 				2F98D68224C9AAE500613A4C /* PhotoViewer.swift in Sources */,
 				50ADFFA82020EE4F00D50D53 /* PhotoViewerPlugin.m in Sources */,
 				2C78E58A25EA700500EA0186 /* Toast.swift in Sources */,

@@ -9,12 +9,17 @@ import Capacitor
 public class PhotoViewerPlugin: CAPPlugin {
     private let implementation = PhotoViewer()
 
+    // MARK: echo
+
     @objc func echo(_ call: CAPPluginCall) {
         let value = call.getString("value") ?? ""
         call.resolve([
             "value": implementation.echo(value)
         ])
     }
+
+    // MARK: show
+
     @objc func show(_ call: CAPPluginCall) {
         guard let imageList = call.options["images"] as? [[String: String]] else {
             let error: String = "Must provide an image list"

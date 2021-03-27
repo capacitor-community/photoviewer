@@ -1,9 +1,21 @@
+# 0.0.1-beta.2 (2021-03-27)
+
+## Chore
+
+ - Update to @capacitor/core@3.0.0-rc.0
+
+## Added Features
+
+ - Web plugin by using `jeep-photoviewer` Stencil component.
+ - Add movie creation to iOS plugin
+
+
 # 0.0.1-beta.1 (2021-03-08) 
 
 ## Chore
 
  - Update to @capacitor/android@3.0.0-beta.6
- 
+
 ## Added Features
 
  - Android Rotation Portrait to Landscape 
