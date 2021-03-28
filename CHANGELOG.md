@@ -1,4 +1,10 @@
-# 0.0.1-beta.2 (2021-03-28)
+# 0.0.1-beta.3 (2021-03-28)
+
+## Bug fixes
+
+ - fix issue with jeep-photoviewer loader
+ 
+# 0.0.1-beta.2 (2021-03-27)
 
 ## Chore
 
