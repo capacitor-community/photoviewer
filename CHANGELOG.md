@@ -1,3 +1,9 @@
+# 0.0.1-rc.1 (2021-05-16)
+
+## Chore
+
+ - Update to @capacitor/core@3.0.0-rc.3
+
 # 0.0.1-beta.3 (2021-03-28)
 
 ## Bug fixes
