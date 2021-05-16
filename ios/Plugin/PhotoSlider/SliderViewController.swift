@@ -13,7 +13,7 @@ import SDWebImage
 
 extension NSNotification.Name {
     static var movieCompleted: Notification.Name {
-        return .init(rawValue:"movieCompleted")}
+        return .init(rawValue: "movieCompleted")}
 }
 
 // swiftlint:disable type_body_length
