@@ -201,125 +201,125 @@ class ImagesToVideo {
             videoWriterInput
                 .requestMediaDataWhenReady(on: mediaQueue,
                                            using: { () -> Void in
-                let fps: Int32 = 1
-                let framePerSecond: Int64 = Int64(imagesPerSecond)
-                let frameDuration =
-                    CMTimeMake(value: Int64(imagesPerSecond),
-                                timescale: fps)
-                var frameCount: Int64 = 0
-                var appendSucceeded = true
-                while !self._uiImages.isEmpty {
-                    if videoWriterInput.isReadyForMoreMediaData {
-                        let nextPhoto = self._uiImages.remove(at: 0)
-                        let lastFrameTime =
-                            CMTimeMake(value: frameCount * framePerSecond,
-                                        timescale: fps)
-                        let presentationTime = frameCount == 0
-                            ? lastFrameTime
-                            : CMTimeAdd(lastFrameTime, frameDuration)
-                        var pixelBuffer: CVPixelBuffer?
-                        let status: CVReturn = CVPixelBufferPoolCreatePixelBuffer(
-                            kCFAllocatorDefault,
-                            bufPool, &pixelBuffer)
-                        if let pixelBuffer = pixelBuffer, status == 0 {
-                            let managedPixelBuffer = pixelBuffer
-                            CVPixelBufferLockBaseAddress(
-                                managedPixelBuffer,
-                                CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
-                            let data =
-                                CVPixelBufferGetBaseAddress(managedPixelBuffer)
-                            let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-                            let context = CGContext(
-                                data: data, width: Int(movieSize.width),
-                                height: Int(movieSize.height),
-                                bitsPerComponent: 8,
-                                bytesPerRow: CVPixelBufferGetBytesPerRow(
-                                    managedPixelBuffer), space: rgbColorSpace,
-                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst
-                                    .rawValue)
-                            guard let ctx = context else {
-                                ret["result"] = false
-                                ret["message"] = "Videowriter : context is null "
-                                NotificationCenter.default.post(
-                                    name: .movieCompleted,
-                                    object: nil, userInfo: ret)
-                                return
-                            }
-                            ctx.clear(CGRect(
-                                        x: 0, y: 0,
-                                        width: CGFloat(movieSize.width),
-                                        height: CGFloat(movieSize.height)))
-                            let horizontalRatio = CGFloat(movieSize.width) /
-                                nextPhoto.size.width
-                            let verticalRatio = CGFloat(movieSize.height) /
-                                nextPhoto.size.height
+                                            let fps: Int32 = 1
+                                            let framePerSecond: Int64 = Int64(imagesPerSecond)
+                                            let frameDuration =
+                                                CMTimeMake(value: Int64(imagesPerSecond),
+                                                           timescale: fps)
+                                            var frameCount: Int64 = 0
+                                            var appendSucceeded = true
+                                            while !self._uiImages.isEmpty {
+                                                if videoWriterInput.isReadyForMoreMediaData {
+                                                    let nextPhoto = self._uiImages.remove(at: 0)
+                                                    let lastFrameTime =
+                                                        CMTimeMake(value: frameCount * framePerSecond,
+                                                                   timescale: fps)
+                                                    let presentationTime = frameCount == 0
+                                                        ? lastFrameTime
+                                                        : CMTimeAdd(lastFrameTime, frameDuration)
+                                                    var pixelBuffer: CVPixelBuffer?
+                                                    let status: CVReturn = CVPixelBufferPoolCreatePixelBuffer(
+                                                        kCFAllocatorDefault,
+                                                        bufPool, &pixelBuffer)
+                                                    if let pixelBuffer = pixelBuffer, status == 0 {
+                                                        let managedPixelBuffer = pixelBuffer
+                                                        CVPixelBufferLockBaseAddress(
+                                                            managedPixelBuffer,
+                                                            CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+                                                        let data =
+                                                            CVPixelBufferGetBaseAddress(managedPixelBuffer)
+                                                        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+                                                        let context = CGContext(
+                                                            data: data, width: Int(movieSize.width),
+                                                            height: Int(movieSize.height),
+                                                            bitsPerComponent: 8,
+                                                            bytesPerRow: CVPixelBufferGetBytesPerRow(
+                                                                managedPixelBuffer), space: rgbColorSpace,
+                                                            bitmapInfo: CGImageAlphaInfo.premultipliedFirst
+                                                                .rawValue)
+                                                        guard let ctx = context else {
+                                                            ret["result"] = false
+                                                            ret["message"] = "Videowriter : context is null "
+                                                            NotificationCenter.default.post(
+                                                                name: .movieCompleted,
+                                                                object: nil, userInfo: ret)
+                                                            return
+                                                        }
+                                                        ctx.clear(CGRect(
+                                                                    x: 0, y: 0,
+                                                                    width: CGFloat(movieSize.width),
+                                                                    height: CGFloat(movieSize.height)))
+                                                        let horizontalRatio = CGFloat(movieSize.width) /
+                                                            nextPhoto.size.width
+                                                        let verticalRatio = CGFloat(movieSize.height) /
+                                                            nextPhoto.size.height
 
-                            //let aspectRatio = max(horizontalRatio,
-                            //                  verticalRatio) // ScaleAspectFill
+                                                        //let aspectRatio = max(horizontalRatio,
+                                                        //                  verticalRatio) // ScaleAspectFill
 
-                            // ScaleAspectFit
-                            let aspectRatio = min(horizontalRatio, verticalRatio)
-                            let newSize: CGSize = CGSize(
-                                width: nextPhoto.size.width * aspectRatio,
-                                height: nextPhoto.size.height * aspectRatio)
-                            let posX = newSize.width < movieSize.width
-                                ? (movieSize.width - newSize.width) / 2 : 0
-                            let posY = newSize.height < movieSize.height
-                                ? (movieSize.height - newSize.height) / 2 : 0
-                            guard let nPhotoCGImage = nextPhoto.cgImage else {
-                                ret["result"] = false
-                                ret["message"] = "Videowriter : nextPhoto" +
-                                    ".cgImage  is null "
-                                NotificationCenter.default.post(
-                                    name: .movieCompleted,
-                                    object: nil, userInfo: ret)
-                                return
-                            }
+                                                        // ScaleAspectFit
+                                                        let aspectRatio = min(horizontalRatio, verticalRatio)
+                                                        let newSize: CGSize = CGSize(
+                                                            width: nextPhoto.size.width * aspectRatio,
+                                                            height: nextPhoto.size.height * aspectRatio)
+                                                        let posX = newSize.width < movieSize.width
+                                                            ? (movieSize.width - newSize.width) / 2 : 0
+                                                        let posY = newSize.height < movieSize.height
+                                                            ? (movieSize.height - newSize.height) / 2 : 0
+                                                        guard let nPhotoCGImage = nextPhoto.cgImage else {
+                                                            ret["result"] = false
+                                                            ret["message"] = "Videowriter : nextPhoto" +
+                                                                ".cgImage  is null "
+                                                            NotificationCenter.default.post(
+                                                                name: .movieCompleted,
+                                                                object: nil, userInfo: ret)
+                                                            return
+                                                        }
 
-                            ctx.draw(nPhotoCGImage, in: CGRect(
-                                        x: posX, y: posY, width: newSize.width,
-                                        height: newSize.height))
-                            CVPixelBufferUnlockBaseAddress(
-                                managedPixelBuffer, CVPixelBufferLockFlags(
-                                    rawValue: CVOptionFlags(0)))
-                            appendSucceeded = pixelBufferAdaptor
-                                .append(pixelBuffer, withPresentationTime:
-                                            presentationTime)
-                        } else {
-                            print("Failed to allocate pixel buffer")
-                            appendSucceeded = false
-                        }
-                        frameCount += 1
-                    }
-                    if !appendSucceeded {
-                        break
-                    }
-                }
-                videoWriterInput.markAsFinished()
-                videoWriter.finishWriting { [self] () -> Void in
+                                                        ctx.draw(nPhotoCGImage, in: CGRect(
+                                                                    x: posX, y: posY, width: newSize.width,
+                                                                    height: newSize.height))
+                                                        CVPixelBufferUnlockBaseAddress(
+                                                            managedPixelBuffer, CVPixelBufferLockFlags(
+                                                                rawValue: CVOptionFlags(0)))
+                                                        appendSucceeded = pixelBufferAdaptor
+                                                            .append(pixelBuffer, withPresentationTime:
+                                                                        presentationTime)
+                                                    } else {
+                                                        print("Failed to allocate pixel buffer")
+                                                        appendSucceeded = false
+                                                    }
+                                                    frameCount += 1
+                                                }
+                                                if !appendSucceeded {
+                                                    break
+                                                }
+                                            }
+                                            videoWriterInput.markAsFinished()
+                                            videoWriter.finishWriting { [self] () -> Void in
 
-                    if videoWriter.status == .completed {
-                        self._asset = AVAsset(url: videoURL as URL)
-                        // self.exportVideoWithAnimation()
+                                                if videoWriter.status == .completed {
+                                                    self._asset = AVAsset(url: videoURL as URL)
+                                                    // self.exportVideoWithAnimation()
 
-                        getPermissionIfNecessary { granted in
-                            guard granted else { return }
+                                                    getPermissionIfNecessary { granted in
+                                                        guard granted else { return }
 
-                            // Save video to photo Gallery
-                            saveToPhotoGallery(videoURL:
-                                                videoURL as URL)
-                        }
-                        ret["result"] = true
-                    } else {
-                        ret["result"] = false
-                        ret["message"] = "Videowriter: Movie " +
-                            "creation failed"
-                    }
-                    NotificationCenter.default
-                        .post(name: .movieCompleted, object: nil, userInfo: ret)
-                    return
-                }
-            })
+                                                        // Save video to photo Gallery
+                                                        saveToPhotoGallery(videoURL:
+                                                                            videoURL as URL)
+                                                    }
+                                                    ret["result"] = true
+                                                } else {
+                                                    ret["result"] = false
+                                                    ret["message"] = "Videowriter: Movie " +
+                                                        "creation failed"
+                                                }
+                                                NotificationCenter.default
+                                                    .post(name: .movieCompleted, object: nil, userInfo: ret)
+                                                return
+                                            }
+                                           })
         }
     }
     // swiftlint:enable function_body_length
@@ -393,7 +393,7 @@ class ImagesToVideo {
                     loadedImage.scale
                 let imgSize: [String: CGFloat] = ["width": imgWidth,
                                                   "height": imgHeight]
-                 sself._imageSize.append(imgSize)
+                sself._imageSize.append(imgSize)
             }
         )
     }

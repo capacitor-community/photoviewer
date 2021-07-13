@@ -22,7 +22,7 @@
 ### echo(...)
 
 ```typescript
-echo(options: capEchoOptions) => any
+echo(options: capEchoOptions) => Promise<capEchoResult>
 ```
 
 Echo a given string
@@ -31,7 +31,7 @@ Echo a given string
 | ------------- | --------------------------------------------------------- | ---------------------------------------------- |
 | **`options`** | <code><a href="#capechooptions">capEchoOptions</a></code> | : <a href="#capechooptions">capEchoOptions</a> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;<a href="#capechoresult">capEchoResult</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -41,7 +41,7 @@ Echo a given string
 ### show(...)
 
 ```typescript
-show(options: capShowOptions) => any
+show(options: capShowOptions) => Promise<capShowResult>
 ```
 
 Show the PhotoViewer
@@ -50,19 +50,12 @@ Show the PhotoViewer
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#capshowoptions">capShowOptions</a></code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;<a href="#capshowresult">capShowResult</a>&gt;</code>
 
 --------------------
 
 
 ### Interfaces
-
-
-#### capEchoOptions
-
-| Prop        | Type                | Description         |
-| ----------- | ------------------- | ------------------- |
-| **`value`** | <code>string</code> | String to be echoed |
 
 
 #### capEchoResult
@@ -72,11 +65,26 @@ Show the PhotoViewer
 | **`value`** | <code>string</code> | String returned |
 
 
+#### capEchoOptions
+
+| Prop        | Type                | Description         |
+| ----------- | ------------------- | ------------------- |
+| **`value`** | <code>string</code> | String to be echoed |
+
+
+#### capShowResult
+
+| Prop          | Type                 | Description                                   |
+| ------------- | -------------------- | --------------------------------------------- |
+| **`result`**  | <code>boolean</code> | result set to true when successful else false |
+| **`message`** | <code>string</code>  | a returned message                            |
+
+
 #### capShowOptions
 
 | Prop          | Type                                                    | Description               |
 | ------------- | ------------------------------------------------------- | ------------------------- |
-| **`images`**  | <code>{}</code>                                         | List of image             |
+| **`images`**  | <code>Image[]</code>                                    | List of image             |
 | **`options`** | <code><a href="#vieweroptions">ViewerOptions</a></code> | Viewer options (optional) |
 
 
@@ -110,13 +118,5 @@ Show the PhotoViewer
 | **`imagetime`** | <code>number</code> | <a href="#image">Image</a> Time Duration in Seconds (default 3) iOS only |
 | **`mode`**      | <code>string</code> | Movie Mode "portrait" / "landscape" (default "landscape") iOS only       |
 | **`ratio`**     | <code>string</code> | Movie Ratio "4/3" / "16/9" (default "16/9") iOS only                     |
-
-
-#### capShowResult
-
-| Prop          | Type                 | Description                                   |
-| ------------- | -------------------- | --------------------------------------------- |
-| **`result`**  | <code>boolean</code> | result set to true when successful else false |
-| **`message`** | <code>string</code>  | a returned message                            |
 
 </docgen-api>

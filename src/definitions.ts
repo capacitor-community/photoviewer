@@ -93,17 +93,17 @@ export interface MovieOptions {
   /**
    * Movie Name (default "myMovie") iOS only
    */
-  name?: string; 
+  name?: string;
   /**
    * Image Time Duration in Seconds (default 3) iOS only
    */
   imagetime?: number;
   /**
    * Movie Mode "portrait" / "landscape" (default "landscape") iOS only
-   */ 
+   */
   mode?: string;
   /**
    * Movie Ratio "4/3" / "16/9" (default "16/9") iOS only
    */
-  ratio?: string; 
+  ratio?: string;
 }
