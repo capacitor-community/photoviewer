@@ -2,7 +2,7 @@
 
 ## Chore
 
- - Update to @capacitor/core@3.0.0-rc.3
+ - Update to @capacitor/core@3.1.1
 
 # 0.0.1-rc.1 (2021-05-16)
 
