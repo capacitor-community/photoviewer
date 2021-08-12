@@ -1,3 +1,13 @@
+# 0.0.2 (2021-08-12)
+
+## Chore
+
+ - Update to @capacitor/core@3.1.2
+
+## Add Features
+
+ - Add Ionic-Angular-Usage.md
+
 # 0.0.1 (2021-07-13)
 
 ## Chore
