@@ -1,5 +1,5 @@
 <p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
-<h2 align="center">IONIC/VUE USAGE DOCUMENTATION 🚧</h2>
+<h2 align="center">IONIC/VUE USAGE DOCUMENTATION</h2>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <p align="center">
   In Ionic/Vue Applications, the <code>@capacitor-community/photoviewer</code> can be accessed in component file</p>

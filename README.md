@@ -2,7 +2,7 @@
 <h3 align="center">PHOTO VIEWER</h3>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <br>
-<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 BETA  Android, iOS and Web </strong></p>
+<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 Android, iOS and Web </strong></p>
 <p align="center" style="font-size:50px;color:red"><strong>Electron 🚧</strong></p><br>
 
 <p align="center">
@@ -179,6 +179,9 @@ npm run serve          // Web
 ## Usage
 
 - [In your Ionic/Vue App](https://github.com/capacitor-community/photoviewer/blob/master/docs/Ionic-Vue-Usage.md)
+
+- [In your Ionic/Angular App](https://github.com/capacitor-community/photoviewer/blob/master/docs/Ionic-Angular-Usage.md)
+
 
 
 ### iOS an Android
