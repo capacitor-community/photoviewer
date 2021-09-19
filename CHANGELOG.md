@@ -1,3 +1,14 @@
+# 0.0.3 (2021-09-19)
+
+## Chore
+
+ - Update to @capacitor/core@3.2.3
+ - Update to jeep-photoviewer@1.0.1
+
+## Add Features (Web, iOS)
+
+ - Display a fullscreen view when the image list contains one image
+
 # 0.0.2 (2021-08-12)
 
 ## Chore

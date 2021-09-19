@@ -52,15 +52,28 @@ public class PhotoViewerPlugin: CAPPlugin {
 
         // Display
         DispatchQueue.main.async { [weak self] in
-            guard ((self?.implementation.show(imageList, options: options)) != nil),
-                  let viewController = self?.implementation.viewController else {
-                call.reject("Show : Unable to show the CollectionViewController")
-                return
+            if imageList.count > 1 {
+                guard ((self?.implementation.show(imageList, options: options)) != nil),
+                      let viewController = self?.implementation.viewController else {
+                    call.reject("Show : Unable to show the CollectionViewController")
+                    return
+                }
+                viewController.modalPresentationStyle = .fullScreen
+                self?.bridge?.viewController?.present(viewController, animated: true, completion: {
+                    call.resolve(["result": true])
+                })
+            } else if imageList.count == 1 {
+                guard ((self?.implementation.show(imageList, options: options)) != nil),
+                      let sliderController = self?.implementation.sliderController else {
+                    call.reject("Show : Unable to show the SliderViewController")
+                    return
+                }
+                sliderController.modalPresentationStyle = .fullScreen
+                self?.bridge?.viewController?.present(sliderController, animated: true, completion: {
+                    call.resolve(["result": true])
+                })
+
             }
-            viewController.modalPresentationStyle = .fullScreen
-            self?.bridge?.viewController?.present(viewController, animated: true, completion: {
-                call.resolve(["result": true])
-            })
         }
 
     }

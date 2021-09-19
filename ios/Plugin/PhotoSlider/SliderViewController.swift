@@ -33,6 +33,7 @@ class SliderViewController: UIViewController {
     private var _compressionQuality: Double = 0.8
     private var _movieOptions: [String: Any] = [:]
     private var _movieObserver: Any?
+    private var _closeButton: String = "yes"
     // MARK: - Set-up position
 
     var position: IndexPath {
@@ -90,6 +91,17 @@ class SliderViewController: UIViewController {
         }
     }
 
+    // MARK: - Set-up closebutton
+
+    var closebutton: String {
+        get {
+            return self._closeButton
+        }
+        set {
+            self._closeButton = newValue
+        }
+    }
+
     // MARK: - Set-up Navigation Items
 
     lazy var navBar: UINavigationBar = { () -> UINavigationBar in
@@ -100,10 +112,12 @@ class SliderViewController: UIViewController {
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         let navigationItem = UINavigationItem()
-        if self._isFilm {
-            navigationItem.rightBarButtonItems = [mClose, mFilm]
-        } else {
-            navigationItem.rightBarButtonItem = mClose
+        if self._closeButton == "yes" {
+            if self._isFilm {
+                navigationItem.rightBarButtonItems = [mClose, mFilm]
+            } else {
+                navigationItem.rightBarButtonItem = mClose
+            }
         }
         if self._isShare {
             navigationItem.leftBarButtonItem = mShare
