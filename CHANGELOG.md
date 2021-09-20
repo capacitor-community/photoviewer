@@ -1,3 +1,9 @@
+# 0.0.4 (2021-09-20)
+
+## Add Features (Android)
+
+ - Display a fullscreen view when the image list contains one image
+
 # 0.0.3 (2021-09-19)
 
 ## Chore

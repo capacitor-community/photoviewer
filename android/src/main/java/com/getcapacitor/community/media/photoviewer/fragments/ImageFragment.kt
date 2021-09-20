@@ -3,6 +3,7 @@ package com.getcapacitor.community.media.photoviewer.fragments
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -10,102 +11,106 @@ import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.getcapacitor.JSObject
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
-import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSlidePageBinding
+import com.getcapacitor.community.media.photoviewer.databinding.ImageFragmentBinding
 import com.getcapacitor.community.media.photoviewer.helper.CallbackListener
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-
-
-class ScreenSlidePageFragment() : Fragment(), CallbackListener {
-    private val TAG = "ScreenSlidePageFragment"
-    lateinit var tvGalleryTitle: TextView
+class ImageFragment : Fragment() , CallbackListener {
+    private val TAG = "ImageFragment"
+    private var imageFragmentBinding: ImageFragmentBinding? = null
+    private var bShare: Boolean = true
+    private var bTitle: Boolean = true
+    private var maxZoomScale: Double = 3.0
+    private var compressionQuality: Double = 0.8
+    private var tmpImage: File? = null
+    lateinit var appId: String
+    lateinit var tvTitle: TextView
     lateinit var ivFullscreenImage: ImageView
     lateinit var rlMenu: RelativeLayout
+
+    private lateinit var image: Image
+    private var options = JSObject()
+    var mContainer: ViewGroup? = null
+    lateinit var mInflater: LayoutInflater
     lateinit var  appContext: Context
-    private var tmpImage: File? = null
-    lateinit var binding: FragmentScreenSlidePageBinding
-    lateinit var image: Image
-    lateinit var appId: String
-    var bShare: Boolean = true
-    var bTitle: Boolean = true
-    var maxZoomScale: Double = 3.0
-    var compressionQuality: Double = 0.8
-    companion object {
-        const val ARG_IMAGE = "image"
-        const val ARG_SHARE = "share"
-        const val ARG_TITLE = "title"
-        const val ARG_MAXZOOMSCALE = "maxzoomscale"
-        const val ARG_COMPRESSIONQUALITY = "compressionquality"
 
-        fun getInstance(image: Image, bShare: Boolean, bTitle: Boolean,
-                        maxZoomScale: Double, compressionQuality: Double): Fragment {
-            val screenSlidePageFragment = ScreenSlidePageFragment()
-            val bundle = Bundle()
-            bundle.putParcelable(ARG_IMAGE, image)
-            bundle.putBoolean(ARG_SHARE, bShare)
-            bundle.putBoolean(ARG_TITLE, bTitle)
-            bundle.putDouble(ARG_MAXZOOMSCALE, maxZoomScale)
-            bundle.putDouble(ARG_COMPRESSIONQUALITY, compressionQuality)
-            screenSlidePageFragment.arguments = bundle
-            return screenSlidePageFragment
-        }
+
+    fun setImage(image: Image) {
+        this.image = image
     }
-
-
+    fun setOptions(options: JSObject) {
+        this.options = options
+        if(this.options.has("share")) bShare = this.options.getBoolean("share")
+        if(this.options.has("title")) bTitle = this.options.getBoolean("title")
+        if(this.options.has("maxzoomscale")) maxZoomScale = this.options
+            .getDouble("maxzoomscale")
+        if(this.options.has("compressionquality")) compressionQuality = this.options
+            .getDouble("compressionquality")
+    }
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentScreenSlidePageBinding
-            .inflate(inflater, container, false)
-
-        image = requireArguments().getParcelable<Image>(ARG_IMAGE)!!
-        bShare = requireArguments().getBoolean(ARG_SHARE)
-        bTitle = requireArguments().getBoolean(ARG_TITLE)
-        maxZoomScale = requireArguments().getDouble(ARG_MAXZOOMSCALE)
-        compressionQuality = requireArguments().getDouble(ARG_COMPRESSIONQUALITY)
+        Log.d(TAG, " in onCreateView imageFragment")
+        mInflater = inflater
+        if (container != null) {
+            mContainer  = container
+            val view: View = initializeView()
+            return view
+        }
+        return null
+    }
+    private fun initializeView(): View {
+        if (mContainer != null) {
+            mContainer?.removeAllViewsInLayout()
+        }
         appContext = this.requireContext()
         appId = appContext.applicationInfo.processName
         Log.d(TAG, ">>>option appliocation id: $appId")
 
-        Log.d(TAG, ">>>option bShare: $bShare")
-        Log.d(TAG, ">>>option bTitle: $bTitle")
-        Log.d(TAG, ">>>option maxZoomScale: $maxZoomScale")
-        Log.d(TAG, ">>>option compressionQuality: $compressionQuality")
+        // Inflate the layout for this fragment
+        val binding = ImageFragmentBinding.inflate(mInflater, mContainer, false)
+        imageFragmentBinding = binding
+        val orientation: Int = resources.configuration.orientation
+        Log.d(TAG, "orientation: $orientation")
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.d(TAG, "orientation Portrait")
+        } else {
+            Log.d(TAG, "orientation Landscape")
+        }
         rlMenu = binding.menuBtns
-        tvGalleryTitle = binding.tvGalleryTitle
-        if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
+        tvTitle = binding.tvTitle
+        if(!bTitle) tvTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
-//        ivFullscreenImage.maxZoom = (maxZoomScale).toFloat()
-//        ivFullscreenImage.minZoom = (1.0).toFloat()
-        tvGalleryTitle.text = image.title
-
+        tvTitle.text = image.title
         GlideApp.with(appContext)
             .load(image.url)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivFullscreenImage)
-        container?.addView(binding.root)
+//        mContainer?.addView(binding.root)
 
         val share: ImageButton = binding.shareBtn
-        val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE
         val clickListener = View.OnClickListener { viewFS ->
             when (viewFS.getId()) {
@@ -117,34 +122,35 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                     toggleMenu()
                     showTouchView()
                 }
-                R.id.closeBtn -> {
-                    Log.d(TAG, "click on close")
-                    closeFragment()
-                }
 
             }
         }
         share.setOnClickListener(clickListener)
-        close.setOnClickListener(clickListener)
         ivFullscreenImage.setOnClickListener(clickListener)
 
         return binding.root
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        Log.d(TAG, "$$ onConfigurationChanged ${newConfig.orientation}")
+        val view: View = initializeView()
+        mContainer?.addView(view)
+        super.onConfigurationChanged(newConfig)
+    }
     override fun onDestroyView() {
-        deleteTmpImage()
+        imageFragmentBinding = null
+        clearCache()
         super.onDestroyView()
+    }
+    private fun clearCache() {
+        Thread(Runnable {
+            Glide.get(appContext).clearDiskCache()
+        }).start()
+        Glide.get(appContext).clearMemory()
     }
 
     override fun onMenuToggle() {
         toggleMenu()
-    }
-    private fun deleteTmpImage() {
-        if (tmpImage != null) {
-            val path: String = tmpImage!!.absolutePath
-            println("in onDestroy $path")
-            tmpImage!!.delete()
-        }
-
     }
     private fun showTouchView() {
         val touchViewFragment = TouchViewFragment(this)
@@ -154,11 +160,6 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     }
     private fun toggleMenu() {
         rlMenu.isVisible = !rlMenu.isVisible
-    }
-
-    private fun closeFragment() {
-        val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
-        fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
     }
     private fun shareImage(image: Image) {
         if (Build.VERSION.SDK_INT >= 24) {
@@ -238,4 +239,14 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
             })
 
     }
+    private fun deleteTmpImage() {
+        if (tmpImage != null) {
+            val path: String = tmpImage!!.absolutePath
+            println("in onDestroy $path")
+            tmpImage!!.delete()
+        }
+
+    }
+
+
 }

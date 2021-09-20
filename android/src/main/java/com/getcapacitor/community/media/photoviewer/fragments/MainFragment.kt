@@ -40,12 +40,12 @@ class MainFragment : Fragment() , GalleryImageClickListener {
     fun setOptions(options: JSObject) {
         this.options = options
         if(this.options.has("spancount")) this.spanCount = this.options
-                .getInt("spancount")
+            .getInt("spancount")
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, " in onCreateView fragment")
         mInflater = inflater
@@ -78,7 +78,7 @@ class MainFragment : Fragment() , GalleryImageClickListener {
             GridLayoutManager(appContext, spanCount, GridLayoutManager.VERTICAL, false)
         } else {
             GridLayoutManager(appContext, spanCount + 1,
-                    GridLayoutManager.VERTICAL, false)
+                GridLayoutManager.VERTICAL, false)
         }
         binding.recyclerView.layoutManager = recyclerViewLayoutManager;
         binding.recyclerView.adapter = galleryAdapter

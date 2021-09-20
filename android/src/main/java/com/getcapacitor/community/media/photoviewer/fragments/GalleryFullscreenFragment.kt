@@ -37,22 +37,22 @@ class GalleryFullscreenFragment: DialogFragment() {
     fun setOptions(options: JSObject) {
         this.options = options
         if(this.options.has("transformer")) transformer = this.options
-                .getString("transformer").toString()
+            .getString("transformer").toString()
         if(this.options.has("share")) bShare = this.options.getBoolean("share")
         if(this.options.has("title")) bTitle = this.options.getBoolean("title")
         if(this.options.has("maxzoomscale")) maxZoomScale = this.options
-                .getDouble("maxzoomscale")
+            .getDouble("maxzoomscale")
         if(this.options.has("compressionquality")) compressionQuality = this.options
-                .getDouble("compressionquality")
+            .getDouble("compressionquality")
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentGalleryFullscreenBinding
-                .inflate(inflater, container, false)
+            .inflate(inflater, container, false)
         fsFragmentBinding = binding
         viewPager = binding.viewPager
         val pagerAdapter = ScreenSlidePagerAdapter(this)
@@ -78,7 +78,8 @@ class GalleryFullscreenFragment: DialogFragment() {
         override fun createFragment(position: Int): Fragment {
             val image: Image = imageList.get(position)
             return ScreenSlidePageFragment.getInstance(image, bShare, bTitle, maxZoomScale,
-                    compressionQuality)
+                compressionQuality)
+
         }
     }
 
