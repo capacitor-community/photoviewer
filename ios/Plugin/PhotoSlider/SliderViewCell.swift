@@ -9,8 +9,9 @@
 import UIKit
 import SDWebImage
 
-protocol SliderViewCellDelegate: class {
-    func didShowButtons()
+protocol SliderViewCellDelegate: AnyObject {
+    func didShowButtons(tapCell: Bool)
+    func didZoom(point: CGPoint)
 }
 
 class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
@@ -33,6 +34,9 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                 if let isTitle = self._options["title"] as? Bool {
                     self._isTitle = isTitle
                 }
+            }
+            if self._isTitle {
+                contentView.addSubview(mLabel)
             }
         }
     }
@@ -62,9 +66,6 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         contentView.backgroundColor = .black
         contentView.addSubview(mImageView)
-        if self._isTitle {
-            contentView.addSubview(mLabel)
-        }
         contentView.clipsToBounds = true
         addGestureRecognizers()
 
@@ -89,7 +90,6 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     func configure(imageUrl: String, title: String) {
         mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil)
         mLabel.text = title
-
     }
 
     // MARK: - prepareForReuse
@@ -108,11 +108,25 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         singleTapGesture.numberOfTapsRequired = 1
         singleTapGesture.numberOfTouchesRequired = 1
         mImageView.addGestureRecognizer(singleTapGesture)
+        let doubleTapRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        doubleTapRecognizer.numberOfTouchesRequired = 1
+        mImageView.addGestureRecognizer(doubleTapRecognizer)
+
+        singleTapGesture.require(toFail: doubleTapRecognizer)
     }
     @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
-
         if let mDelegate = delegate {
-            mDelegate.didShowButtons()
+            mDelegate.didShowButtons(tapCell: true)
+        } else {
+            print("No delegate for that cell")
+        }
+    }
+    @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
+        let pointInView: CGPoint = recognizer.location(in: mImageView)
+        if let mDelegate = delegate {
+            mDelegate.didZoom(point: pointInView)
         } else {
             print("No delegate for that cell")
         }

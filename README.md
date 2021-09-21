@@ -5,8 +5,14 @@
 <p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 Android, iOS and Web </strong></p>
 <p align="center" style="font-size:50px;color:red"><strong>Electron 🚧</strong></p><br>
 
-<p align="center">
-  Capacitor community plugin for Web and Native Photo Viewer allowing to open fullscreen a selected picture from a grid of pictures with zoom-in and sharing features. A picture can be acessed by url or base64. On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
+<p align="left">
+Capacitor community plugin for Web and Native Photo Viewer allowing to open fullscreen </p>
+<p align="left">
+- a selected picture from a grid of pictures with zoom-in and sharing features. </p>
+<p align="left">
+- a single picture with zoom-in and sharing features.</p>
+<p align="left">
+A picture can be acessed by url or base64. On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
 </p>
 <br>
 <p align="center">
@@ -184,7 +190,7 @@ npm run serve          // Web
 
 
 
-### iOS an Android
+### iOS and Android
 
 - In the Gallery make a `tap` will select the image and go fullscreen
 - In Fulscreen
@@ -192,6 +198,7 @@ npm run serve          // Web
       - `double tap` to zoom in and out  
       - `pinch` with your two fingers
       - `tap` will show the share and exit buttons and leave the window for other gestures.
+    - `double tap` will hide the buttons and zoom in straightforward (iOS only)
 
 ## Dependencies
 

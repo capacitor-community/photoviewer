@@ -39,8 +39,11 @@ enum PhotoViewerError: Error {
             sliderVC?.modalPresentationStyle = .overFullScreen
             sliderVC?.position = IndexPath(row: 0, section: 0)
             sliderVC?.imageList = imageList
-            sliderVC?.options = options
-            sliderVC?.closebutton = "no"
+            var mOptions = options
+            if mOptions.keys.contains("movieoptions") {
+                mOptions.removeValue(forKey: "movieoptions")
+            }
+            sliderVC?.options = mOptions
             return true
         }
     }

@@ -10,8 +10,9 @@ import UIKit
 
 import SDWebImage
 
-protocol ImageScrollViewControllerDelegate: class {
+protocol ImageScrollViewControllerDelegate: AnyObject {
     func didOneTap()
+    func didTwoTaps(point: CGPoint)
 }
 
 class ImageScrollViewController: UIViewController {
@@ -21,6 +22,9 @@ class ImageScrollViewController: UIViewController {
     private var _maxZoomScale: CGFloat = 3.0
     private var _curZoomScale: CGFloat = 3.0
     private var _toast: Toast = Toast()
+    private var _zoomIn: Bool = false
+    private var _zoomInPoint: CGPoint = CGPoint(x: 0, y: 0)
+    private var _hasOneTap: Bool = false
 
     var dismissCompletion: (() -> Void)?
 
@@ -43,7 +47,33 @@ class ImageScrollViewController: UIViewController {
             self._curZoomScale = newValue
         }
     }
+    var zoomIn: Bool {
+        get {
+            return self._zoomIn
+        }
+        set {
+            self._zoomIn = newValue
 
+        }
+    }
+    var zoomInPoint: CGPoint {
+        get {
+            return self._zoomInPoint
+        }
+        set {
+            self._zoomInPoint = newValue
+
+        }
+    }
+    var tapCell: Bool {
+        get {
+            return self._hasOneTap
+        }
+        set {
+            self._hasOneTap = newValue
+
+        }
+    }
     // MARK: - Set-up Views
 
     lazy var mScrollView: UIScrollView = {
@@ -115,6 +145,9 @@ class ImageScrollViewController: UIViewController {
         mScrollView.contentSize = mImageView.bounds.size
 
         calculateMaximumZoomScale(mScrollView.bounds.size)
+        if self._zoomIn {
+            zoomInOrOut(at: self._zoomInPoint)
+        }
 
     }
 
@@ -159,7 +192,26 @@ class ImageScrollViewController: UIViewController {
 
     @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
         let pointInView = recognizer.location(in: mImageView)
-        zoomInOrOut(at: pointInView)
+        if self._hasOneTap {
+            zoomInOrOut(at: pointInView)
+        } else {
+            if mScrollView.zoomScale !=
+                mScrollView.minimumZoomScale {
+                mScrollView.zoomScale = mScrollView.minimumZoomScale
+                dismiss(animated: false, completion: dismissCompletion)
+                if let mDelegate = delegate {
+                    mDelegate.didOneTap()
+                } else {
+                    print("No delegate for this ImageScrollViewController")
+                }
+            } else {
+                if let mDelegate = delegate {
+                    mDelegate.didTwoTaps(point: pointInView )
+                } else {
+                    print("No delegate for this ImageScrollViewController")
+                }
+            }
+        }
     }
 }
 

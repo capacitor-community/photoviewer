@@ -33,7 +33,6 @@ class SliderViewController: UIViewController {
     private var _compressionQuality: Double = 0.8
     private var _movieOptions: [String: Any] = [:]
     private var _movieObserver: Any?
-    private var _closeButton: String = "yes"
     // MARK: - Set-up position
 
     var position: IndexPath {
@@ -91,17 +90,6 @@ class SliderViewController: UIViewController {
         }
     }
 
-    // MARK: - Set-up closebutton
-
-    var closebutton: String {
-        get {
-            return self._closeButton
-        }
-        set {
-            self._closeButton = newValue
-        }
-    }
-
     // MARK: - Set-up Navigation Items
 
     lazy var navBar: UINavigationBar = { () -> UINavigationBar in
@@ -112,12 +100,10 @@ class SliderViewController: UIViewController {
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         let navigationItem = UINavigationItem()
-        if self._closeButton == "yes" {
-            if self._isFilm {
-                navigationItem.rightBarButtonItems = [mClose, mFilm]
-            } else {
-                navigationItem.rightBarButtonItem = mClose
-            }
+        if self._isFilm {
+            navigationItem.rightBarButtonItems = [mClose, mFilm]
+        } else {
+            navigationItem.rightBarButtonItem = mClose
         }
         if self._isShare {
             navigationItem.leftBarButtonItem = mShare
@@ -407,8 +393,9 @@ extension SliderViewController: UICollectionViewDataSource {
                     mCell.delegate = self
                     return mCell
                 } else {
-                    print("Error: image title not found")
-                    return UICollectionViewCell()
+                    mCell.configure(imageUrl: imageUrl, title: "")
+                    mCell.delegate = self
+                    return mCell
                 }
             } else {
                 print("Error: image url not found")
@@ -430,7 +417,7 @@ extension SliderViewController: UICollectionViewDelegate {
 }
 
 extension SliderViewController: SliderViewCellDelegate {
-    func didShowButtons() {
+    func didShowButtons(tapCell: Bool) {
         var mPosition = self.position
         if let selPos = self._selectedPosition {
             mPosition = selPos
@@ -441,7 +428,7 @@ extension SliderViewController: SliderViewCellDelegate {
                 self._imageViewer?.delegate = self
                 self.collectionView.alpha = 0
                 self._imageViewer?.dismissCompletion = {
-                    UIView.animate(withDuration: 0.3) {
+                    UIView.animate(withDuration: 0.5) {
                         self.collectionView.alpha = 1.0
                         self.navBar.alpha = 1.0
                     }
@@ -449,6 +436,7 @@ extension SliderViewController: SliderViewCellDelegate {
 
                 self._imageViewer?.url = imageUrl
                 self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
+                self._imageViewer?.tapCell = tapCell
                 if let imgViewer = self._imageViewer {
                     imgViewer.modalPresentationStyle = .overFullScreen
 
@@ -465,10 +453,48 @@ extension SliderViewController: SliderViewCellDelegate {
             }
         }
     }
+
+    func didZoom(point: CGPoint) {
+        UIView.animate(withDuration: 0.0) {
+            self.navBar.alpha = 0.0
+        }
+        var mPosition = self.position
+        if let selPos = self._selectedPosition {
+            mPosition = selPos
+        }
+        if let imageUrl: String = self.imageList[mPosition.row]["url"] {
+            self._imageViewer = ImageScrollViewController()
+            self._imageViewer?.delegate = self
+            self.collectionView.alpha = 0
+            self._imageViewer?.dismissCompletion = {
+                UIView.animate(withDuration: 0.3) {
+                    self.collectionView.alpha = 1.0
+                    self.navBar.alpha = 1.0
+                }
+            }
+
+            self._imageViewer?.url = imageUrl
+            self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
+            self._imageViewer?.zoomIn = true
+            self._imageViewer?.zoomInPoint = point
+            if let imgViewer = self._imageViewer {
+                imgViewer.modalPresentationStyle = .overFullScreen
+                self.present(imgViewer, animated: false)
+            } else {
+                print("no self._imageViewer")
+            }
+        } else {
+            print("No imgage available")
+        }
+
+    }
 }
 extension SliderViewController: ImageScrollViewControllerDelegate {
     func didOneTap() {
-        didShowButtons()
+        didShowButtons(tapCell: false)
+    }
+    func didTwoTaps(point: CGPoint) {
+        didZoom(point: point)
     }
 }
 extension UICollectionViewFlowLayout {
