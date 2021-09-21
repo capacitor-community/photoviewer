@@ -1,3 +1,9 @@
+# 0.0.5 (2021-09-21)
+
+## Bug fixes
+
+ - fix all issues listed in issue#2 for iOS only
+
 # 0.0.4 (2021-09-20)
 
 ## Add Features (Android)
