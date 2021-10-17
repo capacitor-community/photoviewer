@@ -1,4 +1,10 @@
-# 1.0.0
+# 1.0.1 (2021-10-17)
+
+## Bug fixes
+
+ - Add s.dependency 'ISVImageScrollView' to the CapacitorCommunityPhotoviewer.podspec
+
+# 1.0.0 (2021-10-17)
 
 ## Chore
 
@@ -13,7 +19,7 @@
 ## Bug fixes
 
  - Fix issue#2
- 
+
 # 0.0.5 (2021-09-21)
 
 ## Bug fixes
