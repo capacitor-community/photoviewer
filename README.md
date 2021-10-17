@@ -135,7 +135,7 @@ buildscript {
         ```
     - in the `dependencies` block add
         ```
-        implementation "androidx.core:core-ktx:+"
+        implementation "androidx.core:core-ktx:1.6.0"
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         ```
 
@@ -178,6 +178,10 @@ npm run serve          // Web
 
 ## Applications demonstrating the use of the plugin
 
+### Ionic/Angular
+
+- [angular-photoviewer-app](https://github.com/jepiqueau/angular-photoviewer-app)
+
 ### Ionic/Vue
 
 - [vue-photoviewer-app](https://github.com/jepiqueau/vue-photoviewer-app)
@@ -192,19 +196,23 @@ npm run serve          // Web
 
 ### iOS and Android
 
-- In the Gallery make a `tap` will select the image and go fullscreen
-- In Fulscreen
-    - `tap` will hide the share and exit buttons and open the window for other gestures.
-      - `double tap` to zoom in and out  
-      - `pinch` with your two fingers
-      - `tap` will show the share and exit buttons and leave the window for other gestures.
-    - `double tap` will hide the buttons and zoom in straightforward (iOS only)
+- In `Gallery` mode (Image Array with more than one Image): 
+    - make a `tap` will select the image and go fullscreen
+    - In Fulscreen
+        - `tap` will hide the share and exit buttons and open the window for other gestures.
+        - `double tap` to zoom in and out  
+        - `pinch` with your two fingers
+        - `tap` will show the share and exit buttons and leave the window for other gestures.
+        - `double tap` will hide the buttons and zoom in straightforward (iOS only)
+- In `One Image` mode (Image Array with one Image only):
+    - `pinch-zoom` and `pan` with your two fingers
+    - `double-tap` to zoom directly to the maximum zoom
 
 ## Dependencies
 
 The Android code is using `MikeOrtiz/TouchImageView` allowing for the zooming in picture (https://github.com/MikeOrtiz/TouchImageView)
 
-The iOS code is using `SDWebImage` for http async image downloader (https://github.com/SDWebImage/SDWebImage)
+The iOS code is using `SDWebImage` for http async image downloader (https://github.com/SDWebImage/SDWebImage) and `ISVImageScrollView` for the pinch-zoom and pan in picture (https://github.com/yuriiik/ISVImageScrollView)
 
 ## Contributors ✨
 

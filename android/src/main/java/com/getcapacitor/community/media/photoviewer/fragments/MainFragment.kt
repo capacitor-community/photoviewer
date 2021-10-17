@@ -1,11 +1,9 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
+//import android.widget.Toast
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
-//import android.widget.Toast
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +45,6 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, " in onCreateView fragment")
         mInflater = inflater
         if (container != null) {
             mContainer  = container

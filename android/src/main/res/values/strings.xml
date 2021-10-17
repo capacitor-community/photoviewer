@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PhotoViewer2</string>
     <string name="share">Share</string>
+    <string name="close">Close</string>
 </resources>

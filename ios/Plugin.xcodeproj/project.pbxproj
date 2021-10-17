@@ -17,6 +17,7 @@
 		2C767E2A25E81C4F00D0EF42 /* SliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */; };
 		2C767E2E25E81C6E00D0EF42 /* SliderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */; };
 		2C78E58A25EA700500EA0186 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C78E58925EA700500EA0186 /* Toast.swift */; };
+		2C951CC02705C9DF0056E1F7 /* OneImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C951CBF2705C9DF0056E1F7 /* OneImageViewController.swift */; };
 		2C97285F25E8D4250013ADB3 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C97285E25E8D4250013ADB3 /* Placeholder.swift */; };
 		2F98D68224C9AAE500613A4C /* PhotoViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98D68124C9AAE400613A4C /* PhotoViewer.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
@@ -46,6 +47,7 @@
 		2C767E2925E81C4F00D0EF42 /* SliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewController.swift; sourceTree = "<group>"; };
 		2C767E2D25E81C6E00D0EF42 /* SliderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewCell.swift; sourceTree = "<group>"; };
 		2C78E58925EA700500EA0186 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		2C951CBF2705C9DF0056E1F7 /* OneImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneImageViewController.swift; sourceTree = "<group>"; };
 		2C97285E25E8D4250013ADB3 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		2F98D68124C9AAE400613A4C /* PhotoViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewer.swift; sourceTree = "<group>"; };
 		3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		2C951CBE2705C9B90056E1F7 /* OnePhoto */ = {
+			isa = PBXGroup;
+			children = (
+				2C951CBF2705C9DF0056E1F7 /* OneImageViewController.swift */,
+			);
+			path = OnePhoto;
+			sourceTree = "<group>";
+		};
 		2C97285D25E8D3F80013ADB3 /* PlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +156,7 @@
 		50ADFF8A201F53D600D50D53 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				2C951CBE2705C9B90056E1F7 /* OnePhoto */,
 				2C78E58825EA6FEB00EA0186 /* Utils */,
 				2C97285D25E8D3F80013ADB3 /* PlaceHolder */,
 				2C767E2825E81AF800D0EF42 /* PhotoSlider */,
@@ -329,12 +340,14 @@
 				"${PODS_ROOT}/Target Support Files/Pods-PluginTests/Pods-PluginTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Capacitor/Capacitor.framework",
 				"${BUILT_PRODUCTS_DIR}/CapacitorCordova/Cordova.framework",
+				"${BUILT_PRODUCTS_DIR}/ISVImageScrollView/ISVImageScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Capacitor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cordova.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISVImageScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E1A94820377CB70090CE1A /* PhotoViewerPlugin.swift in Sources */,
+				2C951CC02705C9DF0056E1F7 /* OneImageViewController.swift in Sources */,
 				2C767E2A25E81C4F00D0EF42 /* SliderViewController.swift in Sources */,
 				2C767D6C25E79A0A00D0EF42 /* Image.swift in Sources */,
 				2C767D7725E79A7B00D0EF42 /* CollectionViewCell.swift in Sources */,

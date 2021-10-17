@@ -1,6 +1,5 @@
 package com.getcapacitor.community.media.photoviewer;
 
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;

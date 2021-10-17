@@ -1,7 +1,6 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment

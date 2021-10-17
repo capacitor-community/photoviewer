@@ -1,7 +1,6 @@
 package com.getcapacitor.community.media.photoviewer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import com.getcapacitor.Bridge;
@@ -11,7 +10,6 @@ import com.getcapacitor.JSObject;
 import com.getcapacitor.community.media.photoviewer.adapter.Image;
 import com.getcapacitor.community.media.photoviewer.fragments.ImageFragment;
 import com.getcapacitor.community.media.photoviewer.fragments.MainFragment;
-import com.getcapacitor.community.media.photoviewer.fragments.ScreenSlidePageFragment;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;

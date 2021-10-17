@@ -1,34 +1,26 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
-import android.content.ClipData
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
-import android.view.*
-import android.widget.*
-import androidx.core.content.FileProvider
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSlidePageBinding
 import com.getcapacitor.community.media.photoviewer.helper.CallbackListener
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
+import com.getcapacitor.community.media.photoviewer.helper.ShareImage
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-
 
 
 class ScreenSlidePageFragment() : Fragment(), CallbackListener {
@@ -37,7 +29,6 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     lateinit var ivFullscreenImage: ImageView
     lateinit var rlMenu: RelativeLayout
     lateinit var  appContext: Context
-    private var tmpImage: File? = null
     lateinit var binding: FragmentScreenSlidePageBinding
     lateinit var image: Image
     lateinit var appId: String
@@ -85,16 +76,10 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         appId = appContext.applicationInfo.processName
         Log.d(TAG, ">>>option appliocation id: $appId")
 
-        Log.d(TAG, ">>>option bShare: $bShare")
-        Log.d(TAG, ">>>option bTitle: $bTitle")
-        Log.d(TAG, ">>>option maxZoomScale: $maxZoomScale")
-        Log.d(TAG, ">>>option compressionQuality: $compressionQuality")
         rlMenu = binding.menuBtns
         tvGalleryTitle = binding.tvGalleryTitle
         if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
-//        ivFullscreenImage.maxZoom = (maxZoomScale).toFloat()
-//        ivFullscreenImage.minZoom = (1.0).toFloat()
         tvGalleryTitle.text = image.title
 
         GlideApp.with(appContext)
@@ -102,7 +87,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivFullscreenImage)
-        container?.addView(binding.root)
+//        container?.addView(binding.root)
 
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn
@@ -110,7 +95,8 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         val clickListener = View.OnClickListener { viewFS ->
             when (viewFS.getId()) {
                 R.id.shareBtn -> {
-                    shareImage(image)
+                    val mShareImage: ShareImage = ShareImage()
+                    mShareImage.shareImage(image, appId, appContext, compressionQuality)
                 }
                 R.id.ivFullscreenImage -> {
                     Log.d(TAG, "click on image")
@@ -130,21 +116,9 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
 
         return binding.root
     }
-    override fun onDestroyView() {
-        deleteTmpImage()
-        super.onDestroyView()
-    }
 
     override fun onMenuToggle() {
         toggleMenu()
-    }
-    private fun deleteTmpImage() {
-        if (tmpImage != null) {
-            val path: String = tmpImage!!.absolutePath
-            println("in onDestroy $path")
-            tmpImage!!.delete()
-        }
-
     }
     private fun showTouchView() {
         val touchViewFragment = TouchViewFragment(this)
@@ -159,83 +133,5 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     private fun closeFragment() {
         val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
         fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
-    }
-    private fun shareImage(image: Image) {
-        if (Build.VERSION.SDK_INT >= 24) {
-            try {
-                val m = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
-                m.invoke(null)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        // convert TouchImageView to Bitmap File and share
-        deleteTmpImage()
-        createTmpImageAndShare(image)
-        return
-    }
-    private fun shareIntentCreation() {
-        // create the shareIntent
-        try {
-            val uri: Uri = FileProvider.getUriForFile(requireContext(),
-                "$appId.provider", tmpImage!!)
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type = "\"image/*\""
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                shareIntent.setClipData(ClipData.newRawUri(null, uri));
-            }
-
-            shareIntent.addFlags(
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
-                        Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
-
-            startActivity(Intent.createChooser(shareIntent, "Share image via"))
-
-        } catch (e: java.lang.Exception) {
-            val toast = Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.TOP, 0, 50)
-            toast.show()
-            e.printStackTrace()
-        }
-
-    }
-    private fun createTmpImageAndShare(image: Image) {
-        val fileName: String = "share_image_" + System.currentTimeMillis() + ".png"
-        tmpImage = File(requireContext().filesDir, fileName)
-        GlideApp.with(requireContext())
-            .asBitmap()
-            .load(image.url)
-            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    try {
-                        val out: FileOutputStream = FileOutputStream(tmpImage)
-                        val compression = compressionQuality * 100
-                        resource.compress(Bitmap.CompressFormat.PNG, compression.toInt(), out)
-                        out.close()
-                        tmpImage!!.setReadable(true, false)
-                        val toast = Toast.makeText(context!!, " created: $fileName", Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.TOP, 0, 50)
-                        toast.show()
-
-                        // share Intent creation
-                        shareIntentCreation()
-                        return
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                        val toast = Toast.makeText(context!!, e.message, Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.TOP, 0, 50)
-                        toast.show()
-                        return
-                    }
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-                }
-            })
-
     }
 }

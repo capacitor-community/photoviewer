@@ -13,10 +13,11 @@
             android:layout_height="match_parent"
             android:background="@android:color/black"
             android:gravity="center">
-            <ImageView
-                android:id="@+id/ivFullscreenImage"
+            <com.ortiz.touchview.TouchImageView
+                android:id="@+id/ivTouchImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:scaleType="fitCenter"/>
         </RelativeLayout>
         <RelativeLayout
@@ -33,18 +34,15 @@
                 android:padding="8dp"
                 android:layout_alignParentLeft="true"
                 android:text="@string/share" />
+            <ImageButton
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:padding="8dp"
+                android:layout_alignParentRight="true"
+                android:text="@string/close" />
         </RelativeLayout>
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#7f000000"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="0dp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            tools:text="Image Title"/>
     </RelativeLayout>
 </layout>

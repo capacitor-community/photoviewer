@@ -1,3 +1,19 @@
+# 1.0.0
+
+## Chore
+
+ - Update to @capacitor/core@3.2.5
+ - Update to @capacitor/ios@3.2.5
+ - Update to @capacitor/android@3.2.5
+
+## Add Features (iOS, Android)
+
+ - One image mode pinch-zoom and pan
+
+## Bug fixes
+
+ - Fix issue#2
+ 
 # 0.0.5 (2021-09-21)
 
 ## Bug fixes

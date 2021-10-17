@@ -7,18 +7,18 @@ enum PhotoViewerError: Error {
 }
 @objc public class PhotoViewer: NSObject {
     var collectionViewController: CollectionViewController?
+    var oneImageViewController: OneImageViewController?
 
-    // MARK: viewController
+    // MARK: collectionController
 
-    @objc var viewController: CollectionViewController? {
+    @objc var collectionController: CollectionViewController? {
         return collectionViewController
     }
-    var sliderVC: SliderViewController?
+    // MARK: oneImageController
 
-    @objc var sliderController: SliderViewController? {
-        return sliderVC
+    @objc var oneImageController: OneImageViewController? {
+        return oneImageViewController
     }
-
     // MARK: echo
 
     @objc public func echo(_ value: String) -> String {
@@ -35,16 +35,13 @@ enum PhotoViewerError: Error {
             collectionViewController?.options = options
             return true
         } else {
-            sliderVC = SliderViewController()
-            sliderVC?.modalPresentationStyle = .overFullScreen
-            sliderVC?.position = IndexPath(row: 0, section: 0)
-            sliderVC?.imageList = imageList
-            var mOptions = options
-            if mOptions.keys.contains("movieoptions") {
-                mOptions.removeValue(forKey: "movieoptions")
+            oneImageViewController = OneImageViewController()
+            if let imageUrl = imageList[0]["url"] {
+                oneImageViewController?.url = imageUrl
+                oneImageViewController?.options = options
+                return true
             }
-            sliderVC?.options = mOptions
-            return true
+            return false
         }
     }
 }

@@ -40,7 +40,7 @@
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:padding="8dp"
                 android:layout_alignParentRight="true"
-                android:text="@string/share" />
+                android:text="@string/close" />
         </RelativeLayout>
         <TextView
             android:id="@+id/tvGalleryTitle"
