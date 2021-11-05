@@ -80,34 +80,30 @@ public class PhotoViewer extends BridgeActivity {
 
     private void createImageFragment(Image image, JSObject options) throws Exception {
         FrameLayout frameLayoutView = bridge.getActivity().findViewById(frameLayoutViewId);
-        if (frameLayoutView != null) {
-            throw new Exception("FrameLayout for PhotoViewer already exists");
-        } else {
-            try {
-                // Initialize a new FrameLayout as container for fragment
-                frameLayoutView = new FrameLayout(context);
-                frameLayoutView.setId(frameLayoutViewId);
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-                );
-                // Apply the Layout Parameters to frameLayout
-                frameLayoutView.setLayoutParams(lp);
-                // Add FrameLayout to bridge_layout_main
-                ((ViewGroup) bridge.getWebView().getParent()).addView(frameLayoutView);
-                final ImageFragment imageFragment = new ImageFragment();
-                imageFragment.setImage(image);
-                imageFragment.setOptions(options);
+        try {
+            // Initialize a new FrameLayout as container for fragment
+            frameLayoutView = new FrameLayout(context);
+            frameLayoutView.setId(frameLayoutViewId);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            );
+            // Apply the Layout Parameters to frameLayout
+            frameLayoutView.setLayoutParams(lp);
+            // Add FrameLayout to bridge_layout_main
+            ((ViewGroup) bridge.getWebView().getParent()).addView(frameLayoutView);
+            final ImageFragment imageFragment = new ImageFragment();
+            imageFragment.setImage(image);
+            imageFragment.setOptions(options);
 
-                bridge
-                    .getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(frameLayoutViewId, imageFragment, "imagefragment")
-                    .commit();
-            } catch (Exception e) {
-                throw new Exception(e.getMessage());
-            }
+            bridge
+                .getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayoutViewId, imageFragment, "imagefragment")
+                .commit();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 
