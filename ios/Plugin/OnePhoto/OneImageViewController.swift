@@ -56,7 +56,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
 
     private let mImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     private let mScrollView: ISVImageScrollView = {
@@ -126,11 +126,25 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         }
         view.addSubview(mScrollView)
         mScrollView.frame = view.frame
-        mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder)
-        mScrollView.imageView = mImageView
-        mScrollView.maximumZoomScale = self._maxZoomScale
-        mScrollView.delegate = self
+        self.mScrollView.maximumZoomScale = self._maxZoomScale
+        self.mScrollView.delegate = self
+        mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
+            if let err = error {
+                print("Error: \(err)")
+                return
+            }
+            guard let imgUrl = url else {
+                print("Error: image url not correct")
+                return
+            }
+            guard let img = image else {
+                print("Error: image url \(imgUrl) not loaded")
+                return
+            }
+            self.mImageView.image = img
+            self.mScrollView.imageView = self.mImageView
 
+        })
         let navigationItem = UINavigationItem()
         navigationItem.rightBarButtonItem = mClose
         if self._isShare {

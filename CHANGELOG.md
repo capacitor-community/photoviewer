@@ -1,3 +1,15 @@
+# 1.0.3 (2021-12-15)
+
+## Chore
+
+ - Update to @capacitor/core@3.3.2
+ - Update to @capacitor/ios@3.3.2
+ - Update to @capacitor/android@3.3.2
+
+## Bug fixes
+
+ - Fix iOS Wrong image ratio / Image cut off issue#7
+
 # 1.0.2 (2021-11-04)
 
 ## Bug fixes
