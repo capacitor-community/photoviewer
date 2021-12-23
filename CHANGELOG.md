@@ -1,3 +1,9 @@
+# 1.0.4 (2021-12-23)
+
+## Added Features
+
+ - Fix Android Manually close the image on back pressed issue#8
+
 # 1.0.3 (2021-12-15)
 
 ## Chore
