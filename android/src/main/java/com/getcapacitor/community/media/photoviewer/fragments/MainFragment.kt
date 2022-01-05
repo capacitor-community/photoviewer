@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,23 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         if (container != null) {
             mContainer  = container
             val view: View = initializeView()
+            activity?.runOnUiThread( java.lang.Runnable {
+                view.isFocusableInTouchMode = true;
+                view.requestFocus();
+                view.setOnKeyListener(object: View.OnKeyListener {
+                    override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                        // if the event is a key down event on the enter button
+                        if (event.action == KeyEvent.ACTION_DOWN &&
+                            keyCode == KeyEvent.KEYCODE_BACK
+                        ) {
+                            backPressed()
+                            return true
+                        }
+                        return false
+                    }
+                })
+            })
+
             return view
         }
         return null
@@ -83,6 +101,9 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         Log.d(TAG, "> options: $options")
 
         return binding.root
+    }
+    private fun backPressed() {
+        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

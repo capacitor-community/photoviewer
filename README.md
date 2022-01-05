@@ -54,44 +54,10 @@ npx cap sync
 
 ### Android
 
-- open the project `AndroidManifest.xml` and add the following to the application tag
+- on the `res` project folder open the `file_paths.xml` file and add
 
 ```xml
-    </application>
-        ...
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
-        </provider>
-        ...
-    </application>
-```
-as well the Internet permission
-```xml
-<manifest>
-    ...
-    <!-- Permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    ...
-</manifest>
-
-``` 
-
-- on the `res` project folder create a folder `xml`if it does not exist and create a `file_paths.xml` file containing
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <files-path
-        name="files"
-        path="."/>
-
-</paths>
+    <files-path name="files" path="."/>
 ```
 
 - open the `build.gradle (Project:android)` and make sure that `kotlin` is declared
@@ -99,15 +65,9 @@ as well the Internet permission
 ```js
 ...
 buildscript {
-    ext.kotlin_version = '1.6.0'
-
-    repositories {
-        google()
-        jcenter()
-    }
+    ext.kotlin_version = '1.6.10'
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath 'com.google.gms:google-services:4.3.3'
+        ...
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -185,6 +145,10 @@ npm run serve          // Web
 ### Ionic/Vue
 
 - [vue-photoviewer-app](https://github.com/jepiqueau/vue-photoviewer-app)
+
+### React
+
+- [vite-react-photoviewer-app](https://github.com/jepiqueau/vite-react-photoviewer-app)
 
 ## Usage
 

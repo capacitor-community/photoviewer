@@ -1,14 +1,18 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.RelativeLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.getcapacitor.JSObject
+import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentGalleryFullscreenBinding
 import com.getcapacitor.community.media.photoviewer.helper.DepthPageTransformer
@@ -61,7 +65,28 @@ class GalleryFullscreenFragment: DialogFragment() {
         curTransf = ZoomOutPageTransformer()
         if(transformer.equals("depth")) curTransf = DepthPageTransformer()
         viewPager.setPageTransformer(curTransf)
-        return binding.root
+        val view = binding.root
+        activity?.runOnUiThread( java.lang.Runnable {
+                view.isFocusableInTouchMode = true;
+                view.requestFocus();
+            view.setOnKeyListener(object: View.OnKeyListener {
+                override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                    // if the event is a key down event on the enter button
+                    if (event.action == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_BACK
+                    ) {
+                        backPressed()
+                        return true
+                    }
+                    return false
+                }
+            })
+        })
+
+        return view
+    }
+    private fun backPressed() {
+        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
     }
 
     override fun onDestroyView() {

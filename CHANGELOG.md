@@ -1,3 +1,17 @@
+# 1.0.5 (2022-01-05)
+
+## Added Features
+
+ - Android add back press button on the three main fragments
+ - iOS add close button in the photo gallery page
+ - Link to a Vite React application
+
+## Bug fixes
+
+ - Update Readme for Android project issue#9
+ - Add a link to a Vite React application issue#10
+
+
 # 1.0.4 (2021-12-23)
 
 ## Added Features

@@ -47,6 +47,35 @@ class CollectionViewController: UIViewController {
 
         return mColView
     }()
+    lazy var mNavBar: UINavigationBar = { () -> UINavigationBar in
+
+        let navigationBar = UINavigationBar()
+        navigationBar.isTranslucent = true
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        return navigationBar
+    }()
+    lazy var mClose: UIBarButtonItem = {
+        let bClose = UIBarButtonItem()
+        let image: UIImage?
+        if #available(iOS 13, *) {
+            let configuration = UIImage.SymbolConfiguration(scale: .large)
+            image = UIImage(systemName: "multiply.circle.fill",
+                            withConfiguration: configuration)
+            bClose.image = image
+        } else {
+
+            bClose.title = "Close"
+            let fontSize: CGFloat = 18
+            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
+            bClose.setTitleTextAttributes(
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
+                 NSAttributedString.Key.font: font], for: .normal)
+        }
+        bClose.tintColor = .white
+        bClose.action = #selector(closeButtonTapped)
+        return bClose
+    }()
 
     // MARK: - Set-up imageList
 
@@ -115,6 +144,12 @@ class CollectionViewController: UIViewController {
         collectionView.bottomAnchor
             .constraint(equalTo: view.bottomAnchor)
             .isActive = true
+        let navigationItem = UINavigationItem()
+        navigationItem.rightBarButtonItem = mClose
+        mNavBar.setItems([navigationItem], animated: false)
+        mNavBar.frame = CGRect(x: 0, y: 35,
+                               width: view.frame.size.width, height: 64)
+        view.addSubview(mNavBar)
 
     }
 
@@ -167,6 +202,12 @@ class CollectionViewController: UIViewController {
 
     func destroyAllGestures() {
         self.collectionView.gestureRecognizers?.removeAll()
+    }
+
+    // MARK: - closeButtonTapped
+
+    @objc func closeButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - didSingleTap
