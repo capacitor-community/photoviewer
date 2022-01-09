@@ -83,7 +83,6 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         // init recyclerview
         appContext = this.requireContext()
         val orientation: Int = resources.configuration.orientation
-        Log.d(TAG, "orientation: $orientation")
         if(orientation == Configuration.ORIENTATION_PORTRAIT) {
             Log.d(TAG, "orientation Portrait")
         } else {
@@ -98,7 +97,6 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         binding.recyclerView.layoutManager = recyclerViewLayoutManager;
         binding.recyclerView.adapter = galleryAdapter
         galleryAdapter.notifyDataSetChanged()
-        Log.d(TAG, "> options: $options")
 
         return binding.root
     }
@@ -107,7 +105,6 @@ class MainFragment : Fragment() , GalleryImageClickListener {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        Log.d(TAG, "$$ onConfigurationChanged ${newConfig.orientation}")
         val view: View = initializeView()
         mContainer?.addView(view)
         super.onConfigurationChanged(newConfig)

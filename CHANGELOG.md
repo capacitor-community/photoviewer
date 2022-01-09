@@ -1,3 +1,9 @@
+# 1.0.6 (2022-01-09)
+
+## Bug fixes
+
+ - Fix Android Image share
+
 # 1.0.5 (2022-01-05)
 
 ## Added Features

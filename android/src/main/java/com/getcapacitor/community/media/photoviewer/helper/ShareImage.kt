@@ -41,7 +41,7 @@ class ShareImage {
         // create the shareIntent
         try {
             val uri: Uri = FileProvider.getUriForFile(appContext,
-                "$appId.provider", tmpImage!!)
+                "$appId.fileprovider", tmpImage!!)
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "\"image/*\""

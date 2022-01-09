@@ -14,6 +14,7 @@ import type {
 export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
   private _imageList: Image[] = [];
   private _options: ViewerOptions = {} as ViewerOptions;
+  private _container: any;
 
   async echo(options: capEchoOptions): Promise<capEchoResult> {
     console.log('ECHO', options);
@@ -45,6 +46,9 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
       } else {
         divid = 'photoviewer-container';
       }
+      this._container = document.querySelector(
+        `#${divid}`,
+      );
       photoViewer.addEventListener(
         'jeepPhotoViewerResult',
         async (ev: any) => {
@@ -52,6 +56,7 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
           if (res === null) {
             reject('Error: event does not include detail ');
           } else {
+            this._container.removeChild(photoViewer);
             console.log(`res ${JSON.stringify(res)}`);
             resolve(res);
           }
@@ -59,11 +64,8 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
         false,
       );
 
-      const container: HTMLDivElement | null = document.querySelector(
-        `#${divid}`,
-      );
-      if (container != null) {
-        container.appendChild(photoViewer);
+      if (this._container != null) {
+        this._container.appendChild(photoViewer);
       } else {
         reject("Div id='photoviewer-container' not found");
       }

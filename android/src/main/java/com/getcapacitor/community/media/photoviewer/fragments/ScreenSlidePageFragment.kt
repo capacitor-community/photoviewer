@@ -73,8 +73,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         maxZoomScale = requireArguments().getDouble(ARG_MAXZOOMSCALE)
         compressionQuality = requireArguments().getDouble(ARG_COMPRESSIONQUALITY)
         appContext = this.requireContext()
-        appId = appContext.applicationInfo.processName
-        Log.d(TAG, ">>>option appliocation id: $appId")
+        appId = appContext.getPackageName()
 
         rlMenu = binding.menuBtns
         tvGalleryTitle = binding.tvGalleryTitle
@@ -99,12 +98,10 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                     mShareImage.shareImage(image, appId, appContext, compressionQuality)
                 }
                 R.id.ivFullscreenImage -> {
-                    Log.d(TAG, "click on image")
                     toggleMenu()
                     showTouchView()
                 }
                 R.id.closeBtn -> {
-                    Log.d(TAG, "click on close")
                     closeFragment()
                 }
 

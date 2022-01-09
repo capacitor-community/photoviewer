@@ -55,7 +55,6 @@ class ImageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, " in onCreateView imageFragment")
         mInflater = inflater
         if (container != null) {
             mContainer  = container
@@ -91,14 +90,12 @@ class ImageFragment : Fragment() {
             mContainer?.removeAllViewsInLayout()
         }
         appContext = this.requireContext()
-        appId = appContext.applicationInfo.processName
-        Log.d(TAG, ">>>option appliocation id: $appId")
+        appId = appContext.getPackageName()
 
         // Inflate the layout for this fragment
         val binding = ImageFragmentBinding.inflate(mInflater, mContainer, false)
         imageFragmentBinding = binding
         val orientation: Int = resources.configuration.orientation
-        Log.d(TAG, "orientation: $orientation")
         if(orientation == Configuration.ORIENTATION_PORTRAIT) {
             Log.d(TAG, "orientation Portrait")
         } else {
@@ -122,7 +119,6 @@ class ImageFragment : Fragment() {
                     mShareImage.shareImage(image, appId, appContext, compressionQuality)
                 }
                 R.id.closeBtn -> {
-                    Log.d(TAG, "click on close")
                     activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
                 }
             }
@@ -134,7 +130,6 @@ class ImageFragment : Fragment() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        Log.d(TAG, "$$ onConfigurationChanged ${newConfig.orientation}")
         val view: View = initializeView()
         mContainer?.addView(view)
         super.onConfigurationChanged(newConfig)
