@@ -1,3 +1,7 @@
+# 1.0.7 (2022-01-11)
+
+ - fix Web plugin for jeep-photoviewer@1.0.5
+
 # 1.0.6 (2022-01-09)
 
 ## Bug fixes
