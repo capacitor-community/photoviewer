@@ -207,6 +207,11 @@ class CollectionViewController: UIViewController {
     // MARK: - closeButtonTapped
 
     @objc func closeButtonTapped() {
+        let vId: [String: Any] = ["result": true]
+        NotificationCenter.default.post(name: .photoviewerExit,
+                                        object: nil,
+                                        userInfo: vId)
+
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -224,13 +229,14 @@ class CollectionViewController: UIViewController {
             print("Error Image not in collectionView")
             return
         }
-        showModalSlider(position: index, imageList: imageList, options: options)
+        showModalSlider(position: index, imageList: imageList, mode: "gallery", options: options)
     }
 
     // MARK: - showModalSlider
 
     func showModalSlider(position: IndexPath,
                          imageList: [[String: String]],
+                         mode: String,
                          options: [String: Any]) {
         _toast.showToast(view: self.view, message: "Image \(position)",
                          font: .systemFont(ofSize: 14.0))
@@ -238,6 +244,7 @@ class CollectionViewController: UIViewController {
         sliderVC.modalPresentationStyle = .overFullScreen
         sliderVC.position = position
         sliderVC.imageList = imageList
+        sliderVC.mode = mode
         sliderVC.options = options
         present(sliderVC, animated: true, completion: nil)
     }

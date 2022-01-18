@@ -17,6 +17,9 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _compressionQuality: Double = 0.8
     private var _options: [String: Any] = [:]
     private var _isShare: Bool = true
+    private var _startFrom: Int = 0
+
+    // MARK: - Set-up url
 
     var url: String {
         get {
@@ -24,6 +27,15 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         }
         set {
             self._url = newValue
+        }
+    }
+
+    var startFrom: Int {
+        get {
+            return self._startFrom
+        }
+        set {
+            self._startFrom = newValue
         }
     }
 
@@ -160,6 +172,14 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - closeButtonTapped
 
     @objc func closeButtonTapped() {
+        let vId: [String: Any] =
+            ["result": true,
+             "imageIndex": startFrom
+            ]
+        NotificationCenter.default.post(name: .photoviewerExit,
+                                        object: nil,
+                                        userInfo: vId)
+
         self.dismiss(animated: true, completion: nil)
     }
 

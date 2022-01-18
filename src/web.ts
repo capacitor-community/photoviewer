@@ -14,7 +14,10 @@ import type {
 export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
   private _imageList: Image[] = [];
   private _options: ViewerOptions = {} as ViewerOptions;
+  private _mode = 'one';
+  private _startFrom = 0;
   private _container: any;
+  private _modeList: string[] = ['one', 'gallery', 'slider'];
 
   async echo(options: capEchoOptions): Promise<capEchoResult> {
     return options;
@@ -28,10 +31,24 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
       if (Object.keys(options).includes('options')) {
         this._options = options.options ?? ({} as ViewerOptions);
       }
+      if (Object.keys(options).includes('mode')) {
+        const mMode = options.mode;
+        if (this._modeList.includes(mMode as string)) {
+          this._mode = mMode ?? 'one';
+        }
+      }
+      if (Object.keys(options).includes('startFrom')) {
+        const mStartFrom = options.startFrom;
+        this._startFrom = mStartFrom ?? 0;
+      }
       const photoViewer: HTMLJeepPhotoviewerElement = document.createElement(
         'jeep-photoviewer',
       );
       photoViewer.imageList = this._imageList;
+      photoViewer.mode = this._mode;
+      if (this._mode === 'one' || this._mode === 'slider') {
+        photoViewer.startFrom = this._startFrom;
+      }
       const optionsKeys: string[] = Object.keys(this._options);
       let divid: string | undefined;
       if (optionsKeys.length > 0) {
@@ -60,6 +77,7 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
               reject('Error: event does not include detail ');
             } else {
               this._container.removeChild(photoViewer);
+              this.notifyListeners('jeepCapPhotoViewerExit', ev.detail);
               resolve(res);
             }
           },

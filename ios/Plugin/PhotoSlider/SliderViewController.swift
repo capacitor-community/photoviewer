@@ -21,6 +21,7 @@ class SliderViewController: UIViewController {
 
     private var _numCells: CGFloat = 3
     private var _numImages: Int = 0
+    private var _mode: String = "slider"
     private var _imageList: [[String: String]] = []
     private var _options: [String: Any] = [:]
     private var _position: IndexPath = [0, 0]
@@ -53,6 +54,17 @@ class SliderViewController: UIViewController {
         set {
             self._imageList = newValue
             self._numImages = self._imageList.count
+        }
+    }
+
+    // MARK: - Set-up mode
+
+    var mode: String {
+        get {
+            return self._mode
+        }
+        set {
+            self._mode = newValue
         }
     }
 
@@ -297,6 +309,16 @@ class SliderViewController: UIViewController {
     // MARK: - closeButtonTapped
 
     @objc func closeButtonTapped() {
+        print("closeButtonTapped mode \(mode)")
+        if mode == "slider" {
+            let vId: [String: Any] =
+                ["result": true,
+                 "imageIndex": self._selectedPosition?.row as Any
+                ]
+            NotificationCenter.default.post(name: .photoviewerExit,
+                                            object: nil,
+                                            userInfo: vId)
+        }
         self.dismiss(animated: true, completion: nil)
     }
 

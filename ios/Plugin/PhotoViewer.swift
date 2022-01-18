@@ -8,6 +8,7 @@ enum PhotoViewerError: Error {
 @objc public class PhotoViewer: NSObject {
     var collectionViewController: CollectionViewController?
     var oneImageViewController: OneImageViewController?
+    var sliderViewController: SliderViewController?
 
     // MARK: collectionController
 
@@ -19,6 +20,12 @@ enum PhotoViewerError: Error {
     @objc var oneImageController: OneImageViewController? {
         return oneImageViewController
     }
+    // MARK: oneImageController
+
+    @objc var sliderController: SliderViewController? {
+        return sliderViewController
+    }
+
     // MARK: echo
 
     @objc public func echo(_ value: String) -> String {
@@ -28,19 +35,31 @@ enum PhotoViewerError: Error {
     // MARK: show
 
     @objc public func show(_ imageList: [[String: String]],
+                           mode: String, startFrom: Int,
                            options: [String: Any]) -> Bool {
-        if imageList.count > 1 {
+        if imageList.count > 1  && mode == "gallery" {
             collectionViewController = CollectionViewController()
             collectionViewController?.imageList = imageList
             collectionViewController?.options = options
             return true
-        } else {
+        } else if mode == "one" {
             oneImageViewController = OneImageViewController()
-            if let imageUrl = imageList[0]["url"] {
+            if let imageUrl = imageList[startFrom]["url"] {
                 oneImageViewController?.url = imageUrl
+                oneImageViewController?.startFrom = startFrom
                 oneImageViewController?.options = options
                 return true
             }
+            return false
+        } else if imageList.count > 1 && mode == "slider" {
+            let position: IndexPath = [0, startFrom]
+            sliderViewController = SliderViewController()
+            sliderViewController?.imageList = imageList
+            sliderViewController?.position = position
+            sliderViewController?.mode = mode
+            sliderViewController?.options = options
+            return true
+        } else {
             return false
         }
     }

@@ -22,6 +22,14 @@ export interface capShowOptions {
    * Viewer options (optional)
    */
   options?: ViewerOptions;
+  /**
+   * Viewer mode ("gallery","slider","one")
+   */
+  mode?: string;
+  /**
+   * Viewer image index to start from for mode ("slider","one")
+   */
+  startFrom?: number;
 }
 export interface capEchoOptions {
   /**
@@ -44,6 +52,10 @@ export interface capShowResult {
    * a returned message
    */
   message?: string;
+  /**
+   * Result Image index at closing returned
+   */
+  imageIndex?: number;
 }
 export interface Image {
   /**

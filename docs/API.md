@@ -74,18 +74,21 @@ Show the PhotoViewer
 
 #### capShowResult
 
-| Prop          | Type                 | Description                                   |
-| ------------- | -------------------- | --------------------------------------------- |
-| **`result`**  | <code>boolean</code> | result set to true when successful else false |
-| **`message`** | <code>string</code>  | a returned message                            |
+| Prop             | Type                 | Description                                                 |
+| ---------------- | -------------------- | ----------------------------------------------------------- |
+| **`result`**     | <code>boolean</code> | result set to true when successful else false               |
+| **`message`**    | <code>string</code>  | a returned message                                          |
+| **`imageIndex`** | <code>number</code>  | Result <a href="#image">Image</a> index at closing returned |
 
 
 #### capShowOptions
 
-| Prop          | Type                                                    | Description               |
-| ------------- | ------------------------------------------------------- | ------------------------- |
-| **`images`**  | <code>Image[]</code>                                    | List of image             |
-| **`options`** | <code><a href="#vieweroptions">ViewerOptions</a></code> | Viewer options (optional) |
+| Prop            | Type                                                    | Description                                                |
+| --------------- | ------------------------------------------------------- | ---------------------------------------------------------- |
+| **`images`**    | <code>Image[]</code>                                    | List of image                                              |
+| **`options`**   | <code><a href="#vieweroptions">ViewerOptions</a></code> | Viewer options (optional)                                  |
+| **`mode`**      | <code>string</code>                                     | Viewer mode ("gallery","slider","one")                     |
+| **`startFrom`** | <code>number</code>                                     | Viewer image index to start from for mode ("slider","one") |
 
 
 #### Image
