@@ -1,6 +1,7 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.getcapacitor.JSObject
+import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentGalleryFullscreenBinding
@@ -19,11 +21,12 @@ import com.getcapacitor.community.media.photoviewer.helper.DepthPageTransformer
 import com.getcapacitor.community.media.photoviewer.helper.ZoomOutPageTransformer
 
 class GalleryFullscreenFragment: DialogFragment() {
-    private val TAG = "GalleryFullscreenFragment"
+    private val TAG = "GalleryFullscrFragment"
     private var fsFragmentBinding: FragmentGalleryFullscreenBinding? = null
     private var imageList: ArrayList<Image> = ArrayList()
     private var selectedPosition: Int = 0
     private var transformer: String = "zoom"
+    private var mode: String = "gallery"
     private var bShare: Boolean = true
     private var bTitle: Boolean = true
     private var maxZoomScale: Double = 3.0
@@ -35,7 +38,10 @@ class GalleryFullscreenFragment: DialogFragment() {
     fun setImageList(imageList: ArrayList<Image>) {
         this.imageList = imageList
     }
-    fun setPosition(position: Int) {
+    fun setMode(mode: String) {
+        this.mode = mode
+    }
+    fun setStartFrom(position: Int) {
         this.selectedPosition = position
     }
     fun setOptions(options: JSObject) {
@@ -86,14 +92,24 @@ class GalleryFullscreenFragment: DialogFragment() {
         return view
     }
     private fun backPressed() {
-        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+      if(mode == "slider") {
+        postNotification()
+      }
+      activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
     }
 
     override fun onDestroyView() {
         fsFragmentBinding = null
         super.onDestroyView()
     }
-    private fun setCurrentItem(position: Int) {
+    private fun postNotification() {
+      var info: MutableMap<String, Any> = mutableMapOf()
+      info["result"] = true
+      info["imageIndex"] = selectedPosition
+      NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
+    }
+
+  private fun setCurrentItem(position: Int) {
         viewPager.setCurrentItem(position, false)
     }
 
@@ -102,7 +118,7 @@ class GalleryFullscreenFragment: DialogFragment() {
 
         override fun createFragment(position: Int): Fragment {
             val image: Image = imageList.get(position)
-            return ScreenSlidePageFragment.getInstance(image, bShare, bTitle, maxZoomScale,
+            return ScreenSlidePageFragment.getInstance(image, mode, position, bShare, bTitle, maxZoomScale,
                 compressionQuality)
 
         }

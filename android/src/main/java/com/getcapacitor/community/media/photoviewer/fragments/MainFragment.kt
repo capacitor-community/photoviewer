@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.getcapacitor.JSObject
+import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter
 import com.getcapacitor.community.media.photoviewer.adapter.GalleryImageAdapter
 import com.getcapacitor.community.media.photoviewer.adapter.GalleryImageClickListener
 import com.getcapacitor.community.media.photoviewer.adapter.Image
@@ -100,7 +101,14 @@ class MainFragment : Fragment() , GalleryImageClickListener {
 
         return binding.root
     }
+    private fun postNotification() {
+      var info: MutableMap<String, Any> = mutableMapOf()
+      info["result"] = true
+      NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
+    }
+
     private fun backPressed() {
+      postNotification()
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
     }
 
@@ -118,7 +126,8 @@ class MainFragment : Fragment() , GalleryImageClickListener {
     override fun onClick(position: Int) {
         val galleryFragment = GalleryFullscreenFragment()
         galleryFragment.setImageList(imageList)
-        galleryFragment.setPosition(position)
+        galleryFragment.setStartFrom(position)
+        galleryFragment.setMode("gallery")
         galleryFragment.setOptions(options)
 
         val fragmentTransaction = parentFragmentManager.beginTransaction()

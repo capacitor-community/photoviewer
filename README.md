@@ -33,6 +33,23 @@ A picture can be acessed by url or base64. On iOS plugin, the creation of a movi
 | ----------------- | ----------------------------------------- | ------ |
 | Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
 
+
+## Note to developers
+
+🚨 Since release 1.0.8 ->> 🚨
+
+ - Add mode `slider` 
+ - the call to the method show has been modified as follows;
+ ```js
+     const show = async (imageList: Image[], mode: string,
+              startFrom: number, options?: ViewerOptions): Promise<capShowResult> => {
+ ```
+with 
+ - mode in ["one","gallery","slider"]
+ - startFrom: imageIndex in the imageList table valid only for mode "one" & mode "slider"
+ 
+🚨 Since release 1.0.8 <<- 🚨
+
 ## Browser Support
 
 The plugin follows the guidelines from the `Capacitor Team`,

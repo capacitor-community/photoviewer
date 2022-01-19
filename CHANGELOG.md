@@ -1,8 +1,8 @@
-# 1.0.8 (2022-01-XX) 🚨 Not published yet to npm 🚨
+# 1.0.8 (2022-01-19) 
 
 ## Added Features
 
- - Add `Slider` mode for iOS & Web
+ - Add `Slider` mode for iOS, Android & Web
 
 ## Bug fixes
 

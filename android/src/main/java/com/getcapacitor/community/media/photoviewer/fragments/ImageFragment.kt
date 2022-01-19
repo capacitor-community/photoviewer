@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.getcapacitor.JSObject
+import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.ImageFragmentBinding
@@ -32,6 +33,7 @@ class ImageFragment : Fragment() {
     private lateinit var rlMenu: RelativeLayout
 
     private lateinit var image: Image
+    private lateinit var startFrom: Integer
 
     private var options = JSObject()
     var mContainer: ViewGroup? = null
@@ -42,8 +44,12 @@ class ImageFragment : Fragment() {
         this.image = image
     }
 
+    fun setStartFrom(startFrom: Integer) {
+      this.startFrom = startFrom
+    }
 
-    fun setOptions(options: JSObject) {
+
+  fun setOptions(options: JSObject) {
         this.options = options
         if(this.options.has("share")) bShare = this.options.getBoolean("share")
         if(this.options.has("maxzoomscale")) maxZoomScale = this.options
@@ -82,9 +88,15 @@ class ImageFragment : Fragment() {
     }
 
   private fun backPressed() {
+    postNotification()
     activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
   }
-
+  private fun postNotification() {
+    var info: MutableMap<String, Any> = mutableMapOf()
+    info["result"] = true
+    info["imageIndex"] = startFrom
+    NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
+  }
   private fun initializeView(): View {
         if (mContainer != null) {
             mContainer?.removeAllViewsInLayout()
@@ -112,20 +124,22 @@ class ImageFragment : Fragment() {
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE
-        val clickListener = View.OnClickListener { viewFS ->
+        activity?.runOnUiThread( java.lang.Runnable {
+          val clickListener = View.OnClickListener { viewFS ->
             when (viewFS.getId()) {
-                R.id.shareBtn -> {
-                    val mShareImage: ShareImage = ShareImage()
-                    mShareImage.shareImage(image, appId, appContext, compressionQuality)
-                }
-                R.id.closeBtn -> {
-                    activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
-                }
+              R.id.shareBtn -> {
+                val mShareImage: ShareImage = ShareImage()
+                mShareImage.shareImage(image, appId, appContext, compressionQuality)
+              }
+              R.id.closeBtn -> {
+                postNotification()
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
+              }
             }
-        }
-        share.setOnClickListener(clickListener)
-        close.setOnClickListener(clickListener)
-
+          }
+          share.setOnClickListener(clickListener)
+          close.setOnClickListener(clickListener)
+        })
         return binding.root
     }
 
