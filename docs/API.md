@@ -13,6 +13,7 @@
 * [`echo(...)`](#echo)
 * [`show(...)`](#show)
 * [Interfaces](#interfaces)
+* [Listeners](#listeners)
 
 </docgen-index>
 
@@ -123,3 +124,19 @@ Show the PhotoViewer
 | **`ratio`**     | <code>string</code> | Movie Ratio "4/3" / "16/9" (default "16/9") iOS only                     |
 
 </docgen-api>
+
+### Listeners
+
+The listeners are attached to the plugin not to the DOM document element.
+
+| Listener                   | Type                                | Description                             |
+| -------------------------- | ----------------------------------- | -------------------------------------------- |
+| **jeepCapPhotoViewerExit** | [capExitListener](#capexitlistener) | Emitted when the close button is pressed |
+
+#### capExitListener
+
+| Prop           | Type    | Description                                  |
+| -------------- | ------- | -------------------------------------------- |
+| **result**     | boolean | true if successful false otherwise           |
+| **imageIndex** | number  | last selected image index in slider/one mode |
+| **message**    | string  | error message if result is false             |

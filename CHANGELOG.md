@@ -3,6 +3,7 @@
 ## Added Features
 
  - Add `Slider` mode for iOS, Android & Web
+ - Add `jeepCapPhotoViewerExit` plugin event listener
 
 ## Bug fixes
 
