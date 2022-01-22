@@ -1,3 +1,10 @@
+# 1.0.9 (2022-01-22) 
+
+## Bug fixes
+
+ - Fix indexImage in SliderViewController iOS
+ - Fix documentation `Ionic-Angular-Usage.md` && `Ionic-Vue-Usage.md`
+
 # 1.0.8 (2022-01-19) 
 
 ## Added Features

@@ -13,7 +13,6 @@
 * [`echo(...)`](#echo)
 * [`show(...)`](#show)
 * [Interfaces](#interfaces)
-* [Listeners](#listeners)
 
 </docgen-index>
 

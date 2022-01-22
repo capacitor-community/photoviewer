@@ -45,12 +45,18 @@ export default defineComponent({
             {url: "https://i.ibb.co/VYYPZGk/salmon.jpg", title: "Salmon "},
         ]
 
+        const mode: string = "one";
+        const startFrom: number = 2;
 
         const options: ViewerOptions = {} as ViewerOptions;
         
-        const show = async (imageList: Image[], options?: ViewerOptions): Promise<capShowResult> => {
+        const show = async (imageList: Image[], mode: string,
+                            startFrom: number, options?: ViewerOptions
+                            ): Promise<capShowResult> => {
             const opt: capShowOptions = {} as capShowOptions;
             opt.images = imageList;
+            opt.mode = mode;
+            opt.startFrom = startFrom;
             if(options) opt.options = options
             try {
                 const ret = await PhotoViewer.show(opt);
@@ -98,7 +104,7 @@ export default defineComponent({
                 // comment or uncomment as you wish
 
                 // http images call
-                ret = await show(imageList, options);
+                ret = await show(imageList, mode, startFrom, options);
 
                 // base64 images call
                 // ret = await show(base64List, options);

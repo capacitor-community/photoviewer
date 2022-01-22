@@ -311,9 +311,13 @@ class SliderViewController: UIViewController {
     @objc func closeButtonTapped() {
         print("closeButtonTapped mode \(mode)")
         if mode == "slider" {
+            var mPosition = self.position
+            if let selPos = self._selectedPosition {
+                mPosition = selPos
+            }
             let vId: [String: Any] =
                 ["result": true,
-                 "imageIndex": self._selectedPosition?.row as Any
+                 "imageIndex": mPosition.row as Any
                 ]
             NotificationCenter.default.post(name: .photoviewerExit,
                                             object: nil,

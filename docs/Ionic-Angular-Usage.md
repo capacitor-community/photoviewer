@@ -147,6 +147,8 @@ import { Toast } from '@capacitor/toast';
 export class PhotoviewerComponent implements OnInit, AfterViewInit {
   platform: string;
   imageList: Image[];
+  mode: string = "one";
+  startFrom: number = 0;
   options: ViewerOptions = {} as ViewerOptions;
 
   constructor() {
@@ -171,9 +173,15 @@ export class PhotoviewerComponent implements OnInit, AfterViewInit {
     ];
   }
   async ngAfterViewInit() {
-    const show = async (imageList: Image[], options?: ViewerOptions): Promise<capShowResult> => {
+    const show = async (imageList: Image[], mode: string,
+              startFrom: number, options?: ViewerOptions
+              ): Promise<capShowResult> => {
       const opt: capShowOptions = {} as capShowOptions;
       opt.images = imageList;
+      opt.mode = mode;
+      if( mode === 'one' || mode === 'slider') {
+        opt.startFrom = startFrom;
+      }
       if(options) {
         opt.options = options;
       }
@@ -210,6 +218,8 @@ export class PhotoviewerComponent implements OnInit, AfterViewInit {
       await showToast(`echo ${echo.value}`);
     }
     try {
+      this.mode = "one";
+      this.startFrom = 2;
       // **************************************
       // here you defined the different options
       // **************************************
@@ -226,7 +236,8 @@ export class PhotoviewerComponent implements OnInit, AfterViewInit {
       // **************************************
       // comment or uncomment as you wish
       // http images call
-      const result = await show(this.imageList, this.options);
+      const result = await show(this.imageList, this.mode,
+                                this.startFrom,this.options);
       console.log(`after show ret: ${JSON.stringify(result)}`);
       // base64 images call
       //ret = await show(base64List, options);
