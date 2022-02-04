@@ -101,16 +101,17 @@ Show the PhotoViewer
 
 #### ViewerOptions
 
-| Prop                     | Type                                                  | Description                                                                          |
-| ------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **`share`**              | <code>boolean</code>                                  | display the share button (default true)                                              |
-| **`title`**              | <code>boolean</code>                                  | display the image title if any (default true)                                        |
-| **`transformer`**        | <code>string</code>                                   | transformer Android "zoom", "depth" or "none" (default "zoom")                       |
-| **`spancount`**          | <code>number</code>                                   | Grid span count (default 3)                                                          |
-| **`maxzoomscale`**       | <code>number</code>                                   | Max Zoom Scale (default 3)                                                           |
-| **`compressionquality`** | <code>number</code>                                   | Compression Quality for Sharing <a href="#image">Image</a> range [0-1] (default 0.8) |
-| **`divid`**              | <code>string</code>                                   | Div HTML Element Id (Web only) (default 'photoviewer-container')                     |
-| **`movieoptions`**       | <code><a href="#movieoptions">MovieOptions</a></code> | Movie Options iOS only                                                               |
+| Prop                     | Type                                                  | Description                                                                                                |
+| ------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **`share`**              | <code>boolean</code>                                  | display the share button (default true)                                                                    |
+| **`title`**              | <code>boolean</code>                                  | display the image title if any (default true)                                                              |
+| **`transformer`**        | <code>string</code>                                   | transformer Android "zoom", "depth" or "none" (default "zoom")                                             |
+| **`spancount`**          | <code>number</code>                                   | Grid span count (default 3)                                                                                |
+| **`maxzoomscale`**       | <code>number</code>                                   | Max Zoom Scale (default 3)                                                                                 |
+| **`compressionquality`** | <code>number</code>                                   | Compression Quality for Sharing <a href="#image">Image</a> range [0-1] (default 0.8)                       |
+| **`backgroundcolor`**    | <code>string</code>                                   | Background Color ["white", "ivory", "lightgrey", "darkgrey", "grey", "dimgrey", "black"] (default "black") |
+| **`divid`**              | <code>string</code>                                   | Div HTML Element Id (Web only) (default 'photoviewer-container')                                           |
+| **`movieoptions`**       | <code><a href="#movieoptions">MovieOptions</a></code> | Movie Options iOS only                                                                                     |
 
 
 #### MovieOptions

@@ -21,6 +21,8 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     private var _options: [String: Any] = [:]
     private var _isTitle: Bool = true
     private var _toast: Toast = Toast()
+    private var _backgroundColor: String = "black"
+    private var _backColor: BackgroundColor = BackgroundColor()
 
     // MARK: - Set-up options
 
@@ -37,6 +39,14 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             }
             if self._isTitle {
                 contentView.addSubview(mLabel)
+            }
+            if self._options.keys.contains("backgroundcolor") {
+                if let backgroundColor = self._options["backgroundcolor"]
+                    as? String {
+                    self._backgroundColor = backgroundColor
+                    contentView.backgroundColor =  _backColor
+                        .setBackColor(color: _backgroundColor)
+                }
             }
         }
     }
@@ -55,7 +65,7 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         label.text = "title"
         label.textAlignment = .center
         label.clipsToBounds = true
-        label.textColor = .white
+        label.textColor = .lightGray
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18.0)
         return label
     }()
@@ -64,7 +74,6 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .black
         contentView.addSubview(mImageView)
         contentView.clipsToBounds = true
         addGestureRecognizers()

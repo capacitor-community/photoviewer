@@ -1,3 +1,17 @@
+# 1.1.0 (2022-02-04)
+
+## Chore
+
+ - Update to @capacitor/core@3.4.0
+ - Update to @capacitor/ios@3.4.0
+ - Update to @capacitor/android@3.4.0
+ - Update to jeep-photoviewer@1.1.1
+
+## Added Features
+
+ - Add `backgroundcolor` option for iOS, Android & Web
+
+
 # 1.0.9 (2022-01-22) 
 
 ## Bug fixes

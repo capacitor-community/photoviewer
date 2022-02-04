@@ -18,6 +18,7 @@ import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCe
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.ImageFragmentBinding
+import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import com.getcapacitor.community.media.photoviewer.helper.ShareImage
 import com.ortiz.touchview.TouchImageView
@@ -28,9 +29,11 @@ class ImageFragment : Fragment() {
     private var bShare: Boolean = true
     private var maxZoomScale: Double = 3.0
     private var compressionQuality: Double = 0.8
+    private var backgroundColor: String = "black"
     private lateinit var appId: String
     private lateinit var ivTouchImage: TouchImageView
     private lateinit var rlMenu: RelativeLayout
+    private lateinit var rlLayout: RelativeLayout
 
     private lateinit var image: Image
     private lateinit var startFrom: Integer
@@ -45,17 +48,19 @@ class ImageFragment : Fragment() {
     }
 
     fun setStartFrom(startFrom: Integer) {
-      this.startFrom = startFrom
+        this.startFrom = startFrom
     }
 
 
-  fun setOptions(options: JSObject) {
+    fun setOptions(options: JSObject) {
         this.options = options
         if(this.options.has("share")) bShare = this.options.getBoolean("share")
         if(this.options.has("maxzoomscale")) maxZoomScale = this.options
             .getDouble("maxzoomscale")
         if(this.options.has("compressionquality")) compressionQuality = this.options
             .getDouble("compressionquality")
+        if(this.options.has("backgroundcolor")) backgroundColor = this.options
+            .getString("backgroundcolor").toString()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,20 +71,20 @@ class ImageFragment : Fragment() {
             mContainer  = container
             val view: View = initializeView()
             activity?.runOnUiThread( java.lang.Runnable {
-              view.isFocusableInTouchMode = true;
-              view.requestFocus();
-              view.setOnKeyListener(object: View.OnKeyListener {
-                override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
-                  // if the event is a key down event on the enter button
-                  if (event.action == KeyEvent.ACTION_DOWN &&
-                    keyCode == KeyEvent.KEYCODE_BACK
-                  ) {
-                    backPressed()
-                    return true
-                  }
-                  return false
-                }
-              })
+                view.isFocusableInTouchMode = true;
+                view.requestFocus();
+                view.setOnKeyListener(object: View.OnKeyListener {
+                    override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                        // if the event is a key down event on the enter button
+                        if (event.action == KeyEvent.ACTION_DOWN &&
+                            keyCode == KeyEvent.KEYCODE_BACK
+                        ) {
+                            backPressed()
+                            return true
+                        }
+                        return false
+                    }
+                })
             })
 
             return view
@@ -87,17 +92,17 @@ class ImageFragment : Fragment() {
         return null
     }
 
-  private fun backPressed() {
-    postNotification()
-    activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
-  }
-  private fun postNotification() {
-    var info: MutableMap<String, Any> = mutableMapOf()
-    info["result"] = true
-    info["imageIndex"] = startFrom
-    NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
-  }
-  private fun initializeView(): View {
+    private fun backPressed() {
+        postNotification()
+        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
+    }
+    private fun postNotification() {
+        var info: MutableMap<String, Any> = mutableMapOf()
+        info["result"] = true
+        info["imageIndex"] = startFrom
+        NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
+    }
+    private fun initializeView(): View {
         if (mContainer != null) {
             mContainer?.removeAllViewsInLayout()
         }
@@ -113,6 +118,10 @@ class ImageFragment : Fragment() {
         } else {
             Log.d(TAG, "orientation Landscape")
         }
+        rlLayout = binding.rlTouchImage
+        val mBackgroundColor = BackgroundColor()
+        rlLayout.setBackgroundResource(mBackgroundColor.setBackColor(backgroundColor))
+
         rlMenu = binding.menuBtns
         ivTouchImage = binding.ivTouchImage
         GlideApp.with(appContext)
@@ -125,20 +134,20 @@ class ImageFragment : Fragment() {
         val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE
         activity?.runOnUiThread( java.lang.Runnable {
-          val clickListener = View.OnClickListener { viewFS ->
-            when (viewFS.getId()) {
-              R.id.shareBtn -> {
-                val mShareImage: ShareImage = ShareImage()
-                mShareImage.shareImage(image, appId, appContext, compressionQuality)
-              }
-              R.id.closeBtn -> {
-                postNotification()
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
-              }
+            val clickListener = View.OnClickListener { viewFS ->
+                when (viewFS.getId()) {
+                    R.id.shareBtn -> {
+                        val mShareImage: ShareImage = ShareImage()
+                        mShareImage.shareImage(image, appId, appContext, compressionQuality)
+                    }
+                    R.id.closeBtn -> {
+                        postNotification()
+                        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
+                    }
+                }
             }
-          }
-          share.setOnClickListener(clickListener)
-          close.setOnClickListener(clickListener)
+            share.setOnClickListener(clickListener)
+            close.setOnClickListener(clickListener)
         })
         return binding.root
     }

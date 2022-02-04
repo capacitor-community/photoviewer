@@ -19,6 +19,7 @@ class ImageScrollViewController: UIViewController {
     weak var delegate: ImageScrollViewControllerDelegate?
 
     private var _url: String = ""
+    private var _backgroundColor: UIColor = .black
     private var _maxZoomScale: CGFloat = 3.0
     private var _curZoomScale: CGFloat = 3.0
     private var _toast: Toast = Toast()
@@ -37,6 +38,15 @@ class ImageScrollViewController: UIViewController {
         set {
             self._url = newValue
         }
+    }
+    var backgroundColor: UIColor {
+        get {
+            return self._backgroundColor
+        }
+        set {
+            self._backgroundColor = newValue
+        }
+
     }
     var maxZoomScale: CGFloat {
         get {
@@ -82,7 +92,7 @@ class ImageScrollViewController: UIViewController {
         scrollView.minimumZoomScale = 1.0
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .clear
+        scrollView.backgroundColor = self._backgroundColor
         return scrollView
     }()
     lazy var mImageView: UIImageView = {
@@ -90,6 +100,7 @@ class ImageScrollViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
+        imageView.backgroundColor = self._backgroundColor
         return imageView
     }()
 

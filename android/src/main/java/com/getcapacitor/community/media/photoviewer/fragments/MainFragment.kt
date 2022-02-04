@@ -20,11 +20,13 @@ import com.getcapacitor.community.media.photoviewer.adapter.GalleryImageAdapter
 import com.getcapacitor.community.media.photoviewer.adapter.GalleryImageClickListener
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.MainFragmentBinding
+import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 
 class MainFragment : Fragment() , GalleryImageClickListener {
     private val TAG = "MainFragment"
     private var mainFragmentBinding: MainFragmentBinding? = null
     private var spanCount = 3
+    private var backgroundColor: String = "black"
 
     private var imageList = ArrayList<Image>()
     private var options = JSObject()
@@ -41,6 +43,8 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         this.options = options
         if(this.options.has("spancount")) this.spanCount = this.options
             .getInt("spancount")
+        if(this.options.has("backgroundcolor")) backgroundColor = this.options
+            .getString("backgroundcolor").toString()
     }
 
     override fun onCreateView(
@@ -81,6 +85,7 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         mainFragmentBinding = binding
         galleryAdapter = GalleryImageAdapter(imageList)
         galleryAdapter.listener = this
+
         // init recyclerview
         appContext = this.requireContext()
         val orientation: Int = resources.configuration.orientation
@@ -102,13 +107,13 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         return binding.root
     }
     private fun postNotification() {
-      var info: MutableMap<String, Any> = mutableMapOf()
-      info["result"] = true
-      NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
+        var info: MutableMap<String, Any> = mutableMapOf()
+        info["result"] = true
+        NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
     }
 
     private fun backPressed() {
-      postNotification()
+        postNotification()
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
     }
 

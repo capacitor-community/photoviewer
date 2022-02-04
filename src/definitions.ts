@@ -93,6 +93,12 @@ export interface ViewerOptions {
    */
   compressionquality?: number;
   /**
+   * Background Color
+   * ["white", "ivory", "lightgrey", "darkgrey", "grey", "dimgrey", "black"]
+   * (default "black")
+   */
+  backgroundcolor?: string;
+  /**
    * Div HTML Element Id (Web only) (default 'photoviewer-container')
    */
   divid?: string;

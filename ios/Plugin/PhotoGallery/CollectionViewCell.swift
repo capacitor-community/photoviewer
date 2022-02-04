@@ -32,7 +32,7 @@ class CollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .systemRed
+        contentView.backgroundColor = .lightGray
         if #available(iOS 13, *) {
         } else {
             contentView.addSubview(mPlaceholder)

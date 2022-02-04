@@ -16,17 +16,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.getcapacitor.JSObject
 import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter
 import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSlidePageBinding
-import com.getcapacitor.community.media.photoviewer.databinding.ImageFragmentBinding
-import com.getcapacitor.community.media.photoviewer.databinding.MainFragmentBinding
+import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.CallbackListener
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import com.getcapacitor.community.media.photoviewer.helper.ShareImage
-import java.io.File
 
 
 class ScreenSlidePageFragment() : Fragment(), CallbackListener {
@@ -35,6 +32,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     lateinit var tvGalleryTitle: TextView
     lateinit var ivFullscreenImage: ImageView
     lateinit var rlMenu: RelativeLayout
+    lateinit var rlFullscreen: RelativeLayout
     lateinit var  appContext: Context
     lateinit var image: Image
     lateinit var appId: String
@@ -44,6 +42,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     var bTitle: Boolean = true
     var maxZoomScale: Double = 3.0
     var compressionQuality: Double = 0.8
+    var backgroundColor: String = "black"
     companion object {
         const val ARG_IMAGE = "image"
         const val ARG_MODE = "mode"
@@ -52,10 +51,11 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         const val ARG_TITLE = "title"
         const val ARG_MAXZOOMSCALE = "maxzoomscale"
         const val ARG_COMPRESSIONQUALITY = "compressionquality"
+        const val ARG_BACKGROUNDCOLOR = "backgroundcolor"
 
         fun getInstance(image: Image, mode: String, imageIndex: Int, bShare: Boolean,
-                        bTitle: Boolean, maxZoomScale: Double, compressionQuality: Double)
-                        : Fragment {
+                        bTitle: Boolean, maxZoomScale: Double, compressionQuality: Double,
+                        backgroundColor: String): Fragment {
             val screenSlidePageFragment = ScreenSlidePageFragment()
             val bundle = Bundle()
             bundle.putParcelable(ARG_IMAGE, image)
@@ -65,6 +65,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
             bundle.putBoolean(ARG_TITLE, bTitle)
             bundle.putDouble(ARG_MAXZOOMSCALE, maxZoomScale)
             bundle.putDouble(ARG_COMPRESSIONQUALITY, compressionQuality)
+            bundle.putString(ARG_BACKGROUNDCOLOR, backgroundColor)
             screenSlidePageFragment.arguments = bundle
             return screenSlidePageFragment
         }
@@ -87,13 +88,19 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         bTitle = requireArguments().getBoolean(ARG_TITLE)
         maxZoomScale = requireArguments().getDouble(ARG_MAXZOOMSCALE)
         compressionQuality = requireArguments().getDouble(ARG_COMPRESSIONQUALITY)
+        backgroundColor= requireArguments().getString(ARG_BACKGROUNDCOLOR).toString()
         appContext = this.requireContext()
         appId = appContext.getPackageName()
+        rlFullscreen = binding.rlFullscreenImage
+        val mBackgroundColor = BackgroundColor()
+        val backColor: Int = mBackgroundColor.setBackColor(backgroundColor)
+        rlFullscreen.setBackgroundResource(backColor)
 
         rlMenu = binding.menuBtns
         tvGalleryTitle = binding.tvGalleryTitle
         if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
+        ivFullscreenImage.setBackgroundResource(backColor)
         tvGalleryTitle.text = image.title
 
         GlideApp.with(appContext)
@@ -101,46 +108,45 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivFullscreenImage)
-//        container?.addView(binding.root)
 
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE
         val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-          override fun handleOnBackPressed() {
-            if (mode == "slider") {
-              postNotification()
+            override fun handleOnBackPressed() {
+                if (mode == "slider") {
+                    postNotification()
+                }
+                closeFragment()
             }
-            closeFragment()
-          }
         }
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
 
         activity?.runOnUiThread( Runnable {
-          binding.root.isFocusableInTouchMode = true;
-          binding.root.requestFocus();
+            binding.root.isFocusableInTouchMode = true;
+            binding.root.requestFocus();
 
-          val clickListener = View.OnClickListener { viewFS ->
-            when (viewFS.getId()) {
-              R.id.shareBtn -> {
-                val mShareImage: ShareImage = ShareImage()
-                mShareImage.shareImage(image, appId, appContext, compressionQuality)
-              }
-              R.id.ivFullscreenImage -> {
-                toggleMenu()
-                showTouchView()
-              }
-              R.id.closeBtn -> {
-                if( mode =="slider") {
-                  postNotification()
+            val clickListener = View.OnClickListener { viewFS ->
+                when (viewFS.getId()) {
+                    R.id.shareBtn -> {
+                        val mShareImage: ShareImage = ShareImage()
+                        mShareImage.shareImage(image, appId, appContext, compressionQuality)
+                    }
+                    R.id.ivFullscreenImage -> {
+                        toggleMenu()
+                        showTouchView()
+                    }
+                    R.id.closeBtn -> {
+                        if( mode =="slider") {
+                            postNotification()
+                        }
+                        closeFragment()
+                    }
                 }
-                closeFragment()
-              }
             }
-          }
-          share.setOnClickListener(clickListener)
-          close.setOnClickListener(clickListener)
-          ivFullscreenImage.setOnClickListener(clickListener)
+            share.setOnClickListener(clickListener)
+            close.setOnClickListener(clickListener)
+            ivFullscreenImage.setOnClickListener(clickListener)
         })
 
         return binding.root
@@ -150,8 +156,8 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         toggleMenu()
     }
     override fun onDestroyView() {
-      sliderFragmentBinding = null
-      super.onDestroyView()
+        sliderFragmentBinding = null
+        super.onDestroyView()
     }
     private fun postNotification() {
         var info: MutableMap<String, Any> = mutableMapOf()
@@ -164,6 +170,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         val touchViewFragment = TouchViewFragment(this)
         touchViewFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen)
         image.url?.let { touchViewFragment.setUrl(it) }
+        backgroundColor?.let {touchViewFragment.setBackgroundColor(it) }
         activity?.let { touchViewFragment.show(it.supportFragmentManager, "touchview") }
     }
     private fun toggleMenu() {
@@ -171,7 +178,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     }
 
     private fun closeFragment() {
-      val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
+        val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
         fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
     }
 }
