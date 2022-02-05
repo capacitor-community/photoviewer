@@ -1,3 +1,13 @@
+# 1.1.1 (2022-02-05)
+
+## Chore
+
+ - Update to jeep-photoviewer@1.1.3
+
+## Bug fixes
+
+ - Hide placeholder when black PNG image with transparency in gallery mode Web
+
 # 1.1.0 (2022-02-04)
 
 ## Chore
