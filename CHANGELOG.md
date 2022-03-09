@@ -1,3 +1,9 @@
+# 1.1.3 (2022-03-09)
+
+## Bug fixes
+
+ - 1.1.2 was taken from a wrong 1.1.1
+ 
 # 1.1.2 (2022-03-09)
 
 ## Chore

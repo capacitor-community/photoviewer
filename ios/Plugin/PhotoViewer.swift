@@ -10,6 +10,7 @@ enum PhotoViewerError: Error {
     var oneImageViewController: OneImageViewController?
     var sliderViewController: SliderViewController?
     var stFrom: Int = 0
+
     // MARK: collectionController
 
     @objc var collectionController: CollectionViewController? {

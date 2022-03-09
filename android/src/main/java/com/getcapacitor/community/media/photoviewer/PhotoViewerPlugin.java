@@ -81,7 +81,6 @@ public class PhotoViewerPlugin extends Plugin {
                             return;
                         } catch (Exception e) {
                             rHandler.retResult(call, false, e.getMessage());
-                            return;
                         }
                     }
                 );
