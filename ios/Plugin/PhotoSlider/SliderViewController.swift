@@ -34,11 +34,6 @@ class SliderViewController: UIViewController {
     private var _compressionQuality: Double = 0.8
     private var _movieOptions: [String: Any] = [:]
     private var _movieObserver: Any?
-    private var _backgroundColor: String = "black"
-    private var _backColor: BackgroundColor = BackgroundColor()
-    private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
-    private var _btColor: UIColor = UIColor.white
-
     // MARK: - Set-up position
 
     var position: IndexPath {
@@ -104,15 +99,6 @@ class SliderViewController: UIViewController {
                     self._isFilm = true
                 }
             }
-            if self._options.keys.contains("backgroundcolor") {
-                if let backgroundColor = self._options["backgroundcolor"]
-                    as? String {
-                    self._backgroundColor = backgroundColor
-                    if _colorRange.contains(_backgroundColor) {
-                        _btColor = UIColor.black
-                    }
-                }
-            }
         }
     }
 
@@ -151,10 +137,10 @@ class SliderViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bClose.tintColor = _btColor
+        bClose.tintColor = .white
         bClose.action = #selector(closeButtonTapped)
         return bClose
     }()
@@ -171,10 +157,10 @@ class SliderViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bShare.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bShare.tintColor = _btColor
+        bShare.tintColor = .white
         bShare.action = #selector(shareButtonTapped)
         return bShare
 
@@ -193,10 +179,10 @@ class SliderViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bFilm.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bFilm.tintColor = _btColor
+        bFilm.tintColor = .white
         bFilm.action = #selector(filmButtonTapped)
         return bFilm
 
@@ -238,8 +224,7 @@ class SliderViewController: UIViewController {
         view.frame.size.width = screenSize.width
         view.frame.size.height = screenSize.height
         view.sizeToFit()
-        view.backgroundColor = _backColor.setBackColor(color: _backgroundColor)
-
+        view.backgroundColor = .black
         self._movieObserver = NotificationCenter.default
             .addObserver(forName: .movieCompleted, object: nil,
                          queue: nil, using: movieCompleted)
@@ -324,6 +309,7 @@ class SliderViewController: UIViewController {
     // MARK: - closeButtonTapped
 
     @objc func closeButtonTapped() {
+        print("closeButtonTapped mode \(mode)")
         if mode == "slider" {
             var mPosition = self.position
             if let selPos = self._selectedPosition {
@@ -477,8 +463,6 @@ extension SliderViewController: SliderViewCellDelegate {
                 self._imageViewer?.url = imageUrl
                 self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
                 self._imageViewer?.tapCell = tapCell
-                self._imageViewer?.backgroundColor = self._backColor.setBackColor(color: self._backgroundColor)
-
                 if let imgViewer = self._imageViewer {
                     imgViewer.modalPresentationStyle = .overFullScreen
 
@@ -516,8 +500,6 @@ extension SliderViewController: SliderViewCellDelegate {
             }
 
             self._imageViewer?.url = imageUrl
-            self._imageViewer?.backgroundColor = _backColor
-                .setBackColor(color: _backgroundColor)
             self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
             self._imageViewer?.zoomIn = true
             self._imageViewer?.zoomInPoint = point

@@ -70,11 +70,18 @@ public class PhotoViewerPlugin extends Plugin {
                 .runOnUiThread(
                     () -> {
                         try {
+                            if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
+                                String msg = "Show : imageList must be greater that one ";
+                                msg += "for Mode " + finalMode;
+                                rHandler.retResult(call, false, msg);
+                                return;
+                            }
                             implementation.show(images, finalMode, finalStartFrom, finalOptions);
                             rHandler.retResult(call, true, null);
                             return;
                         } catch (Exception e) {
                             rHandler.retResult(call, false, e.getMessage());
+                            return;
                         }
                     }
                 );

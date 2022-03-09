@@ -67,7 +67,14 @@ public class PhotoViewerPlugin: CAPPlugin {
 
         // Display
         DispatchQueue.main.async { [weak self] in
-            if imageList.count > 1 && mode == "gallery" {
+            if imageList.count <= 1
+                && (mode == "gallery" || mode == "slider") {
+                var msg = "Show : imageList must be greater that one "
+                msg += "for Mode \(mode)"
+                call.reject(msg)
+                return
+            }
+            if mode == "gallery" {
                 guard ((self?.implementation.show(imageList, mode: mode,
                                                   startFrom: startFrom,
                                                   options: options)) != nil),

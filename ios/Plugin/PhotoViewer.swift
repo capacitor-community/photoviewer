@@ -9,7 +9,7 @@ enum PhotoViewerError: Error {
     var collectionViewController: CollectionViewController?
     var oneImageViewController: OneImageViewController?
     var sliderViewController: SliderViewController?
-
+    var stFrom: Int = 0
     // MARK: collectionController
 
     @objc var collectionController: CollectionViewController? {
@@ -37,6 +37,8 @@ enum PhotoViewerError: Error {
     @objc public func show(_ imageList: [[String: String]],
                            mode: String, startFrom: Int,
                            options: [String: Any]) -> Bool {
+        stFrom = startFrom > imageList.count - 1 ? imageList.count - 1
+            : startFrom
         if imageList.count > 1  && mode == "gallery" {
             collectionViewController = CollectionViewController()
             collectionViewController?.imageList = imageList
@@ -44,15 +46,15 @@ enum PhotoViewerError: Error {
             return true
         } else if mode == "one" {
             oneImageViewController = OneImageViewController()
-            if let imageUrl = imageList[startFrom]["url"] {
+            if let imageUrl = imageList[stFrom]["url"] {
                 oneImageViewController?.url = imageUrl
-                oneImageViewController?.startFrom = startFrom
+                oneImageViewController?.startFrom = stFrom
                 oneImageViewController?.options = options
                 return true
             }
             return false
         } else if imageList.count > 1 && mode == "slider" {
-            let position: IndexPath = [0, startFrom]
+            let position: IndexPath = [0, stFrom]
             sliderViewController = SliderViewController()
             sliderViewController?.imageList = imageList
             sliderViewController?.position = position

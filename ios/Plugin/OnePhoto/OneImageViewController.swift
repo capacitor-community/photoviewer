@@ -18,10 +18,6 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _options: [String: Any] = [:]
     private var _isShare: Bool = true
     private var _startFrom: Int = 0
-    private var _backgroundColor: String = "black"
-    private var _backColor: BackgroundColor = BackgroundColor()
-    private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
-    private var _btColor: UIColor = UIColor.white
 
     // MARK: - Set-up url
 
@@ -67,15 +63,6 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
                     self._compressionQuality = compressionQuality
                 }
             }
-            if self._options.keys.contains("backgroundcolor") {
-                if let backgroundColor = self._options["backgroundcolor"]
-                    as? String {
-                    self._backgroundColor = backgroundColor
-                    if _colorRange.contains(_backgroundColor) {
-                        _btColor = UIColor.black
-                    }
-                }
-            }
         }
     }
 
@@ -96,7 +83,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         navigationBar.shadowImage = UIImage()
         return navigationBar
     }()
-    lazy var mClose: UIBarButtonItem = {
+    private let mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
         let image: UIImage?
         if #available(iOS 13, *) {
@@ -110,14 +97,14 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bClose.tintColor = _btColor
+        bClose.tintColor = .white
         bClose.action = #selector(closeButtonTapped)
         return bClose
     }()
-    lazy var mShare: UIBarButtonItem = {
+    private let  mShare: UIBarButtonItem = {
         let bShare = UIBarButtonItem()
         let image: UIImage?
         if #available(iOS 13, *) {
@@ -130,10 +117,10 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bShare.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bShare.tintColor = _btColor
+        bShare.tintColor = .white
         bShare.action = #selector(shareButtonTapped)
         return bShare
 
@@ -141,8 +128,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = _backColor
-            .setBackColor(color: _backgroundColor)
+        view.backgroundColor = .black
 
         let imgPlaceHolder: UIImage?
         if #available(iOS 13, *) {

@@ -23,10 +23,6 @@ class CollectionViewController: UIViewController {
     private var _numLayoutCells: CGFloat = 3
     private var _cellWidth: CGFloat = 50
     private var _cellHeight: CGFloat = 50
-    private var _backgroundColor: String = "black"
-    private var _backColor: BackgroundColor = BackgroundColor()
-    private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
-    private var _btColor: UIColor = UIColor.white
 
     lazy var layout: UICollectionViewFlowLayout = { ()
         -> UICollectionViewFlowLayout in
@@ -73,10 +69,10 @@ class CollectionViewController: UIViewController {
             let fontSize: CGFloat = 18
             let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
             bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
+                [NSAttributedString.Key.foregroundColor: UIColor.white,
                  NSAttributedString.Key.font: font], for: .normal)
         }
-        bClose.tintColor = _btColor
+        bClose.tintColor = .white
         bClose.action = #selector(closeButtonTapped)
         return bClose
     }()
@@ -104,15 +100,6 @@ class CollectionViewController: UIViewController {
             if self._options.keys.contains("spancount") {
                 if let spc = self._options["spancount"] as? Int {
                     self._numCells = CGFloat(spc)
-                }
-            }
-            if self._options.keys.contains("backgroundcolor") {
-                if let backgroundColor = self._options["backgroundcolor"]
-                    as? String {
-                    self._backgroundColor = backgroundColor
-                    if _colorRange.contains(_backgroundColor) {
-                        _btColor = UIColor.black
-                    }
                 }
             }
         }

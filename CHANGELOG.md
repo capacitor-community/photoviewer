@@ -1,3 +1,17 @@
+# 1.1.2 (2022-03-09)
+
+## Chore
+
+ - Update to @capacitor/core@3.4.1
+ - Update to @capacitor/ios@3.4.1
+ - Update to @capacitor/android@3.4.1
+ - Update to jeep-photoviewer@1.1.4
+
+## Bug fixes
+
+ - Unable to show the SliderViewController issue#14
+ - Google Play crash console issue#15
+ 
 # 1.1.1 (2022-02-05)
 
 ## Chore

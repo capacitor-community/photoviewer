@@ -34,13 +34,14 @@ public class PhotoViewer extends BridgeActivity {
     public void show(JSArray images, String mode, Integer startFrom, JSObject options) throws Exception {
         try {
             ArrayList<Image> imageList = convertJSArrayToImageList(images);
+            Integer stFrom = startFrom > imageList.size() - 1 ? imageList.size() - 1 : startFrom;
             if (imageList.size() > 1 && mode.equals("gallery")) {
                 // create the main fragment
                 createMainFragment(imageList, options);
             } else if (mode.equals("one")) {
-                createImageFragment(imageList, startFrom, options);
+                createImageFragment(imageList, stFrom, options);
             } else if (mode.equals("slider")) {
-                createSliderFragment(imageList, startFrom, options);
+                createSliderFragment(imageList, stFrom, options);
             }
             return;
         } catch (JSONException e) {
