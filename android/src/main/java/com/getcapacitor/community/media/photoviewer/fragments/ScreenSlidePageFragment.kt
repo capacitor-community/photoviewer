@@ -170,7 +170,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         val touchViewFragment = TouchViewFragment(this)
         touchViewFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen)
         image.url?.let { touchViewFragment.setUrl(it) }
-        backgroundColor?.let {touchViewFragment.setBackgroundColor(it) }
+        backgroundColor.let {touchViewFragment.setBackgroundColor(it) }
         activity?.let { touchViewFragment.show(it.supportFragmentManager, "touchview") }
     }
     private fun toggleMenu() {

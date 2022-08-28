@@ -41,9 +41,8 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
         const mStartFrom = options.startFrom;
         this._startFrom = mStartFrom ?? 0;
       }
-      const photoViewer: HTMLJeepPhotoviewerElement = document.createElement(
-        'jeep-photoviewer',
-      );
+      const photoViewer: HTMLJeepPhotoviewerElement =
+        document.createElement('jeep-photoviewer');
       photoViewer.imageList = this._imageList;
       photoViewer.mode = this._mode;
       if (this._mode === 'one' || this._mode === 'slider') {

@@ -1,3 +1,15 @@
+# 2.0.1 (2022-08-28)
+
+  - publish as `latest` release in npm
+
+# 2.0.0-0 (2022-08-05)
+
+### Chore
+
+ - Update to @capacitor/core 4.0.1
+ - Update to @capacitor/ios 4.0.1
+ - Update to @capacitor/android 4.0.1
+
 # 1.1.3 (2022-03-09)
 
 ## Bug fixes

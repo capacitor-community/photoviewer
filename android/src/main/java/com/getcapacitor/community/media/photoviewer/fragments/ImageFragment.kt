@@ -36,7 +36,7 @@ class ImageFragment : Fragment() {
     private lateinit var rlLayout: RelativeLayout
 
     private lateinit var image: Image
-    private lateinit var startFrom: Integer
+    private var startFrom: Int = 0
 
     private var options = JSObject()
     var mContainer: ViewGroup? = null
@@ -47,7 +47,7 @@ class ImageFragment : Fragment() {
         this.image = image
     }
 
-    fun setStartFrom(startFrom: Integer) {
+    fun setStartFrom(startFrom: Int) {
         this.startFrom = startFrom
     }
 

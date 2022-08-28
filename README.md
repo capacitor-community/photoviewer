@@ -2,8 +2,7 @@
 <h3 align="center">PHOTO VIEWER</h3>
 <p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <br>
-<p align="center" style="font-size:50px;color:red"><strong>Capacitor 3 Android, iOS and Web </strong></p>
-<p align="center" style="font-size:50px;color:red"><strong>Electron 🚧</strong></p><br>
+<p align="center" style="font-size:50px;color:red"><strong>Capacitor 4</strong></p>
 
 <p align="left">
 Capacitor community plugin for Web and Native Photo Viewer allowing to open fullscreen </p>
@@ -16,13 +15,13 @@ A picture can be acessed by url or base64. On iOS plugin, the creation of a movi
 </p>
 <br>
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
+  <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/l/@capacitor-community/photoviewer?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/dw/@capacitor-community/photoviewer?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/v/@capacitor-community/photoviewer?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-2-orange?style=flat-square" /></a>
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-3-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
@@ -34,21 +33,17 @@ A picture can be acessed by url or base64. On iOS plugin, the creation of a movi
 | Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
 
 
-## Note to developers
+## CAPACITOR 4 (Master)
 
-🚨 Since release 1.0.8 ->> 🚨
+For more info on releases:
 
- - Add mode `slider` 
- - the call to the method show has been modified as follows;
- ```js
-     const show = async (imageList: Image[], mode: string,
-              startFrom: number, options?: ViewerOptions): Promise<capShowResult> => {
- ```
-with 
- - mode in ["one","gallery","slider"]
- - startFrom: imageIndex in the imageList table valid only for mode "one" & mode "slider"
- 
-🚨 Since release 1.0.8 <<- 🚨
+ - [info_releases](https://github.com/capacitor-community/photoviewer/blob/master/info_releases.md)
+
+ - [changelog](https://github.com/capacitor-community/photoviewer/blob/main/CHANGELOG.md)
+
+ - [issues](https://github.com/capacitor-community/photoviewer/issues)
+
+
 
 ## Browser Support
 
@@ -202,12 +197,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/jepiqueau"><img src="https://avatars3.githubusercontent.com/u/16580653?v=4" width="100px;" alt=""/><br /><sub><b>Jean Pierre Quéau</b></sub></a><br /><a href="https://github.com/capacitor-community/photoviewer/commits?author=jepiqueau" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/ludufre"><img src="https://avatars.githubusercontent.com/u/4112077?v=4" width="100px;" alt=""/><br /><sub><b>Luan Freitas</b></sub></a><br /><a href="https://github.com/capacitor-community/photoviewer/commits?author=jepiqueau" title="Code">💻</a></td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://github.com/jepiqueau"><img src="https://github.com/jepiqueau.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/ludufre"><img src="https://github.com/ludufre.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/rdlabo"><img src="https://github.com/rdlabo.png?size=100" width="50" height="50" /></a>
+</p>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
