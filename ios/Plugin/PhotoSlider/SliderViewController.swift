@@ -356,8 +356,8 @@ class SliderViewController: UIViewController {
                                       placeholderImage: nil)
             }
             if imageUrl.prefix(38) ==
-                    "file:///var/mobile/Media/DCIM/100APPLE" {
-                
+                "file:///var/mobile/Media/DCIM/100APPLE" {
+
                 imageView
                     .getImageFromInternalUrl(url: imageUrl,
                                              imgPlaceHolder: nil)

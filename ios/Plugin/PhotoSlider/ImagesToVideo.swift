@@ -307,7 +307,7 @@ class ImagesToVideo {
 
                                                         // Save video to photo Gallery
                                                         self.saveToPhotoGallery(videoURL:
-                                                                            videoURL as URL)
+                                                                                    videoURL as URL)
                                                     }
                                                     ret["result"] = true
                                                 } else {

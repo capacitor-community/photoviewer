@@ -16,13 +16,13 @@ extension UIImageView {
         // get the appId from the appPath
         let pathArray = appPath.components(separatedBy: "Containers")
         let fPathArray = url.components(separatedBy: "mobile/")
-        
+
         if let uPath = URL(string: pathArray[0]) {
             let fPath = (uPath.appendingPathComponent(
-                String(fPathArray[1]))
+                            String(fPathArray[1]))
             ).absoluteString
             let mUrl = URL(fileURLWithPath: fPath)
-            var imageData : Data?
+            var imageData: Data?
             do {
                 imageData = try Data(contentsOf: mUrl)
             } catch {
@@ -30,7 +30,7 @@ extension UIImageView {
                 self.image = imgPlaceHolder
                 return
             }
-            
+
             guard let dataOfImage = imageData else {
                 print("Error: data for image url \(mUrl) not loaded")
                 self.image = imgPlaceHolder

@@ -138,16 +138,15 @@ class ImageScrollViewController: UIViewController {
         mScrollView.addSubview(mImageView)
         if url.prefix(4) == "http" {
             mImageView.sd_setImage(with: URL(string: url),
-                                  placeholderImage: nil)
+                                   placeholderImage: nil)
         }
         if url.prefix(38) ==
-                "file:///var/mobile/Media/DCIM/100APPLE" {
-            
+            "file:///var/mobile/Media/DCIM/100APPLE" {
+
             mImageView
                 .getImageFromInternalUrl(url: url,
                                          imgPlaceHolder: nil)
         }
-
 
         mImageView.translatesAutoresizingMaskIntoConstraints = false
         addGestureRecognizers()

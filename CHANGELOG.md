@@ -1,3 +1,9 @@
+# 2.0.3 (2022-08-29)
+
+## Bug fixes
+
+ - fix local image web path (iOS)
+
 # 2.0.2 (2022-08-29)
 
 ### Chore

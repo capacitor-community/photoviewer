@@ -155,7 +155,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         self.mScrollView.maximumZoomScale = self._maxZoomScale
         self.mScrollView.delegate = self
         if url.prefix(4) == "http" {
-            
+
             mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
                 if let err = error {
                     print("Error: \(err)")
@@ -171,19 +171,19 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
                 }
                 self.mImageView.image = img
                 self.mScrollView.imageView = self.mImageView
-                
+
             })
         }
 
         if url.prefix(38) == "file:///var/mobile/Media/DCIM/100APPLE" {
-            
+
             self.mImageView
                 .getImageFromInternalUrl(url: url,
-                                 imgPlaceHolder: imgPlaceHolder)
+                                         imgPlaceHolder: imgPlaceHolder)
             //        mImageView.frame = CGRect(x: 0, y: 0,
             //                                  width: view.frame.size.width,
             //                                  height: view.frame.size.height)
-            
+
             self.mScrollView.imageView = self.mImageView
         }
 
