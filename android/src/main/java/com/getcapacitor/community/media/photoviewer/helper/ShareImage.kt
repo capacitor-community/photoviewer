@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.os.StrictMode
 import android.view.Gravity
 import android.widget.Toast
@@ -69,9 +70,34 @@ class ShareImage {
                                        appId: String, appContext: Context) {
         val fileName: String = "share_image_" + System.currentTimeMillis() + ".png"
         tmpImage = File(appContext.filesDir, fileName)
+        val imgUrl = image.url
+        var tobeLoaded: Any? = null
+
+        if (imgUrl?.substring(0, 4).equals("http")) {
+          if (imgUrl != null) {
+            tobeLoaded = imgUrl
+          }
+        }
+
+        if (imgUrl?.substring(0, 4).equals("file")) {
+          val uri: Uri = Uri.parse(imgUrl)
+          val element: String? = uri.getLastPathSegment()
+          if (imgUrl?.contains("DCIM") == true) {
+            tobeLoaded = File(
+              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(),
+              element
+            )
+          }
+          if (imgUrl?.contains("Pictures") == true) {
+            tobeLoaded = File(
+              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .toString(), element
+            )
+          }
+        }
         GlideApp.with(appContext)
             .asBitmap()
-            .load(image.url)
+            .load(tobeLoaded)
             .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {

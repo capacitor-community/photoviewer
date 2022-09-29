@@ -67,7 +67,15 @@ class CollectionViewCell: UICollectionViewCell {
         } else {
             imgPlaceHolder = nil
         }
-        mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: imgPlaceHolder)
+        if imageUrl.prefix(4) == "http" {
+            mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: imgPlaceHolder)
+        }
+        if imageUrl.prefix(38) == "file:///var/mobile/Media/DCIM/100APPLE" {
+            
+            self.mImageView
+                .getImageFromInternalUrl(url: imageUrl,
+                                         imgPlaceHolder: imgPlaceHolder)
+        }
 
     }
 

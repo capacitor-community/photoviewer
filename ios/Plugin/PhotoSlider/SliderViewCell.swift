@@ -97,7 +97,18 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     // MARK: - configure
 
     func configure(imageUrl: String, title: String) {
-        mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil)
+        if imageUrl.prefix(4) == "http" {
+            mImageView.sd_setImage(with: URL(string: imageUrl),
+                                  placeholderImage: nil)
+        }
+        if imageUrl.prefix(38) ==
+                "file:///var/mobile/Media/DCIM/100APPLE" {
+            
+            mImageView
+                .getImageFromInternalUrl(url: imageUrl,
+                                         imgPlaceHolder: nil)
+        }
+
         mLabel.text = title
     }
 

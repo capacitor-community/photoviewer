@@ -1,3 +1,15 @@
+# 2.0.2 (2022-08-29)
+
+### Chore
+
+ - Update to @capacitor/core 4.2.0
+ - Update to @capacitor/ios 4.2.0
+ - Update to @capacitor/android 4.2.0
+
+## Added Features
+
+ - Add local image web path (iOS, Android) issue#22
+
 # 2.0.1 (2022-08-28)
 
   - publish as `latest` release in npm

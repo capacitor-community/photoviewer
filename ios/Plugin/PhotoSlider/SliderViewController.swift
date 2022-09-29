@@ -351,8 +351,18 @@ class SliderViewController: UIViewController {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
             imageView.clipsToBounds = true
-            imageView.sd_setImage(with: URL(string: imageUrl),
-                                  placeholderImage: nil)
+            if imageUrl.prefix(4) == "http" {
+                imageView.sd_setImage(with: URL(string: imageUrl),
+                                      placeholderImage: nil)
+            }
+            if imageUrl.prefix(38) ==
+                    "file:///var/mobile/Media/DCIM/100APPLE" {
+                
+                imageView
+                    .getImageFromInternalUrl(url: imageUrl,
+                                             imgPlaceHolder: nil)
+            }
+
             if let image = imageView.image {
                 if let data = image.jpegData(compressionQuality:
                                                 CGFloat(_compressionQuality)) {

@@ -306,7 +306,7 @@ class ImagesToVideo {
                                                         guard granted else { return }
 
                                                         // Save video to photo Gallery
-                                                        saveToPhotoGallery(videoURL:
+                                                        self.saveToPhotoGallery(videoURL:
                                                                             videoURL as URL)
                                                     }
                                                     ret["result"] = true

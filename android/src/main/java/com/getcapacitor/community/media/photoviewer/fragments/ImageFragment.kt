@@ -2,7 +2,9 @@ package com.getcapacitor.community.media.photoviewer.fragments
 
 import android.content.Context
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -22,6 +24,7 @@ import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import com.getcapacitor.community.media.photoviewer.helper.ShareImage
 import com.ortiz.touchview.TouchImageView
+import java.io.File
 
 class ImageFragment : Fragment() {
     private val TAG = "ImageFragment"
@@ -124,11 +127,33 @@ class ImageFragment : Fragment() {
 
         rlMenu = binding.menuBtns
         ivTouchImage = binding.ivTouchImage
-        GlideApp.with(appContext)
+        val imgUrl = image.url
+        if (imgUrl?.substring(0, 4).equals("http")) {
+          // load image from http
+          GlideApp.with(appContext)
             .load(image.url)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivTouchImage)
+        }
+        if (imgUrl?.substring(0, 4).equals("file")) {
+          val uri: Uri = Uri.parse(imgUrl)
+          val element: String? = uri.getLastPathSegment()
+          var file: File? = null
+          if (imgUrl?.contains("DCIM") == true) {
+            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(), element )
+          }
+          if (imgUrl?.contains("Pictures") == true) {
+            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString(), element )
+          }
+          GlideApp.with(appContext)
+            .asBitmap()
+            .load(file)
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(ivTouchImage)
+        }
+
 
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn

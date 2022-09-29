@@ -143,34 +143,50 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view.
         view.backgroundColor = _backColor
             .setBackColor(color: _backgroundColor)
-
         let imgPlaceHolder: UIImage?
         if #available(iOS 13, *) {
             imgPlaceHolder = UIImage(systemName: "livephoto.slash")
         } else {
             imgPlaceHolder = nil
         }
+
         view.addSubview(mScrollView)
         mScrollView.frame = view.frame
         self.mScrollView.maximumZoomScale = self._maxZoomScale
         self.mScrollView.delegate = self
-        mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
-            if let err = error {
-                print("Error: \(err)")
-                return
-            }
-            guard let imgUrl = url else {
-                print("Error: image url not correct")
-                return
-            }
-            guard let img = image else {
-                print("Error: image url \(imgUrl) not loaded")
-                return
-            }
-            self.mImageView.image = img
-            self.mScrollView.imageView = self.mImageView
+        if url.prefix(4) == "http" {
+            
+            mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
+                if let err = error {
+                    print("Error: \(err)")
+                    return
+                }
+                guard let imgUrl = url else {
+                    print("Error: image url not correct")
+                    return
+                }
+                guard let img = image else {
+                    print("Error: image url \(imgUrl) not loaded")
+                    return
+                }
+                self.mImageView.image = img
+                self.mScrollView.imageView = self.mImageView
+                
+            })
+        }
 
-        })
+        if url.prefix(38) == "file:///var/mobile/Media/DCIM/100APPLE" {
+            
+            self.mImageView
+                .getImageFromInternalUrl(url: url,
+                                 imgPlaceHolder: imgPlaceHolder)
+            //        mImageView.frame = CGRect(x: 0, y: 0,
+            //                                  width: view.frame.size.width,
+            //                                  height: view.frame.size.height)
+            
+            self.mScrollView.imageView = self.mImageView
+        }
+
         let navigationItem = UINavigationItem()
         navigationItem.rightBarButtonItem = mClose
         if self._isShare {

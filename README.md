@@ -11,8 +11,19 @@ Capacitor community plugin for Web and Native Photo Viewer allowing to open full
 <p align="left">
 - a single picture with zoom-in and sharing features.</p>
 <p align="left">
-A picture can be acessed by url or base64. On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
+A picture can be acessed by image web url, base64 data or from internal device for iOS and Android.
 </p>
+<p align="left">
+- iOS <strong><code>file:///var/mobile/Media/DCIM/100APPLE/YOUR_IMAGE.JPG</code></strong>
+</p>
+<p align="left">
+- Android <strong><code>file:///sdcard/DCIM/YOUR_IMAGE.JPG</code></strong>
+ and/or <strong><code>file:///sdcard/Pictures/YOUR_IMAGE.JPG</code></strong>
+</p>
+<p align="left">
+On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
+</p>
+
 <br>
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
