@@ -112,6 +112,8 @@ public class PhotoViewerPlugin extends Plugin {
             if (!isImagesPermissions()) {
                 this.bridge.saveCall(call);
                 requestAllPermissions(call, "imagesPermissionsCallback");
+            } else {
+              isPermissions = true;
             }
         } else {
             isPermissions = true;

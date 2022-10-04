@@ -1,3 +1,9 @@
+# 2.0.5 (2022-10-04)
+
+## Bug fixes
+
+- fix bug in Android permissions
+
 # 2.0.4 (2022-10-04)
 
 ## Bug fixes
