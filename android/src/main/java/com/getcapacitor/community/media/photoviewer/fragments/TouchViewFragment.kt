@@ -15,6 +15,7 @@ import com.getcapacitor.community.media.photoviewer.databinding.FragmentTouchvie
 import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.CallbackListener
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
+import com.getcapacitor.community.media.photoviewer.helper.ImageToBeLoaded
 import com.ortiz.touchview.TouchImageView
 import java.io.File
 
@@ -52,27 +53,21 @@ class TouchViewFragment(private val callbackListener: CallbackListener): DialogF
         ivTouchImage = binding.ivTouchImage
         appContext = this.requireContext()
 
-        if (url.substring(0, 4).equals("http")) {
+        val mImageToBeLoaded = ImageToBeLoaded()
+        val toBeLoaded = mImageToBeLoaded.getToBeLoaded(url)
+
+        if (toBeLoaded is String) {
           // load image from http
           GlideApp.with(appContext)
-            .load(url)
+            .load(toBeLoaded)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivTouchImage)
         }
-        if (url.substring(0, 4).equals("file")) {
-          val uri: Uri = Uri.parse(url)
-          val element: String? = uri.getLastPathSegment()
-          var file: File? = null
-          if (url.contains("DCIM") == true) {
-            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(), element )
-          }
-          if (url.contains("Pictures") == true) {
-            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString(), element )
-          }
+        if (toBeLoaded is File) {
           GlideApp.with(appContext)
             .asBitmap()
-            .load(file)
+            .load(toBeLoaded)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivTouchImage)

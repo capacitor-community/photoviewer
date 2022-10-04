@@ -28,7 +28,6 @@ class SliderViewController: UIViewController {
     private var _selectedPosition: IndexPath?
     private var _isShare: Bool = true
     private var _isFilm: Bool = false
-    private var _toast: Toast = Toast()
     private var _imageViewer: ImageScrollViewController?
     private var _maxZoomScale: Double = 3
     private var _compressionQuality: Double = 0.8
@@ -351,16 +350,18 @@ class SliderViewController: UIViewController {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
             imageView.clipsToBounds = true
-            if imageUrl.prefix(4) == "http" {
+            if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
                 imageView.sd_setImage(with: URL(string: imageUrl),
                                       placeholderImage: nil)
             }
             if imageUrl.prefix(38) ==
-                "file:///var/mobile/Media/DCIM/100APPLE" {
+                "file:///var/mobile/Media/DCIM/100APPLE" ||
+                imageUrl.prefix(38) ==
+                "capacitor://localhost/_capacitor_file_" {
 
-                imageView
-                    .getImageFromInternalUrl(url: imageUrl,
-                                             imgPlaceHolder: nil)
+                let image: UIImage = UIImage()
+                imageView.image = image.getImage(path: imageUrl,
+                                                 placeHolder: "livephoto.slash")
             }
 
             if let image = imageView.image {
@@ -399,13 +400,13 @@ class SliderViewController: UIViewController {
         DispatchQueue.main.async { [self] in
             if let res = info["result"] as? Bool {
                 if res {
-                    let msg = "Movie has been created"
-                    _toast.showToast(view: self.view, message: msg,
-                                     font: .systemFont(ofSize: 16.0))
+                    let msg = "Movie created"
+                    self.showToast( message: msg,
+                                    font: .systemFont(ofSize: 16.0))
                 } else {
-                    let msg = "Movie creation failed"
-                    _toast.showToast(view: self.view, message: msg,
-                                     font: .systemFont(ofSize: 16.0))
+                    let msg = "Movie failed"
+                    self.showToast( message: msg,
+                                    font: .systemFont(ofSize: 16.0))
                 }
             }
         }

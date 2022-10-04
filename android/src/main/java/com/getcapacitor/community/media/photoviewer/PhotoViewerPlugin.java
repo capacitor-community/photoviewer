@@ -1,26 +1,61 @@
 package com.getcapacitor.community.media.photoviewer;
 
+import android.Manifest;
+import android.os.Build;
 import androidx.appcompat.app.AppCompatActivity;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
 import com.getcapacitor.community.media.photoviewer.Notifications.MyRunnable;
 import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-@CapacitorPlugin(name = "PhotoViewer")
+@CapacitorPlugin(
+    name = "PhotoViewer",
+    permissions = { @Permission(alias = PhotoViewerPlugin.MEDIAIMAGES, strings = { Manifest.permission.READ_EXTERNAL_STORAGE }) }
+)
 public class PhotoViewerPlugin extends Plugin {
+
+    // Permission alias constants
+    private static final String PERMISSION_DENIED_ERROR = "Unable to access media images, user denied permission request";
+    static final String MEDIAIMAGES = "images";
 
     private static final String TAG = "CapacitorPhotoViewer";
 
     private PhotoViewer implementation;
     private RetHandler rHandler = new RetHandler();
+    private Boolean isPermissions = false;
 
     @Override
     public void load() {
         implementation = new PhotoViewer(getContext(), getBridge());
+    }
+
+    @PermissionCallback
+    private void imagesPermissionsCallback(PluginCall call) {
+        if (getPermissionState(MEDIAIMAGES) == PermissionState.GRANTED) {
+            isPermissions = true;
+            show(call);
+        } else {
+            call.reject(PERMISSION_DENIED_ERROR);
+        }
+    }
+
+    private boolean isImagesPermissions() {
+        // required for build version >= 29
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (getPermissionState(MEDIAIMAGES) != PermissionState.GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @PluginMethod
@@ -58,36 +93,60 @@ public class PhotoViewerPlugin extends Plugin {
         if (call.getData().has("startFrom")) {
             startFrom = call.getInt("startFrom");
         }
+        // Check if requires permissions
+        boolean isRequired = false;
+        for (int i = 0; i < images.length(); i++) {
+            try {
+                JSONObject obj = images.getJSONObject(i);
+                String url = obj.getString("url");
+                if (url.startsWith("file:") || url.contains("_capacitor_file_")) {
+                    isRequired = true;
+                    break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (isRequired) {
+            // Check for permissions to access media image files
+            if (!isImagesPermissions()) {
+                this.bridge.saveCall(call);
+                requestAllPermissions(call, "imagesPermissionsCallback");
+            }
+        } else {
+            isPermissions = true;
+        }
+        if (isPermissions) {
+            try {
+                JSObject finalOptions = options;
+                String finalMode = mode;
+                Integer finalStartFrom = startFrom;
+                AddObserversToNotificationCenter();
 
-        try {
-            JSObject finalOptions = options;
-            String finalMode = mode;
-            Integer finalStartFrom = startFrom;
-            AddObserversToNotificationCenter();
-
-            bridge
-                .getActivity()
-                .runOnUiThread(
-                    () -> {
-                        try {
-                            if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
-                                String msg = "Show : imageList must be greater that one ";
-                                msg += "for Mode " + finalMode;
-                                rHandler.retResult(call, false, msg);
+                bridge
+                    .getActivity()
+                    .runOnUiThread(
+                        () -> {
+                            try {
+                                if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
+                                    String msg = "Show : imageList must be greater that one ";
+                                    msg += "for Mode " + finalMode;
+                                    rHandler.retResult(call, false, msg);
+                                    return;
+                                }
+                                implementation.show(images, finalMode, finalStartFrom, finalOptions);
+                                rHandler.retResult(call, true, null);
                                 return;
+                            } catch (Exception e) {
+                                rHandler.retResult(call, false, e.getMessage());
                             }
-                            implementation.show(images, finalMode, finalStartFrom, finalOptions);
-                            rHandler.retResult(call, true, null);
-                            return;
-                        } catch (Exception e) {
-                            rHandler.retResult(call, false, e.getMessage());
                         }
-                    }
-                );
-        } catch (Exception e) {
-            String msg = "Show: " + e.getMessage();
-            rHandler.retResult(call, false, msg);
-            return;
+                    );
+            } catch (Exception e) {
+                String msg = "Show: " + e.getMessage();
+                rHandler.retResult(call, false, msg);
+                return;
+            }
         }
     }
 

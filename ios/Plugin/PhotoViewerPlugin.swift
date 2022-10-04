@@ -130,7 +130,8 @@ public class PhotoViewerPlugin: CAPPlugin {
                                  queue: nil,
                                  using: photoViewerExit)
     }
-    // MARK: - playerItemPlay
+
+    // MARK: - photoViewerExit
 
     @objc func photoViewerExit(notification: Notification) {
         guard let info = notification.userInfo as? [String: Any] else { return }

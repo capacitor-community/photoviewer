@@ -143,19 +143,18 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view.
         view.backgroundColor = _backColor
             .setBackColor(color: _backgroundColor)
-        let imgPlaceHolder: UIImage?
-        if #available(iOS 13, *) {
-            imgPlaceHolder = UIImage(systemName: "livephoto.slash")
-        } else {
-            imgPlaceHolder = nil
-        }
 
         view.addSubview(mScrollView)
         mScrollView.frame = view.frame
         self.mScrollView.maximumZoomScale = self._maxZoomScale
         self.mScrollView.delegate = self
-        if url.prefix(4) == "http" {
-
+        if url.prefix(4) == "http" || url.contains("base64") {
+            let imgPlaceHolder: UIImage?
+            if #available(iOS 13, *) {
+                imgPlaceHolder = UIImage(systemName: "livephoto.slash")
+            } else {
+                imgPlaceHolder = nil
+            }
             mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
                 if let err = error {
                     print("Error: \(err)")
@@ -175,15 +174,13 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
             })
         }
 
-        if url.prefix(38) == "file:///var/mobile/Media/DCIM/100APPLE" {
-
-            self.mImageView
-                .getImageFromInternalUrl(url: url,
-                                         imgPlaceHolder: imgPlaceHolder)
-            //        mImageView.frame = CGRect(x: 0, y: 0,
-            //                                  width: view.frame.size.width,
-            //                                  height: view.frame.size.height)
-
+        if url.prefix(38) ==
+            "file:///var/mobile/Media/DCIM/100APPLE" ||
+            url.prefix(38) ==
+            "capacitor://localhost/_capacitor_file_" {
+            let image: UIImage = UIImage()
+            self.mImageView.image = image.getImage(path: url,
+                                                   placeHolder: "livephoto.slash")
             self.mScrollView.imageView = self.mImageView
         }
 

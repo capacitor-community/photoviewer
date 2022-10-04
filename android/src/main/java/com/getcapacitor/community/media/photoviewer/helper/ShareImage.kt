@@ -70,34 +70,11 @@ class ShareImage {
                                        appId: String, appContext: Context) {
         val fileName: String = "share_image_" + System.currentTimeMillis() + ".png"
         tmpImage = File(appContext.filesDir, fileName)
-        val imgUrl = image.url
-        var tobeLoaded: Any? = null
-
-        if (imgUrl?.substring(0, 4).equals("http")) {
-          if (imgUrl != null) {
-            tobeLoaded = imgUrl
-          }
-        }
-
-        if (imgUrl?.substring(0, 4).equals("file")) {
-          val uri: Uri = Uri.parse(imgUrl)
-          val element: String? = uri.getLastPathSegment()
-          if (imgUrl?.contains("DCIM") == true) {
-            tobeLoaded = File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(),
-              element
-            )
-          }
-          if (imgUrl?.contains("Pictures") == true) {
-            tobeLoaded = File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .toString(), element
-            )
-          }
-        }
+        val mImageToBeLoaded = ImageToBeLoaded()
+        val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
         GlideApp.with(appContext)
             .asBitmap()
-            .load(tobeLoaded)
+            .load(toBeLoaded)
             .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {

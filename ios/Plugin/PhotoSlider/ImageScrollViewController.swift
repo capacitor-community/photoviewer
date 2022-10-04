@@ -22,7 +22,6 @@ class ImageScrollViewController: UIViewController {
     private var _backgroundColor: UIColor = .black
     private var _maxZoomScale: CGFloat = 3.0
     private var _curZoomScale: CGFloat = 3.0
-    private var _toast: Toast = Toast()
     private var _zoomIn: Bool = false
     private var _zoomInPoint: CGPoint = CGPoint(x: 0, y: 0)
     private var _hasOneTap: Bool = false
@@ -129,23 +128,23 @@ class ImageScrollViewController: UIViewController {
             mScrollView.contentInsetAdjustmentBehavior = .never
         } else {
             // Fallback on earlier versions
-            self._toast.showToast(view: view,
-                                  message: "not implemented for iOS < 11 ",
-                                  font: .boldSystemFont(ofSize: 14.0))
+            self.showToast( message: "not implemented for iOS < 11 ",
+                            font: .boldSystemFont(ofSize: 14.0))
         }
 
         view.addSubview(mScrollView)
         mScrollView.addSubview(mImageView)
-        if url.prefix(4) == "http" {
+        if url.prefix(4) == "http" || url.contains("base64") {
             mImageView.sd_setImage(with: URL(string: url),
                                    placeholderImage: nil)
         }
         if url.prefix(38) ==
-            "file:///var/mobile/Media/DCIM/100APPLE" {
-
-            mImageView
-                .getImageFromInternalUrl(url: url,
-                                         imgPlaceHolder: nil)
+            "file:///var/mobile/Media/DCIM/100APPLE" ||
+            url.prefix(38) ==
+            "capacitor://localhost/_capacitor_file_" {
+            let image: UIImage = UIImage()
+            self.mImageView.image = image.getImage(path: url,
+                                                   placeHolder: "livephoto.slash")
         }
 
         mImageView.translatesAutoresizingMaskIntoConstraints = false

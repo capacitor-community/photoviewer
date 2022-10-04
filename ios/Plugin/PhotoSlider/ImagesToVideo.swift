@@ -27,7 +27,6 @@ class ImagesToVideo {
     private var _videoRatio: Double = 16 / 9
     private var _asset: AVAsset?
     private var _isVideoCreated: Bool = false
-    private var _toast: Toast = Toast()
 
     // MARK: - Set-up imageList
 
@@ -367,35 +366,54 @@ class ImagesToVideo {
     // MARK: - getUIImage
 
     func getUIImage(imageUrl: String) {
+        if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
 
-        SDWebImageManager.shared.loadImage(
-            with: URL(string: imageUrl),
-            options: .continueInBackground, // or .highPriority
-            progress: nil,
-            completed: { [weak self] (image, _, error, _, _, _) in
-                guard let sself = self else { return }
+            SDWebImageManager.shared.loadImage(
+                with: URL(string: imageUrl),
+                options: .continueInBackground, // or .highPriority
+                progress: nil,
+                completed: { [weak self] (image, _, error, _, _, _) in
+                    guard let sself = self else { return }
 
-                if let err = error {
-                    // Do something with the error
-                    print("*** Error \(err.localizedDescription)")
-                    return
+                    if let err = error {
+                        // Do something with the error
+                        print("*** Error \(err.localizedDescription)")
+                        return
+                    }
+
+                    guard let loadedImage = image else {
+                        // No image handle this error
+                        print("*** Error No Image returned")
+                        return
+                    }
+                    // Do something with image
+                    sself._uiImages.append(loadedImage)
+                    let imgWidth: CGFloat = loadedImage.size.width * loadedImage.scale
+                    let imgHeight: CGFloat = loadedImage.size.height *
+                        loadedImage.scale
+                    let imgSize: [String: CGFloat] = ["width": imgWidth,
+                                                      "height": imgHeight]
+                    sself._imageSize.append(imgSize)
                 }
-
-                guard let loadedImage = image else {
-                    // No image handle this error
-                    print("*** Error No Image returned")
-                    return
-                }
-                // Do something with image
-                sself._uiImages.append(loadedImage)
-                let imgWidth: CGFloat = loadedImage.size.width * loadedImage.scale
-                let imgHeight: CGFloat = loadedImage.size.height *
-                    loadedImage.scale
+            )
+        }
+        if imageUrl.prefix(38) ==
+            "file:///var/mobile/Media/DCIM/100APPLE" ||
+            imageUrl.prefix(38) ==
+            "capacitor://localhost/_capacitor_file_" {
+            let image: UIImage = UIImage()
+            if let img = image.getImage(path: imageUrl,
+                                        placeHolder: "livephoto.slash") {
+                self._uiImages.append(img)
+                let imgWidth: CGFloat = img.size.width * img.scale
+                let imgHeight: CGFloat = img.size.height * img.scale
                 let imgSize: [String: CGFloat] = ["width": imgWidth,
                                                   "height": imgHeight]
-                sself._imageSize.append(imgSize)
+                self._imageSize.append(imgSize)
             }
-        )
+
+        }
+
     }
 
     // MARK: - getPermissionIfNecessary

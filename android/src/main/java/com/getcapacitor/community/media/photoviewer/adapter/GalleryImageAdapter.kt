@@ -12,10 +12,13 @@ import com.getcapacitor.community.media.photoviewer.databinding.ItemGalleryImage
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import java.io.File
 import android.net.Uri;
+import android.util.Log
+import com.getcapacitor.community.media.photoviewer.helper.ImageToBeLoaded
 
 
 class GalleryImageAdapter(private val itemList: List<Image>) : RecyclerView
 .Adapter<GalleryImageAdapter.ViewHolder>() {
+    private val TAG = "GalleryImageAdapter"
     private lateinit var binding: ItemGalleryImageBinding
     private var context: Context? = null
     var listener: GalleryImageClickListener? = null
@@ -36,45 +39,37 @@ class GalleryImageAdapter(private val itemList: List<Image>) : RecyclerView
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(binding: ItemGalleryImageBinding) {
-            val image = itemList.get(bindingAdapterPosition)
-            val imgUrl = image.url
-             if (imgUrl?.substring(0, 4).equals("http")) {
-              // load image from http
-              GlideApp.with(context!!)
-                      .load(image.url)
-                      .centerCrop()
-                      .placeholder(R.drawable.ic_image_place_holder) //5
-                      .error(R.drawable.ic_broken_image) //6
-                      .fallback(R.drawable.ic_no_image) //7
-                      .diskCacheStrategy(DiskCacheStrategy.ALL)
-                      .into(binding.ivGalleryImage)
-            }
-            if (imgUrl?.substring(0, 4).equals("file")) {
-              val uri: Uri = Uri.parse(imgUrl)
-              val element: String? = uri.getLastPathSegment()
-              var file: File? = null
-              if (imgUrl?.contains("DCIM") == true) {
-                file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(), element )
-              }
-              if (imgUrl?.contains("Pictures") == true) {
-                file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString(), element )
-              }
-              GlideApp.with(context!!)
-                .asBitmap()
-                .load(file)
-                .centerCrop()
-                .placeholder(R.drawable.ic_image_place_holder) //5
-                .error(R.drawable.ic_broken_image) //6
-                .fallback(R.drawable.ic_no_image) //7
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivGalleryImage)
-            }
+          val image = itemList.get(bindingAdapterPosition)
+          val mImageToBeLoaded = ImageToBeLoaded()
+          val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
 
-
-            // adding click or tap handler for our image layout
-            binding.container.setOnClickListener {
-                listener?.onClick(bindingAdapterPosition)
-            }
+          if (toBeLoaded is String) {
+            // load image from http
+            GlideApp.with(context!!)
+              .load(toBeLoaded)
+              .centerCrop()
+              .placeholder(R.drawable.ic_image_place_holder) //5
+              .error(R.drawable.ic_broken_image) //6
+              .fallback(R.drawable.ic_no_image) //7
+              .diskCacheStrategy(DiskCacheStrategy.ALL)
+              .into(binding.ivGalleryImage)
+          }
+          if (toBeLoaded is File) {
+            // load image from file
+            GlideApp.with(context!!)
+              .asBitmap()
+              .load(toBeLoaded)
+              .centerCrop()
+              .placeholder(R.drawable.ic_image_place_holder) //5
+              .error(R.drawable.ic_broken_image) //6
+              .fallback(R.drawable.ic_no_image) //7
+              .diskCacheStrategy(DiskCacheStrategy.ALL)
+              .into(binding.ivGalleryImage)
+          }
+          // adding click or tap handler for our image layout
+          binding.container.setOnClickListener {
+              listener?.onClick(bindingAdapterPosition)
+          }
         }
     }
 }

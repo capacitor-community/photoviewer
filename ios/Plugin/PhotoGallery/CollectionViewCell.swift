@@ -61,20 +61,26 @@ class CollectionViewCell: UICollectionViewCell {
     // MARK: - configure
 
     func configure(imageUrl: String) {
-        let imgPlaceHolder: UIImage?
-        if #available(iOS 13, *) {
-            imgPlaceHolder = UIImage(systemName: "livephoto.slash")
-        } else {
-            imgPlaceHolder = nil
-        }
-        if imageUrl.prefix(4) == "http" {
+        print("\(imageUrl)")
+        if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
+            let imgPlaceHolder: UIImage?
+            if #available(iOS 13, *) {
+                imgPlaceHolder = UIImage(systemName: "livephoto.slash")
+            } else {
+                imgPlaceHolder = nil
+            }
             mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: imgPlaceHolder)
         }
-        if imageUrl.prefix(38) == "file:///var/mobile/Media/DCIM/100APPLE" {
-
-            self.mImageView
-                .getImageFromInternalUrl(url: imageUrl,
-                                         imgPlaceHolder: imgPlaceHolder)
+        if imageUrl.prefix(38) ==
+            "file:///var/mobile/Media/DCIM/100APPLE" ||
+            imageUrl.prefix(38) ==
+            "capacitor://localhost/_capacitor_file_" {
+            let image: UIImage = UIImage()
+            self.mImageView.image = image.getImage(path: imageUrl,
+                                                   placeHolder: "livephoto.slash")
+            //            self.mImageView
+            //                .getImageFromInternalUrl(url: imageUrl,
+            //                                         imgPlaceHolder: imgPlaceHolder)
         }
 
     }

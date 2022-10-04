@@ -14,12 +14,21 @@ Capacitor community plugin for Web and Native Photo Viewer allowing to open full
 A picture can be acessed by image web url, base64 data or from internal device for iOS and Android.
 </p>
 <p align="left">
-- iOS <strong><code>file:///var/mobile/Media/DCIM/100APPLE/YOUR_IMAGE.JPG</code></strong>
+- iOS 
 </p>
+<ul>
+<li><strong><code>file:///var/mobile/Media/DCIM/100APPLE/YOUR_IMAGE.JPG</code></strong></li>
+<li><strong><code>capacitor://localhost/_capacitor_file_/var/mobile/Containers/Data/Application/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/Documents/photo1.jpg</code></strong></li>
+</ul>
 <p align="left">
-- Android <strong><code>file:///sdcard/DCIM/YOUR_IMAGE.JPG</code></strong>
- and/or <strong><code>file:///sdcard/Pictures/YOUR_IMAGE.JPG</code></strong>
+- Android
 </p>
+<ul>
+<li><strong><code>file:///sdcard/DCIM/YOUR_IMAGE.JPG</code></strong></li>
+<li><strong><code>file:///sdcard/Pictures/YOUR_IMAGE.JPG</code></strong></li>
+<li><strong><code>http://localhost/_capacitor_file_/storage/emulated/0/Pictures/JPEG_20221001_113835_7582877022250987909.jpg</code></strong></li>
+</ul>
+
 <p align="left">
 On iOS plugin, the creation of a movie from the pictures stored in the <strong>All Photos</strong> folder is now available.
 </p>

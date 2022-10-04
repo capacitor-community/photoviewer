@@ -1,10 +1,16 @@
-# 2.0.3 (2022-08-29)
+# 2.0.4 (2022-10-04)
+
+## Bug fixes
+
+  - fix issue #22 and issue #24
+
+# 2.0.3 (2022-09-29)
 
 ## Bug fixes
 
  - fix local image web path (iOS)
 
-# 2.0.2 (2022-08-29)
+# 2.0.2 (2022-09-29)
 
 ### Chore
 
@@ -16,11 +22,11 @@
 
  - Add local image web path (iOS, Android) issue#22
 
-# 2.0.1 (2022-08-28)
+# 2.0.1 (2022-09-28)
 
   - publish as `latest` release in npm
 
-# 2.0.0-0 (2022-08-05)
+# 2.0.0-0 (2022-09-05)
 
 ### Chore
 

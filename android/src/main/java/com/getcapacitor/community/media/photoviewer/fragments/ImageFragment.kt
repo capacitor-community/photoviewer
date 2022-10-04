@@ -22,6 +22,7 @@ import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.ImageFragmentBinding
 import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
+import com.getcapacitor.community.media.photoviewer.helper.ImageToBeLoaded
 import com.getcapacitor.community.media.photoviewer.helper.ShareImage
 import com.ortiz.touchview.TouchImageView
 import java.io.File
@@ -127,34 +128,26 @@ class ImageFragment : Fragment() {
 
         rlMenu = binding.menuBtns
         ivTouchImage = binding.ivTouchImage
-        val imgUrl = image.url
-        if (imgUrl?.substring(0, 4).equals("http")) {
+        val mImageToBeLoaded = ImageToBeLoaded()
+        val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
+
+        if (toBeLoaded is String) {
           // load image from http
           GlideApp.with(appContext)
-            .load(image.url)
+            .load(toBeLoaded)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivTouchImage)
         }
-        if (imgUrl?.substring(0, 4).equals("file")) {
-          val uri: Uri = Uri.parse(imgUrl)
-          val element: String? = uri.getLastPathSegment()
-          var file: File? = null
-          if (imgUrl?.contains("DCIM") == true) {
-            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(), element )
-          }
-          if (imgUrl?.contains("Pictures") == true) {
-            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString(), element )
-          }
+        if (toBeLoaded is File) {
+          // load image from file
           GlideApp.with(appContext)
             .asBitmap()
-            .load(file)
+            .load(toBeLoaded)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(ivTouchImage)
         }
-
-
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn
         if(!bShare) share.visibility = View.INVISIBLE

@@ -20,7 +20,6 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     private var _options: [String: Any] = [:]
     private var _isTitle: Bool = true
-    private var _toast: Toast = Toast()
     private var _backgroundColor: String = "black"
     private var _backColor: BackgroundColor = BackgroundColor()
 
@@ -97,16 +96,18 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     // MARK: - configure
 
     func configure(imageUrl: String, title: String) {
-        if imageUrl.prefix(4) == "http" {
+        if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
             mImageView.sd_setImage(with: URL(string: imageUrl),
                                    placeholderImage: nil)
         }
         if imageUrl.prefix(38) ==
-            "file:///var/mobile/Media/DCIM/100APPLE" {
+            "file:///var/mobile/Media/DCIM/100APPLE" ||
+            imageUrl.prefix(38) ==
+            "capacitor://localhost/_capacitor_file_" {
 
-            mImageView
-                .getImageFromInternalUrl(url: imageUrl,
-                                         imgPlaceHolder: nil)
+            let image: UIImage = UIImage()
+            self.mImageView.image = image.getImage(path: imageUrl,
+                                                   placeHolder: "livephoto.slash")
         }
 
         mLabel.text = title

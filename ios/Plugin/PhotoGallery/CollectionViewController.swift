@@ -19,7 +19,6 @@ class CollectionViewController: UIViewController {
     private var _numImages: Int = 0
     private var _imageList: [[String: String]] = []
     private var _options: [String: Any] = [:]
-    private var _toast: Toast = Toast()
     private var _numLayoutCells: CGFloat = 3
     private var _cellWidth: CGFloat = 50
     private var _cellHeight: CGFloat = 50
@@ -251,8 +250,8 @@ class CollectionViewController: UIViewController {
                          imageList: [[String: String]],
                          mode: String,
                          options: [String: Any]) {
-        _toast.showToast(view: self.view, message: "Image \(position)",
-                         font: .systemFont(ofSize: 14.0))
+        self.showToast(message: "Image \(position)",
+                       font: .systemFont(ofSize: 14.0))
         let sliderVC = SliderViewController()
         sliderVC.modalPresentationStyle = .overFullScreen
         sliderVC.position = position
