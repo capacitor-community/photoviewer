@@ -1,3 +1,15 @@
+# 2.0.6 (2022-12-03)
+
+### Chore
+
+ - Update to @capacitor/core 4.5.0
+ - Update to @capacitor/ios 4.5.0
+ - Update to @capacitor/android 4.5.0
+
+## Bug fixes
+
+- fix The close button is not visible in iOS with Light theme on issue#27
+
 # 2.0.5 (2022-10-04)
 
 ## Bug fixes
