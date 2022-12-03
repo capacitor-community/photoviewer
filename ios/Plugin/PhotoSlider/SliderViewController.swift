@@ -143,7 +143,7 @@ class SliderViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "multiply",
                             withConfiguration: configuration)
-            bClose.image = image
+            bClose.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
         } else {
 
             bClose.title = "Close"
@@ -164,7 +164,7 @@ class SliderViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "square.and.arrow.up",
                             withConfiguration: configuration)
-            bShare.image = image
+            bShare.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
         } else {
             bShare.title = "Share"
             let fontSize: CGFloat = 18

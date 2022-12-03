@@ -65,7 +65,7 @@ class CollectionViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "multiply.circle.fill",
                             withConfiguration: configuration)
-            bClose.image = image
+            bClose.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
         } else {
 
             bClose.title = "Close"
