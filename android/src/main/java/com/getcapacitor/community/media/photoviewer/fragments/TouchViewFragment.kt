@@ -57,20 +57,20 @@ class TouchViewFragment(private val callbackListener: CallbackListener): DialogF
         val toBeLoaded = mImageToBeLoaded.getToBeLoaded(url)
 
         if (toBeLoaded is String) {
-          // load image from http
-          GlideApp.with(appContext)
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivTouchImage)
+            // load image from http
+            GlideApp.with(appContext)
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivTouchImage)
         }
         if (toBeLoaded is File) {
-          GlideApp.with(appContext)
-            .asBitmap()
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivTouchImage)
+            GlideApp.with(appContext)
+                .asBitmap()
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivTouchImage)
         }
 
         container?.addView(binding.root)

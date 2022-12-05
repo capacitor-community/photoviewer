@@ -1,5 +1,6 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -23,6 +24,7 @@ import com.getcapacitor.community.media.photoviewer.R
 import com.getcapacitor.community.media.photoviewer.adapter.Image
 import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSlidePageBinding
 import com.getcapacitor.community.media.photoviewer.helper.*
+import com.getcapacitor.community.media.photoviewer.listeners.OnSwipeTouchListener
 import java.io.File
 
 
@@ -72,6 +74,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -107,21 +110,21 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
 
         if (toBeLoaded is String) {
-          // load image from http
-          GlideApp.with(appContext)
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivFullscreenImage)
+            // load image from http
+            GlideApp.with(appContext)
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivFullscreenImage)
         }
         if (toBeLoaded is File) {
-          // load image from file
-          GlideApp.with(appContext)
-            .asBitmap()
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivFullscreenImage)
+            // load image from file
+            GlideApp.with(appContext)
+                .asBitmap()
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivFullscreenImage)
         }
 
         val share: ImageButton = binding.shareBtn
@@ -159,9 +162,27 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                     }
                 }
             }
+
             share.setOnClickListener(clickListener)
             close.setOnClickListener(clickListener)
             ivFullscreenImage.setOnClickListener(clickListener)
+            ivFullscreenImage.setOnTouchListener(object: OnSwipeTouchListener(appContext) {
+                override fun onSwipeUp() {
+                    super.onSwipeUp()
+                    if( mode =="slider") {
+                        postNotification()
+                    }
+                    closeFragment()
+                }
+                override fun onSwipeDown() {
+                    super.onSwipeDown()
+                    if( mode =="slider") {
+                        postNotification()
+                    }
+                    closeFragment()
+                }
+            })
+
         })
 
         return binding.root

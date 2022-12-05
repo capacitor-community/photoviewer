@@ -248,6 +248,7 @@ class SliderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupGestureRecognizers()
     }
 
     // MARK: - viewWillAppear
@@ -256,6 +257,13 @@ class SliderViewController: UIViewController {
         super.viewWillAppear(animated)
         view.addSubview(collectionView)
         view.addSubview(navBar)
+    }
+
+    // MARK: - viewDidDisappear
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        destroyAllGestures()
     }
 
     // MARK: - viewWillLayoutSubviews
@@ -336,7 +344,7 @@ class SliderViewController: UIViewController {
                                             object: nil,
                                             userInfo: vId)
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismissWithTransition()
     }
 
     // MARK: - shareButtonTapped
@@ -392,6 +400,25 @@ class SliderViewController: UIViewController {
 
     }
 
+    // MARK: - swipeAction
+
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+        if mode == "slider" {
+            var mPosition = self.position
+            if let selPos = self._selectedPosition {
+                mPosition = selPos
+            }
+            let vId: [String: Any] =
+                ["result": true,
+                 "imageIndex": mPosition.row as Any
+                ]
+            NotificationCenter.default.post(name: .photoviewerExit,
+                                            object: nil,
+                                            userInfo: vId)
+        }
+        self.dismissWithTransition()
+    }
+
     // MARK: - Handle Notifications
 
     @objc func movieCompleted(notification: Notification) {
@@ -410,6 +437,23 @@ class SliderViewController: UIViewController {
                 }
             }
         }
+    }
+
+    // MARK: - setupGestureRecognizers
+
+    private func setupGestureRecognizers() {
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(swipe:)))
+        upSwipe.direction = UISwipeGestureRecognizer.Direction.up
+        view.addGestureRecognizer(upSwipe)
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(swipe:)))
+        downSwipe.direction = UISwipeGestureRecognizer.Direction.down
+        view.addGestureRecognizer(downSwipe)
+    }
+
+    // MARK: - destroyAllGestures
+
+    func destroyAllGestures() {
+        view.gestureRecognizers?.removeAll()
     }
 }
 // swiftlint:enable type_body_length

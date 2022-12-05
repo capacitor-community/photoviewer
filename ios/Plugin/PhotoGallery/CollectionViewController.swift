@@ -138,6 +138,13 @@ class CollectionViewController: UIViewController {
 
     }
 
+    // MARK: - viewDidDisappear
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        destroyAllGestures()
+    }
+
     // MARK: - viewWillAppear
 
     override func viewWillAppear(_ animated: Bool) {

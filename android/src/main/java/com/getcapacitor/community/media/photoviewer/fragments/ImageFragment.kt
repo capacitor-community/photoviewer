@@ -1,5 +1,6 @@
 package com.getcapacitor.community.media.photoviewer.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.net.Uri
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -24,6 +26,7 @@ import com.getcapacitor.community.media.photoviewer.helper.BackgroundColor
 import com.getcapacitor.community.media.photoviewer.helper.GlideApp
 import com.getcapacitor.community.media.photoviewer.helper.ImageToBeLoaded
 import com.getcapacitor.community.media.photoviewer.helper.ShareImage
+import com.getcapacitor.community.media.photoviewer.listeners.OnSwipeTouchListener
 import com.ortiz.touchview.TouchImageView
 import java.io.File
 
@@ -38,15 +41,16 @@ class ImageFragment : Fragment() {
     private lateinit var ivTouchImage: TouchImageView
     private lateinit var rlMenu: RelativeLayout
     private lateinit var rlLayout: RelativeLayout
-
+    private lateinit var mContext: Context
+    private val mFragment = this
     private lateinit var image: Image
     private var startFrom: Int = 0
+    private var isZoomed: Boolean = false
 
     private var options = JSObject()
     var mContainer: ViewGroup? = null
     lateinit var mInflater: LayoutInflater
     lateinit var  appContext: Context
-
     fun setImage(image: Image) {
         this.image = image
     }
@@ -73,6 +77,7 @@ class ImageFragment : Fragment() {
         mInflater = inflater
         if (container != null) {
             mContainer  = container
+            mContext = container.context
             val view: View = initializeView()
             activity?.runOnUiThread( java.lang.Runnable {
                 view.isFocusableInTouchMode = true;
@@ -89,13 +94,13 @@ class ImageFragment : Fragment() {
                         return false
                     }
                 })
+
             })
 
             return view
         }
         return null
     }
-
     private fun backPressed() {
         postNotification()
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
@@ -106,6 +111,7 @@ class ImageFragment : Fragment() {
         info["imageIndex"] = startFrom
         NotificationCenter.defaultCenter().postNotification("photoviewerExit", info);
     }
+    @SuppressLint("ClickableViewAccessibility")
     private fun initializeView(): View {
         if (mContainer != null) {
             mContainer?.removeAllViewsInLayout()
@@ -123,30 +129,49 @@ class ImageFragment : Fragment() {
             Log.d(TAG, "orientation Landscape")
         }
         rlLayout = binding.rlTouchImage
+
         val mBackgroundColor = BackgroundColor()
         rlLayout.setBackgroundResource(mBackgroundColor.setBackColor(backgroundColor))
 
         rlMenu = binding.menuBtns
         ivTouchImage = binding.ivTouchImage
+        ivTouchImage.setOnTouchListener(object: OnSwipeTouchListener(mContext) {
+
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+                if(!ivTouchImage.isZoomed) {
+                    postNotification()
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+                }
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+                if(!ivTouchImage.isZoomed) {
+                    postNotification()
+                    activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+                }
+            }
+        })
+
         val mImageToBeLoaded = ImageToBeLoaded()
         val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
 
         if (toBeLoaded is String) {
-          // load image from http
-          GlideApp.with(appContext)
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivTouchImage)
+            // load image from http
+            GlideApp.with(appContext)
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivTouchImage)
         }
         if (toBeLoaded is File) {
-          // load image from file
-          GlideApp.with(appContext)
-            .asBitmap()
-            .load(toBeLoaded)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivTouchImage)
+            // load image from file
+            GlideApp.with(appContext)
+                .asBitmap()
+                .load(toBeLoaded)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivTouchImage)
         }
         val share: ImageButton = binding.shareBtn
         val close: ImageButton = binding.closeBtn
@@ -160,7 +185,7 @@ class ImageFragment : Fragment() {
                     }
                     R.id.closeBtn -> {
                         postNotification()
-                        activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
+                        activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
                     }
                 }
             }

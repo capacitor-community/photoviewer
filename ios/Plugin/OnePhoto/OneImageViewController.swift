@@ -194,6 +194,28 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
                                width: view.frame.size.width, height: 64)
 
         view.addSubview(mNavBar)
+        setupGestureRecognizers()
+    }
+
+    // MARK: - viewDidDisappear
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        destroyAllGestures()
+    }
+
+    // MARK: - swipeAction
+
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+        let vId: [String: Any] =
+            ["result": true,
+             "imageIndex": startFrom
+            ]
+        NotificationCenter.default.post(name: .photoviewerExit,
+                                        object: nil,
+                                        userInfo: vId)
+        self.dismissWithTransition()
+        //        self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - closeButtonTapped
@@ -206,8 +228,8 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: .photoviewerExit,
                                         object: nil,
                                         userInfo: vId)
-
-        self.dismiss(animated: true, completion: nil)
+        self.dismissWithTransition()
+        //        self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - shareButtonTapped
@@ -261,5 +283,22 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         if scrollView.zoomScale <= self._minZoomScale {
             scrollView.zoomScale = self._minZoomScale
         }
+    }
+
+    // MARK: - setupGestureRecognizers
+
+    private func setupGestureRecognizers() {
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(swipe:)))
+        upSwipe.direction = UISwipeGestureRecognizer.Direction.up
+        view.addGestureRecognizer(upSwipe)
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(swipe:)))
+        downSwipe.direction = UISwipeGestureRecognizer.Direction.down
+        view.addGestureRecognizer(downSwipe)
+    }
+
+    // MARK: - destroyAllGestures
+
+    func destroyAllGestures() {
+        view.gestureRecognizers?.removeAll()
     }
 }

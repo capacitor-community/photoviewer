@@ -1,3 +1,9 @@
+# 2.0.7 (2022-12-05)
+
+## Added Features
+
+ - Add swipe-up & swipe-down gesture issue#26
+
 # 2.0.6 (2022-12-03)
 
 ### Chore
