@@ -1,3 +1,9 @@
+# 2.0.8 (2022-12-06)
+
+## Bug fixes
+
+- fix the web swipe-up & swipe-down gesture in jeep-photoviewer
+
 # 2.0.7 (2022-12-05)
 
 ## Added Features

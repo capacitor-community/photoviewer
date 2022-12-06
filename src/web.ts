@@ -75,9 +75,6 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
             if (res === null) {
               reject('Error: event does not include detail ');
             } else {
-              console.log(
-                `before notification in Web.ts: ${JSON.stringify(res)}`,
-              );
               this.notifyListeners('jeepCapPhotoViewerExit', res);
               this._container.removeChild(photoViewer);
               resolve(res);
