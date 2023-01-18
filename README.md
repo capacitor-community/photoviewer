@@ -35,13 +35,13 @@ On iOS plugin, the creation of a movie from the pictures stored in the <strong>A
 
 <br>
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
+  <img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" />
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/l/@capacitor-community/photoviewer?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/dw/@capacitor-community/photoviewer?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/v/@capacitor-community/photoviewer?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-4-orange?style=flat-square" /></a>
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-5-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
@@ -218,10 +218,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <p align="center">
-  <a href="https://github.com/jepiqueau"><img src="https://github.com/jepiqueau.png?size=100" width="50" height="50" /></a>
-  <a href="https://github.com/ludufre"><img src="https://github.com/ludufre.png?size=100" width="50" height="50" /></a>
-  <a href="https://github.com/rdlabo"><img src="https://github.com/rdlabo.png?size=100" width="50" height="50" /></a>
-  <a href="https://github.com/bozhidarc"><img src="https://github.com/bozhidarc.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/jepiqueau" title="jepiqueau"><img src="https://github.com/jepiqueau.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/ludufre" title="ludufre"><img src="https://github.com/ludufre.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/rdlabo" title="rdlabo"><img src="https://github.com/rdlabo.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/bozhidarc" title="bozhidarc"><img src="https://github.com/bozhidarc.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/adnbrownie" title="adnbrownie"><img src="https://github.com/adnbrownie.png?size=100" width="50" height="50" /></a>
 </p>
 
 <!-- markdownlint-enable -->

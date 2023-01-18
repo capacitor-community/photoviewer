@@ -1,3 +1,16 @@
+# 2.0.9 (2023-01-18)
+
+### Chore
+
+ - Update to @capacitor/core 4.6.1
+ - Update to @capacitor/ios 4.6.1
+ - Update to @capacitor/android 4.6.1
+
+## Bug fixes
+
+ - Change method signature in OnSwipeTouchListener.kt #31 (PR from 
+Nils Braune)
+
 # 2.0.8 (2022-12-06)
 
 ## Bug fixes
