@@ -9,7 +9,7 @@ internal open class OnSwipeTouchListener (c: Context?) :
   View.OnTouchListener {
   private val gestureDetector: GestureDetector
 
-  override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+  override fun onTouch(view: View!, motionEvent: MotionEvent!): Boolean {
     return gestureDetector.onTouchEvent(motionEvent)
   }
   private inner class GestureListener: GestureDetector.SimpleOnGestureListener() {
