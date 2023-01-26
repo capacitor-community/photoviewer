@@ -1,3 +1,9 @@
+# 2.0.10 (2023-01-26)
+
+## Bug fixes
+
+ - Android change onTouch() method signature #32 (PR from Nils Braune)
+
 # 2.0.9 (2023-01-18)
 
 ### Chore

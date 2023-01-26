@@ -9,7 +9,7 @@ internal open class OnSwipeTouchListener (c: Context?) :
   View.OnTouchListener {
   private val gestureDetector: GestureDetector
 
-  override fun onTouch(view: View!, motionEvent: MotionEvent!): Boolean {
+  override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
     return gestureDetector.onTouchEvent(motionEvent)
   }
   private inner class GestureListener: GestureDetector.SimpleOnGestureListener() {
@@ -21,8 +21,8 @@ internal open class OnSwipeTouchListener (c: Context?) :
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      var diffX = moveEvent.x?.minus(downEvent!!.x) ?: 0.0F
-      var diffY = moveEvent.y?.minus(downEvent!!.y) ?: 0.0F
+      var diffX = moveEvent.x.minus(downEvent.x)
+      var diffY = moveEvent.y.minus(downEvent.y)
 
       return if(Math.abs(diffX) > Math.abs(diffY)) {
         // this is a left or right swipe
