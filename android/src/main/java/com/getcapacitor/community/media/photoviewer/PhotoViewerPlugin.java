@@ -76,14 +76,14 @@ public class PhotoViewerPlugin extends Plugin {
             return;
         }
         JSArray images = call.getArray("images");
-        if (images.length() == 0) {
+        if (images == null || images.length() == 0) {
             String msg = "Show: Must provide a non-empty list of image";
             rHandler.retResult(call, false, msg);
             return;
         }
         JSObject options = new JSObject();
         if (call.getData().has("options")) {
-            options = call.getObject("options");
+            options = call.getObject("options", new JSObject());
         }
         String mode = "one";
         if (call.getData().has("mode")) {

@@ -1,3 +1,11 @@
+# 3.0.0-beta.0 (2023-05-16)
+
+### Chore
+
+ - Update to @capacitor/core 5.0.3
+ - Update to @capacitor/ios 5.0.3
+ - Update to @capacitor/android 5.0.3
+
 # 2.0.10 (2023-01-26)
 
 ## Bug fixes
