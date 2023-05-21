@@ -1,3 +1,17 @@
+# 2.1.0 (2023-05-21)
+
+### Chore
+
+ - Update to @capacitor/core 4.8.0
+ - Update to @capacitor/ios 4.8.0
+ - Update to @capacitor/android 4.8.0
+
+## Bug fixes
+
+- Fix OS Share & Close button not visible issue#42
+- Fix iOS invisible close button when opens images list in a slider mode 
+issue#36
+
 # 2.0.10 (2023-01-26)
 
 ## Bug fixes

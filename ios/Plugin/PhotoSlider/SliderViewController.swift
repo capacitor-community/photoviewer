@@ -143,7 +143,7 @@ class SliderViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "multiply",
                             withConfiguration: configuration)
-            bClose.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         } else {
 
             bClose.title = "Close"
@@ -164,7 +164,7 @@ class SliderViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "square.and.arrow.up",
                             withConfiguration: configuration)
-            bShare.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         } else {
             bShare.title = "Share"
             let fontSize: CGFloat = 18
@@ -186,7 +186,7 @@ class SliderViewController: UIViewController {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "film",
                             withConfiguration: configuration)
-            bFilm.image = image
+            bFilm.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         } else {
             bFilm.title = "Film"
             let fontSize: CGFloat = 18
@@ -238,7 +238,6 @@ class SliderViewController: UIViewController {
         view.frame.size.height = screenSize.height
         view.sizeToFit()
         view.backgroundColor = _backColor.setBackColor(color: _backgroundColor)
-
         self._movieObserver = NotificationCenter.default
             .addObserver(forName: .movieCompleted, object: nil,
                          queue: nil, using: movieCompleted)
@@ -533,7 +532,6 @@ extension SliderViewController: SliderViewCellDelegate {
                 self._imageViewer?.maxZoomScale = CGFloat(_maxZoomScale)
                 self._imageViewer?.tapCell = tapCell
                 self._imageViewer?.backgroundColor = self._backColor.setBackColor(color: self._backgroundColor)
-
                 if let imgViewer = self._imageViewer {
                     imgViewer.modalPresentationStyle = .overFullScreen
 

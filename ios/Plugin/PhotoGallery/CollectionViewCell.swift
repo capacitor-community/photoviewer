@@ -61,7 +61,6 @@ class CollectionViewCell: UICollectionViewCell {
     // MARK: - configure
 
     func configure(imageUrl: String) {
-        print("\(imageUrl)")
         if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
             let imgPlaceHolder: UIImage?
             if #available(iOS 13, *) {
