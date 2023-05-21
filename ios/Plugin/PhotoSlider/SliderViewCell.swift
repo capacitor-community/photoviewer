@@ -46,6 +46,9 @@ class SliderViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                     contentView.backgroundColor =  _backColor
                         .setBackColor(color: _backgroundColor)
                 }
+            } else {
+                contentView.backgroundColor =  _backColor
+                    .setBackColor(color: _backgroundColor)
             }
         }
     }

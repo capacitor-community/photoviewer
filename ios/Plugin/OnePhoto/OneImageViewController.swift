@@ -22,7 +22,8 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _backColor: BackgroundColor = BackgroundColor()
     private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
     private var _btColor: UIColor = UIColor.white
-
+    
+    
     // MARK: - Set-up url
 
     var url: String {
@@ -51,6 +52,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         }
         set {
             self._options = newValue
+
             if self._options.keys.contains("share") {
                 if let isShare = self._options["share"] as? Bool {
                     self._isShare = isShare
@@ -94,7 +96,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         navigationBar.isTranslucent = true
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
-        return navigationBar
+         return navigationBar
     }()
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
@@ -103,7 +105,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "multiply",
                             withConfiguration: configuration)
-            bClose.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         } else {
 
             bClose.title = "Close"
@@ -124,7 +126,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
             let configuration = UIImage.SymbolConfiguration(scale: .large)
             image = UIImage(systemName: "square.and.arrow.up",
                             withConfiguration: configuration)
-            bShare.image = image?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         } else {
             bShare.title = "Share"
             let fontSize: CGFloat = 18
@@ -192,7 +194,6 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         mNavBar.setItems([navigationItem], animated: false)
         mNavBar.frame = CGRect(x: 0, y: 35,
                                width: view.frame.size.width, height: 64)
-
         view.addSubview(mNavBar)
         setupGestureRecognizers()
     }
