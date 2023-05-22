@@ -1,6 +1,6 @@
 <p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
 <h3 align="center">PHOTO VIEWER</h3>
-<p align="center"><strong><code>@capacitor-community/photoviewer@next</code></strong></p>
+<p align="center"><strong><code>@capacitor-community/photoviewer</code></strong></p>
 <br>
 <p align="center" style="font-size:50px;color:red"><strong>Capacitor 5</strong></p>
 
@@ -52,9 +52,7 @@ On iOS plugin, the creation of a movie from the pictures stored in the <strong>A
 | ----------------- | ----------------------------------------- | ------ |
 | Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
 
-## CAPACITOR 5 (Next)
-
-## CAPACITOR 4 (Master)
+## CAPACITOR 5 (Master)
 
 For more info on releases:
 
@@ -77,7 +75,7 @@ meaning that it will not work in IE11 without additional JavaScript transformati
 ## Installation
 
 ```bash
-npm install @capacitor-community/photoviewer@next
+npm install @capacitor-community/photoviewer
 npx cap sync
 ```
 
