@@ -49,7 +49,7 @@ public class PhotoViewerPlugin: CAPPlugin {
         }
         let mode: String = call.getString("mode") ?? "one"
         let startFrom: Int = call.getInt("startFrom") ?? 0
-        let options: JSObject = call.getObject("options", JSObject())
+        let options: JSObject = call.getObject("options") ?? [:]
         var mOptions: [String: Any] = [:]
         let keys = options.keys
         if keys.count > 0 {

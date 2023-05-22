@@ -1,3 +1,19 @@
+# 3.0.0-beta.1 (2023-05-21)
+
+## Bug fixes
+
+- Fix OS Share & Close button not visible issue#42
+- Fix iOS invisible close button when opens images list in a slider mode 
+issue#36
+
+# 3.0.0-beta.0 (2023-05-16)
+
+### Chore
+
+ - Update to @capacitor/core 5.0.3
+ - Update to @capacitor/ios 5.0.3
+ - Update to @capacitor/android 5.0.3
+
 # 2.1.0 (2023-05-21)
 
 ### Chore

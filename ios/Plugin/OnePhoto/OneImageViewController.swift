@@ -22,7 +22,8 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _backColor: BackgroundColor = BackgroundColor()
     private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
     private var _btColor: UIColor = UIColor.white
-
+    
+    
     // MARK: - Set-up url
 
     var url: String {
@@ -95,7 +96,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         navigationBar.isTranslucent = true
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
-        return navigationBar
+         return navigationBar
     }()
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()

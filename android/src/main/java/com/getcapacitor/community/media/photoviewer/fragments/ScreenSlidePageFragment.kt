@@ -3,8 +3,11 @@ package com.getcapacitor.community.media.photoviewer.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -55,6 +58,11 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         const val ARG_COMPRESSIONQUALITY = "compressionquality"
         const val ARG_BACKGROUNDCOLOR = "backgroundcolor"
 
+        inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+            SDK_INT >= 33 -> getParcelable(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getParcelable(key) as? T
+        }
+
         fun getInstance(image: Image, mode: String, imageIndex: Int, bShare: Boolean,
                         bTitle: Boolean, maxZoomScale: Double, compressionQuality: Double,
                         backgroundColor: String): Fragment {
@@ -84,7 +92,9 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         val binding = FragmentScreenSlidePageBinding
             .inflate(inflater, container, false)
         sliderFragmentBinding = binding
-        image = requireArguments().getParcelable<Image>(ARG_IMAGE)!!
+        if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            image = requireArguments().getParcelable(ARG_IMAGE,Image::class.java)!!
+        }
         mode = requireArguments().getString(ARG_MODE).toString()
         imageIndex = requireArguments().getInt(ARG_IMAGEINDEX)
         bShare = requireArguments().getBoolean(ARG_SHARE)
