@@ -96,7 +96,7 @@ npx cap sync
 ```js
 ...
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.8.20'
     dependencies {
         ...
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
