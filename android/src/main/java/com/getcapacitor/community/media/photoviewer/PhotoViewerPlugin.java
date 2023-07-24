@@ -19,13 +19,20 @@ import org.json.JSONObject;
 
 @CapacitorPlugin(
     name = "PhotoViewer",
-    permissions = { @Permission(alias = PhotoViewerPlugin.MEDIAIMAGES, strings = { Manifest.permission.READ_EXTERNAL_STORAGE }) }
+    permissions = {
+        @Permission(alias = PhotoViewerPlugin.MEDIAIMAGES,
+                    strings = { Manifest.permission.READ_MEDIA_IMAGES }),
+
+        @Permission(alias = PhotoViewerPlugin.READ_EXTERNAL_STORAGE,
+                    strings = { Manifest.permission.READ_EXTERNAL_STORAGE })
+    }
 )
 public class PhotoViewerPlugin extends Plugin {
 
     // Permission alias constants
     private static final String PERMISSION_DENIED_ERROR = "Unable to access media images, user denied permission request";
     static final String MEDIAIMAGES = "images";
+    static final String READ_EXTERNAL_STORAGE = "read_external_storage";
 
     private static final String TAG = "CapacitorPhotoViewer";
 
@@ -40,18 +47,31 @@ public class PhotoViewerPlugin extends Plugin {
 
     @PermissionCallback
     private void imagesPermissionsCallback(PluginCall call) {
-        if (getPermissionState(MEDIAIMAGES) == PermissionState.GRANTED) {
-            isPermissions = true;
-            show(call);
-        } else {
-            call.reject(PERMISSION_DENIED_ERROR);
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (getPermissionState(MEDIAIMAGES) == PermissionState.GRANTED) {
+                isPermissions = true;
+                show(call);
+            } else {
+                call.reject(PERMISSION_DENIED_ERROR);
+            }
+        } else  if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
+            if (getPermissionState(READ_EXTERNAL_STORAGE) == PermissionState.GRANTED) {
+                isPermissions = true;
+                show(call);
+            } else {
+                call.reject(PERMISSION_DENIED_ERROR);
+            }
         }
     }
 
     private boolean isImagesPermissions() {
-        // required for build version >= 29
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= 33) {
             if (getPermissionState(MEDIAIMAGES) != PermissionState.GRANTED) {
+                return false;
+            }
+        } else if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
+
+            if (getPermissionState(READ_EXTERNAL_STORAGE) != PermissionState.GRANTED) {
                 return false;
             }
         }
