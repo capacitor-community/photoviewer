@@ -1,3 +1,18 @@
+# 3.0.1 (2023-09-12)
+
+### Chore
+
+ - Update to @capacitor/core 5.3.0
+ - Update to @capacitor/ios 5.3.0
+ - Update to @capacitor/android 5.3.0
+
+## Bug fixes
+
+ - Fix request READ_MEDIA_IMAGES permission for Android SDK >= 33 PR#46 from Chirag Anand
+ - Fix Kotlin Version for Capacitor in README.md PR#47 from Chirag Anand
+
+# 3.0.0 (2023-05-22)
+
 # 3.0.0-beta.1 (2023-05-21)
 
 ## Bug fixes
