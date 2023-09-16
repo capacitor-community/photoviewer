@@ -81,6 +81,6 @@
     }
   },
   "dependencies": {
-    "jeep-photoviewer": "^1.1.8"
+    "jeep-photoviewer": "^1.2.0"
   }
 }

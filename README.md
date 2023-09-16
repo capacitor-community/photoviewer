@@ -99,6 +99,8 @@ buildscript {
     ext.kotlin_version = '1.8.20'
     dependencies {
         ...
+        classpath 'com.android.tools.build:gradle:8.0.0'
+        classpath 'com.google.gms:google-services:4.3.15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -126,7 +128,7 @@ buildscript {
         ```
     - in the `dependencies` block add
         ```
-        implementation "androidx.core:core-ktx:1.6.0"
+        implementation "androidx.core:core-ktx:1.10.0"
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         ```
 
