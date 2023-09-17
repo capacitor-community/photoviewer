@@ -215,8 +215,15 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: .photoviewerExit,
                                         object: nil,
                                         userInfo: vId)
-        self.dismissWithTransition()
+//        self.dismissWithTransition()
         //        self.dismiss(animated: true, completion: nil)
+        if swipe.direction == .up {
+            // Slide-up gesture
+            dismissWithTransition(swipeDirection: "up")
+        } else if swipe.direction == .down {
+            // Slide-down gesture
+            dismissWithTransition(swipeDirection: "down")
+        }
     }
 
     // MARK: - closeButtonTapped
@@ -229,7 +236,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: .photoviewerExit,
                                         object: nil,
                                         userInfo: vId)
-        self.dismissWithTransition()
+        self.dismissWithTransition(swipeDirection: "no")
         //        self.dismiss(animated: true, completion: nil)
     }
 

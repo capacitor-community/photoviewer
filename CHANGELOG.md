@@ -1,3 +1,12 @@
+# 3.0.3 (2023-09-17)
+
+## Bug fixes
+
+ - Android fix closing with transition issue#38
+ - Android fix App in prod calls ANR when user exits from image viewer issue#48
+ - Android fix Image title on Android issue#39
+ - Android fix Close button stops working after device is rotated issue#50
+
 # 3.0.2 (2023-09-16)
 
 ## Bug fixes

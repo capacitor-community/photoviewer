@@ -26,12 +26,20 @@ extension UIViewController {
             toastLabel.removeFromSuperview()
         })
     }
-    func dismissWithTransition() {
+    func dismissWithTransition(swipeDirection: String) {
         let transition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
+        if swipeDirection == "up" {
+            transition.subtype = CATransitionSubtype.fromTop
+        } else if swipeDirection == "down" {
+            transition.subtype = CATransitionSubtype.fromBottom
+        } else {
+            transition.subtype = CATransitionSubtype.fromRight
+        }
+
+
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }

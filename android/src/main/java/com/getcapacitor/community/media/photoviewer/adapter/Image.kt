@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Image(
         val url: String?,
-        val title: String?
+        val title: String? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),

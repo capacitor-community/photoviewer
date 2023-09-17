@@ -13,6 +13,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -29,7 +30,7 @@ import com.getcapacitor.community.media.photoviewer.databinding.FragmentScreenSl
 import com.getcapacitor.community.media.photoviewer.helper.*
 import com.getcapacitor.community.media.photoviewer.listeners.OnSwipeTouchListener
 import java.io.File
-
+import android.view.animation.AnimationUtils
 
 class ScreenSlidePageFragment() : Fragment(), CallbackListener {
     private val TAG = "ScreenSlidePageFragment"
@@ -111,10 +112,10 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
 
         rlMenu = binding.menuBtns
         tvGalleryTitle = binding.tvGalleryTitle
-        if(!bTitle) tvGalleryTitle.visibility = View.INVISIBLE
         ivFullscreenImage = binding.ivFullscreenImage
         ivFullscreenImage.setBackgroundResource(backColor)
-        tvGalleryTitle.text = image.title
+        tvGalleryTitle.text = image.title ?: ""
+        if(!bTitle || tvGalleryTitle.text.isEmpty()) tvGalleryTitle.visibility = View.INVISIBLE
 
         val mImageToBeLoaded = ImageToBeLoaded()
         val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
@@ -145,7 +146,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                 if (mode == "slider") {
                     postNotification()
                 }
-                closeFragment()
+                closeFragment("no")
             }
         }
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -168,7 +169,7 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                         if( mode =="slider") {
                             postNotification()
                         }
-                        closeFragment()
+                        closeFragment("no")
                     }
                 }
             }
@@ -182,14 +183,14 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
                     if( mode =="slider") {
                         postNotification()
                     }
-                    closeFragment()
+                    closeFragment("up")
                 }
                 override fun onSwipeDown() {
                     super.onSwipeDown()
                     if( mode =="slider") {
                         postNotification()
                     }
-                    closeFragment()
+                    closeFragment("down")
                 }
             })
 
@@ -223,9 +224,31 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         rlMenu.isVisible = !rlMenu.isVisible
     }
 
-    private fun closeFragment() {
-        val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
-        fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
+    private fun closeFragment(swipeDirection: String) {
+        if (swipeDirection == "no") {
+            val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
+            fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
+        }
+        val animationId = when (swipeDirection) {
+            "up" -> R.anim.slide_up
+            "down" -> R.anim.slide_down
+            else -> return
+        }
+
+        // Load the animation
+        val slideAnimation = AnimationUtils.loadAnimation(appContext, animationId)
+        // Set the animation listener to perform the fragment removal after the animation
+        slideAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationRepeat(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                // Remove the fragment or perform any other necessary actions
+                val fragment = activity?.supportFragmentManager?.findFragmentByTag("gallery")
+                fragment?.parentFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
+            }
+        })
+        // Start the animation on your view
+        ivFullscreenImage.startAnimation(slideAnimation)
     }
 }
 

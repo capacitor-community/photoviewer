@@ -343,7 +343,7 @@ class SliderViewController: UIViewController {
                                             object: nil,
                                             userInfo: vId)
         }
-        self.dismissWithTransition()
+        self.dismissWithTransition(swipeDirection: "no")
     }
 
     // MARK: - shareButtonTapped
@@ -415,7 +415,13 @@ class SliderViewController: UIViewController {
                                             object: nil,
                                             userInfo: vId)
         }
-        self.dismissWithTransition()
+        if swipe.direction == .up {
+            // Slide-up gesture
+            dismissWithTransition(swipeDirection: "up")
+        } else if swipe.direction == .down {
+            // Slide-down gesture
+            dismissWithTransition(swipeDirection: "down")
+        }
     }
 
     // MARK: - Handle Notifications

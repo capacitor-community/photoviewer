@@ -11,6 +11,8 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -141,14 +143,14 @@ class ImageFragment : Fragment() {
                 super.onSwipeUp()
                 if(!ivTouchImage.isZoomed) {
                     postNotification()
-                    activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+                    closeFragment("up")
                 }
             }
             override fun onSwipeDown() {
                 super.onSwipeDown()
                 if(!ivTouchImage.isZoomed) {
                     postNotification()
-                    activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+                    closeFragment("down")
                 }
             }
         })
@@ -185,7 +187,7 @@ class ImageFragment : Fragment() {
                     }
                     R.id.closeBtn -> {
                         postNotification()
-                        activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+                        closeFragment("no")
                     }
                 }
             }
@@ -210,5 +212,29 @@ class ImageFragment : Fragment() {
             Glide.get(appContext).clearDiskCache()
         }).start()
         Glide.get(appContext).clearMemory()
+    }
+    private fun closeFragment(swipeDirection: String) {
+        if (swipeDirection == "no") {
+            activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+        }
+        val animationId = when (swipeDirection) {
+            "up" -> R.anim.slide_up
+            "down" -> R.anim.slide_down
+            else -> return
+        }
+
+        // Load the animation
+        val slideAnimation = AnimationUtils.loadAnimation(appContext, animationId)
+        // Set the animation listener to perform the fragment removal after the animation
+        slideAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationRepeat(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                // Remove the fragment or perform any other necessary actions
+                activity?.supportFragmentManager?.beginTransaction()?.remove(mFragment)?.commit();
+            }
+        })
+        // Start the animation on your view
+        ivTouchImage.startAnimation(slideAnimation)
     }
 }
