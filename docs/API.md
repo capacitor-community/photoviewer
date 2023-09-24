@@ -12,6 +12,8 @@
 
 * [`echo(...)`](#echo)
 * [`show(...)`](#show)
+* [`saveImageFromHttpToInternal(...)`](#saveimagefromhttptointernal)
+* [`getInternalImagePaths()`](#getinternalimagepaths)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -46,11 +48,47 @@ show(options: capShowOptions) => Promise<capShowResult>
 
 Show the PhotoViewer
 
-| Param         | Type                                                      |
-| ------------- | --------------------------------------------------------- |
-| **`options`** | <code><a href="#capshowoptions">capShowOptions</a></code> |
+| Param         | Type                                                      | Description                                  |
+| ------------- | --------------------------------------------------------- | -------------------------------------------- |
+| **`options`** | <code><a href="#capshowoptions">capShowOptions</a></code> | <a href="#capshowoptions">capShowOptions</a> |
 
 **Returns:** <code>Promise&lt;<a href="#capshowresult">capShowResult</a>&gt;</code>
+
+**Since:** 0.0.1
+
+--------------------
+
+
+### saveImageFromHttpToInternal(...)
+
+```typescript
+saveImageFromHttpToInternal(options: capHttpOptions) => Promise<capHttpResult>
+```
+
+Download an image from http and save it locally
+
+| Param         | Type                                                      | Description                                  |
+| ------------- | --------------------------------------------------------- | -------------------------------------------- |
+| **`options`** | <code><a href="#caphttpoptions">capHttpOptions</a></code> | <a href="#caphttpoptions">capHttpOptions</a> |
+
+**Returns:** <code>Promise&lt;<a href="#caphttpresult">capHttpResult</a>&gt;</code>
+
+**Since:** 3.0.4
+
+--------------------
+
+
+### getInternalImagePaths()
+
+```typescript
+getInternalImagePaths() => Promise<capPaths>
+```
+
+Get the internal image path list
+
+**Returns:** <code>Promise&lt;<a href="#cappaths">capPaths</a>&gt;</code>
+
+**Since:** 3.0.4
 
 --------------------
 
@@ -122,6 +160,29 @@ Show the PhotoViewer
 | **`imagetime`** | <code>number</code> | <a href="#image">Image</a> Time Duration in Seconds (default 3) iOS only |
 | **`mode`**      | <code>string</code> | Movie Mode "portrait" / "landscape" (default "landscape") iOS only       |
 | **`ratio`**     | <code>string</code> | Movie Ratio "4/3" / "16/9" (default "16/9") iOS only                     |
+
+
+#### capHttpResult
+
+| Prop          | Type                | Description                                         |
+| ------------- | ------------------- | --------------------------------------------------- |
+| **`webPath`** | <code>string</code> | Web View-friendly path of the internal stored image |
+| **`message`** | <code>string</code> | message                                             |
+
+
+#### capHttpOptions
+
+| Prop           | Type                | Description                            |
+| -------------- | ------------------- | -------------------------------------- |
+| **`url`**      | <code>string</code> | https url of an image                  |
+| **`filename`** | <code>string</code> | file name of the internal stored image |
+
+
+#### capPaths
+
+| Prop           | Type                  | Description     |
+| -------------- | --------------------- | --------------- |
+| **`pathList`** | <code>string[]</code> | image path list |
 
 </docgen-api>
 

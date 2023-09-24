@@ -79,6 +79,24 @@ npm install @capacitor-community/photoviewer
 npx cap sync
 ```
 
+Since version 3.0.4, modify the `capacitor.config.ts` to add the image location to save the image downloaded from an HTTP request to the internal disk.
+
+```ts
+const config: CapacitorConfig = {
+  ...
+  plugins: {
+    PhotoViewer: {
+      iosImageLocation: 'Library/Images',
+      androidImageLocation: 'Files/Images',
+    }
+  }
+  ...
+};
+
+export default config;
+
+
+```
 ### iOS
 
 - in Xcode, open `Info.plist` and add a new Information Property like `Privacy - Photo Library Usage Description` and set a value to `We need to write photos`. This is required to have the `Share`of images and the `create Movie` working.
@@ -159,10 +177,12 @@ npm run serve          // Web
 
 ## Supported methods
 
-| Name     | Android | iOS | Electron | Web |
-| :------- | :------ | :-- | :------- | :-- |
-| echo     |   ✅    |  ✅  |    ❌    |  ✅ |
-| show     |   ✅    |  ✅  |    ❌    |  ✅ |
+| Name                        | Android | iOS | Electron | Web |
+| :-------------------------- | :------ | :-- | :------- | :-- |
+| echo                        |   ✅    |  ✅  |    ❌    |  ✅ |
+| show                        |   ✅    |  ✅  |    ❌    |  ✅ |
+| saveImageFromHttpToInternal |   ❌    |  ✅  |    ❌    |  ❌ |
+| getInternalImagePaths       |   ❌    |  ✅  |    ❌    |  ❌ |
 
 
 ## Documentation

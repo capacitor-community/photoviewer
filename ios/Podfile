@@ -9,12 +9,12 @@ end
 
 target 'Plugin' do
   capacitor_pods
-  pod 'SDWebImage', '~> 5.10.4'
+  pod 'SDWebImage', '~> 5.18.2'
   pod 'ISVImageScrollView', '~> 0.3'
 end
 
 target 'PluginTests' do
   capacitor_pods
-  pod 'SDWebImage', '~> 5.10.4'
+  pod 'SDWebImage', '~> 5.18.2'
   pod 'ISVImageScrollView', '~> 0.3'
 end

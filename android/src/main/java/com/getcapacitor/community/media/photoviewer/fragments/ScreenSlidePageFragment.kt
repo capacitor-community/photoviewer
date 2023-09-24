@@ -95,6 +95,8 @@ class ScreenSlidePageFragment() : Fragment(), CallbackListener {
         sliderFragmentBinding = binding
         if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             image = requireArguments().getParcelable(ARG_IMAGE,Image::class.java)!!
+        } else {
+          image = requireArguments().getParcelable<Image>(ARG_IMAGE)!!
         }
         mode = requireArguments().getString(ARG_MODE).toString()
         imageIndex = requireArguments().getInt(ARG_IMAGEINDEX)

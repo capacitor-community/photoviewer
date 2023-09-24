@@ -10,11 +10,15 @@ extension NSNotification.Name {
  */
 @objc(PhotoViewerPlugin)
 public class PhotoViewerPlugin: CAPPlugin {
-    private let implementation = PhotoViewer()
+    private var implementation: PhotoViewer?
     var exitObserver: Any?
+    var config: PhotoViewerConfig?
 
     override public func load() {
+        let mConfig = photoviewerConfig()
+        self.config = mConfig
         self.addObserversToNotificationCenter()
+        self.implementation = PhotoViewer(config: mConfig)
     }
     deinit {
         NotificationCenter.default.removeObserver(exitObserver as Any)
@@ -24,9 +28,11 @@ public class PhotoViewerPlugin: CAPPlugin {
 
     @objc func echo(_ call: CAPPluginCall) {
         let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+        if let retValue: String = implementation?.echo(value) {
+            call.resolve([
+                "value": retValue
+            ])
+        }
     }
 
     // MARK: show
@@ -75,35 +81,40 @@ public class PhotoViewerPlugin: CAPPlugin {
                 return
             }
             if mode == "gallery" {
-                guard ((self?.implementation.show(imageList, mode: mode,
+                guard ((self?.implementation?.show(imageList, mode: mode,
                                                   startFrom: startFrom,
                                                   options: options)) != nil),
-                      let collectionController = self?.implementation.collectionController else {
+                      let collectionController = self?.implementation?
+                                            .collectionController else {
                     call.reject("Show : Unable to show the CollectionViewController")
                     return
                 }
                 collectionController.modalPresentationStyle = .fullScreen
-                self?.bridge?.viewController?.present(collectionController, animated: true, completion: {
+                self?.bridge?.viewController?.present(collectionController,
+                                                      animated: true, completion: {
                     call.resolve(["result": true])
                 })
             } else if mode == "one" {
-                guard ((self?.implementation.show(imageList, mode: mode,
+                guard ((self?.implementation?.show(imageList, mode: mode,
                                                   startFrom: startFrom,
                                                   options: options)) != nil),
-                      let oneImageController = self?.implementation.oneImageController else {
+                      let oneImageController = self?.implementation?
+                                                .oneImageController else {
                     call.reject("Show : Unable to show the OneImageViewController")
                     return
                 }
                 oneImageController.modalPresentationStyle = .fullScreen
-                self?.bridge?.viewController?.present(oneImageController, animated: true, completion: {
+                self?.bridge?.viewController?.present(oneImageController,
+                                                      animated: true, completion: {
                     call.resolve(["result": true])
                 })
 
             } else if mode == "slider" {
-                guard ((self?.implementation.show(imageList, mode: mode,
+                guard ((self?.implementation?.show(imageList, mode: mode,
                                                   startFrom: startFrom,
                                                   options: options)) != nil),
-                      let sliderController = self?.implementation.sliderController else {
+                      let sliderController = self?.implementation?
+                                                    .sliderController else {
                     call.reject("Show : Unable to show the SliderViewController")
                     return
                 }
@@ -123,6 +134,61 @@ public class PhotoViewerPlugin: CAPPlugin {
     // swiftlint:enable cyclomatic_complexity
     // swiftlint:enable function_body_length
 
+    @objc func saveImageFromHttpToInternal(_ call: CAPPluginCall) {
+        guard let imageUrl = call.options["url"] as? String else {
+            let error: String = "Must provide an image url"
+            print(error)
+            call.reject("SaveImageFromHttpToInternal : \(error)")
+            return
+        }
+        guard let fileName = call.options["filename"] as? String else {
+            let error: String = "Must provide an image filename"
+            print(error)
+            call.reject("SaveImageFromHttpToInternal : \(error)")
+            return
+        }
+        DispatchQueue.global(qos: .background).async {
+            do {
+                try self.implementation?
+                    .saveImageFromHttpToInternal(call, url: imageUrl,
+                                                 fileName: fileName)
+            } catch PhotoViewerError.failed(let message) {
+
+                DispatchQueue.main.async {
+                    call.reject("SaveImageFromHttpToInternal : \(message)")
+                    return
+                }
+            } catch let error {
+                DispatchQueue.main.async {
+                    let msg = "SaveImageFromHttpToInternal : " +
+                        "\(error.localizedDescription)"
+                    call.reject("\(msg)")
+                    return
+                }
+            }
+        }
+    }
+    @objc func getInternalImagePaths(_ call: CAPPluginCall) {
+        do {
+            if let pathList: [String] = try self.implementation?
+                                                .getInternalImagePaths() {
+                call.resolve(["pathList": pathList])
+                return
+            } else {
+                call.reject("GetInternalImagePaths : no image path list")
+                return
+            }
+       } catch PhotoViewerError.failed(let message) {
+            call.reject("GetInternalImagePaths : \(message)")
+            return
+       } catch let error {
+            let msg = "GetInternalImagePaths : " +
+                "\(error.localizedDescription)"
+            call.reject("\(msg)")
+            return
+       }
+
+    }
     @objc func addObserversToNotificationCenter() {
         // add Observers
         exitObserver = NotificationCenter
@@ -139,6 +205,15 @@ public class PhotoViewerPlugin: CAPPlugin {
             self.notifyListeners("jeepCapPhotoViewerExit", data: info, retainUntilConsumed: true)
             return
         }
+    }
+
+    private func photoviewerConfig() -> PhotoViewerConfig {
+        var config = PhotoViewerConfig()
+        let configPlugin = getConfig()
+        if let iosImageLocation = configPlugin.getString("iosImageLocation") {
+            config.iosImageLocation = iosImageLocation
+        }
+        return config
     }
 
 }

@@ -9,9 +9,29 @@ export interface PhotoViewerPlugin {
   echo(options: capEchoOptions): Promise<capEchoResult>;
   /**
    * Show the PhotoViewer
-   * @param options
+   * 
+   * @param options capShowOptions
+   * @return Promise<capShowResult>
+   * @since 0.0.1
    */
   show(options: capShowOptions): Promise<capShowResult>;
+
+  /**
+   * Download an image from http and save it locally
+   * 
+   * @param options capHttpOptions
+   * @return Promise<capHttpResult>
+   * @since 3.0.4
+   */
+  saveImageFromHttpToInternal(options: capHttpOptions): Promise<capHttpResult>;
+
+  /**
+   * Get the internal image path list
+   * 
+   * @return Promise<capPaths>
+   * @since 3.0.4
+   */
+  getInternalImagePaths(): Promise<capPaths>;
 }
 export interface capShowOptions {
   /**
@@ -124,4 +144,30 @@ export interface MovieOptions {
    * Movie Ratio "4/3" / "16/9" (default "16/9") iOS only
    */
   ratio?: string;
+}
+export interface capHttpOptions {
+  /**
+   * https url of an image
+   */
+  url: string;
+  /**
+   * file name of the internal stored image
+   */
+  filename: string;
+}
+export interface capHttpResult {
+  /**
+   * Web View-friendly path of the internal stored image
+   */
+  webPath?: string;
+  /**
+   * message 
+   */
+  message?: string;
+}
+export interface capPaths {
+  /**
+   * image path list
+   */
+  pathList: string[];
 }

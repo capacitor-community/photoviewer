@@ -6,4 +6,6 @@
 CAP_PLUGIN(PhotoViewerPlugin, "PhotoViewer",
            CAP_PLUGIN_METHOD(echo, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(show, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(saveImageFromHttpToInternal, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getInternalImagePaths, CAPPluginReturnPromise);
 )

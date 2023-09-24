@@ -171,6 +171,15 @@ public class PhotoViewerPlugin extends Plugin {
             }
         }
     }
+    @PluginMethod
+    public void saveImageFromHttpToInternal(PluginCall call) {
+        call.unimplemented("Not implemented on Android.");
+    }
+
+    @PluginMethod
+    public void getInternalImagePaths(PluginCall call) {
+       call.unimplemented("Not implemented on Android.");
+    }
 
     private void AddObserversToNotificationCenter() {
         NotificationCenter

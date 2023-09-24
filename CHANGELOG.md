@@ -1,3 +1,16 @@
+# 3.0.4 (2023-09-24)
+
+## Added Features
+
+ - iOS Add method saveImageFromHttpToInternal
+ - iOS Add method getInternalImagePaths
+ - Add iOSImageLocation definition in capacitor.config.ts
+
+## Bug fixes
+
+ - Android fix App crashing when calling PhotoViewer.show after updating to version 3.0 and capacitor 5 issue#51
+
+
 # 3.0.3 (2023-09-17)
 
 ## Bug fixes

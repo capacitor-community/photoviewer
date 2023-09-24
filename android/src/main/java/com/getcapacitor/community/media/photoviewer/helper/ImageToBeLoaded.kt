@@ -9,37 +9,26 @@ class ImageToBeLoaded {
     var toBeLoaded: Any? = null
     val imgUrl = url
     val isCap: Boolean = imgUrl.contains("_capacitor_file_")
-    if ((imgUrl.substring(0, 4).equals("http") && !isCap) ||
-      imgUrl.contains("base64") ) {
+
+    if (imgUrl.startsWith("file://")) {
+      // Handle file:// URLs
+      val filePath = imgUrl.substring(7) // Remove "file://" prefix
+      val file = File(filePath)
+      if (file.exists()) {
+        toBeLoaded = file
+      }
+    } else if (isCap) {
+      // Handle Capacitor file URLs
+      val filePath = imgUrl.substringAfter("_capacitor_file_")
+      val file = File(filePath)
+      if (file.exists()) {
+        toBeLoaded = file
+      }
+    } else if (imgUrl.startsWith("http") || imgUrl.contains("base64")) {
+      // Handle http URLs or base64 data
       toBeLoaded = imgUrl
     }
-    if (imgUrl.substring(0, 4).equals("file") || isCap) {
-      val uri: Uri = Uri.parse(imgUrl)
-      val element: String? = uri.getLastPathSegment()
-      var file: File? = null
-      if(isCap) {
-        val filePath = uri.getPath()?.removePrefix("/_capacitor_file_")
-        file = filePath?.let { File(it) }
-      } else {
-        if (imgUrl.contains("DCIM")) {
-          file = element?.let {
-            File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-                .toString(), it
-            )
-          }
-        }
-        if (imgUrl.contains("Pictures")) {
-          file = element?.let {
-            File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .toString(), it
-            )
-          }
-        }
-      }
-      toBeLoaded = file
-    }
+
     return toBeLoaded
   }
 }

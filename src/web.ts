@@ -7,6 +7,9 @@ import type {
   capEchoResult,
   capShowOptions,
   capShowResult,
+  capHttpOptions,
+  capHttpResult,
+  capPaths,
   Image,
   ViewerOptions,
 } from './definitions';
@@ -85,6 +88,14 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
         return Promise.reject("Div id='photoviewer-container' not found");
       }
   }
+  async saveImageFromHttpToInternal(options: capHttpOptions): Promise<capHttpResult> {
+    console.log('saveImageFromHttpToInternal', options);
+    throw this.unimplemented('Not implemented on web.');
+  }
+  async getInternalImagePaths(): Promise<capPaths> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+  
   private jeepPhotoViewerResult = (ev: any) => {
     const res = ev.detail;
     if(res !== null) {
