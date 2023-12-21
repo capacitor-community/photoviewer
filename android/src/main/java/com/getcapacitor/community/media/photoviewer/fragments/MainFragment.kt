@@ -117,11 +117,6 @@ class MainFragment : Fragment() , GalleryImageClickListener {
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit();
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        val view: View = initializeView()
-        mContainer?.addView(view)
-        super.onConfigurationChanged(newConfig)
-    }
     override fun onDestroyView() {
         mainFragmentBinding = null
         clearCache()

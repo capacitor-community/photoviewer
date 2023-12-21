@@ -41,7 +41,7 @@ On iOS plugin, the creation of a movie from the pictures stored in the <strong>A
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/dw/@capacitor-community/photoviewer?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/v/@capacitor-community/photoviewer?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-6-orange?style=flat-square" /></a>
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-7-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 <br>
@@ -245,6 +245,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <a href="https://github.com/bozhidarc" title="bozhidarc"><img src="https://github.com/bozhidarc.png?size=100" width="50" height="50" /></a>
   <a href="https://github.com/adnbrownie" title="adnbrownie"><img src="https://github.com/adnbrownie.png?size=100" width="50" height="50" /></a>
   <a href="https://github.com/chiraganand" title="chiraganand"><img src="https://github.com/chiraganand.png?size=100" width="50" height="50" /></a>
+  <a href="https://github.com/https://github.com/camilocalvo" title="camilocalvo"><img src="https://github.com/camilocalvo.png?size=100" width="50" height="50" /></a>
 </p>
 
 <!-- markdownlint-enable -->

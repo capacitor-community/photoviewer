@@ -197,11 +197,6 @@ class ImageFragment : Fragment() {
         return binding.root
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        val view: View = initializeView()
-        mContainer?.addView(view)
-        super.onConfigurationChanged(newConfig)
-    }
     override fun onDestroyView() {
         imageFragmentBinding = null
         clearCache()

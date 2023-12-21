@@ -1,3 +1,18 @@
+
+# 3.0.5 (2023-12-21)
+
+### Chore
+
+ - Update to @capacitor/core 5.3.0
+ - Update to @capacitor/ios 5.3.0
+ - Update to @capacitor/android 5.3.0
+
+### Bug fixes
+
+ - Android Close button stops working after device is rotated issue#50
+ - Android Display timeout disabled with plugin installed issue#43
+ - iOS Photo and close button partially disappear off of screen when device is rotated issue#57 (PR#58 from camilocalvo)
+ 
 # 3.0.4 (2023-09-24)
 
 ## Added Features
