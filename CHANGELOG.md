@@ -1,11 +1,11 @@
-
-# 3.0.5 (2023-12-21)
-
+# 3.0.6 (2023_12_21)
 ### Chore
 
  - Update to @capacitor/core 5.3.0
  - Update to @capacitor/ios 5.3.0
  - Update to @capacitor/android 5.3.0
+
+# 3.0.5 (2023-12-21)
 
 ### Bug fixes
 
