@@ -140,16 +140,13 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         return bShare
 
     }()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        view.backgroundColor = _backColor
-            .setBackColor(color: _backgroundColor)
-
+    
+    func addSubviewsToParentView(size: CGSize) {
         view.addSubview(mScrollView)
-        mScrollView.frame = view.frame
+        mScrollView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: size.width, height: size.height))
         self.mScrollView.maximumZoomScale = self._maxZoomScale
         self.mScrollView.delegate = self
+
         if url.prefix(4) == "http" || url.contains("base64") {
             let imgPlaceHolder: UIImage?
             if #available(iOS 13, *) {
@@ -193,9 +190,18 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         }
         mNavBar.setItems([navigationItem], animated: false)
         mNavBar.frame = CGRect(x: 0, y: 35,
-                               width: view.frame.size.width, height: 64)
+                               width: size.width, height: 64)
         view.addSubview(mNavBar)
         setupGestureRecognizers()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        view.backgroundColor = _backColor
+            .setBackColor(color: _backgroundColor)
+
+        addSubviewsToParentView(size: CGSize(width: view.frame.width, height: view.frame.height))
     }
 
     // MARK: - viewDidDisappear
@@ -291,6 +297,16 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         if scrollView.zoomScale <= self._minZoomScale {
             scrollView.zoomScale = self._minZoomScale
         }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        mImageView.removeFromSuperview()
+        mScrollView.removeFromSuperview()
+        mNavBar.removeFromSuperview()
+
+        addSubviewsToParentView(size: size)
     }
 
     // MARK: - setupGestureRecognizers
