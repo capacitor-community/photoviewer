@@ -225,10 +225,6 @@ npm run serve          // Web
     - `pinch-zoom` and `pan` with your two fingers
     - `double-tap` to zoom directly to the maximum zoom
 
-## Video Application
-
-### iOS
-
 
 ## Dependencies
 
