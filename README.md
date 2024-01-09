@@ -225,6 +225,11 @@ npm run serve          // Web
     - `pinch-zoom` and `pan` with your two fingers
     - `double-tap` to zoom directly to the maximum zoom
 
+## Video Application
+
+### iOS
+
+
 ## Dependencies
 
 The Android code is using `MikeOrtiz/TouchImageView` allowing for the zooming in picture (https://github.com/MikeOrtiz/TouchImageView)
