@@ -136,7 +136,7 @@ class ImageScrollViewController: UIViewController {
         mScrollView.addSubview(mImageView)
         if url.prefix(4) == "http" || url.contains("base64") {
             mImageView.sd_setImage(with: URL(string: url),
-                                   placeholderImage: nil)
+                                placeholderImage: nil)
         }
         if url.prefix(38) ==
             "file:///var/mobile/Media/DCIM/100APPLE" ||

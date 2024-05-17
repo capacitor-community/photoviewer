@@ -22,8 +22,8 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _backColor: BackgroundColor = BackgroundColor()
     private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
     private var _btColor: UIColor = UIColor.white
-    
-    
+
+
     // MARK: - Set-up url
 
     var url: String {
@@ -140,7 +140,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         return bShare
 
     }()
-    
+
     func addSubviewsToParentView(size: CGSize) {
         view.addSubview(mScrollView)
         mScrollView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: size.width, height: size.height))
@@ -194,7 +194,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(mNavBar)
         setupGestureRecognizers()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -301,7 +301,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         mImageView.removeFromSuperview()
         mScrollView.removeFromSuperview()
         mNavBar.removeFromSuperview()

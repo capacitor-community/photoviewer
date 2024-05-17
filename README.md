@@ -37,7 +37,7 @@ Capacitor community plugin for Web and Native Photo Viewer allowing to open full
 A picture can be acessed by image web url, base64 data or from internal device for iOS and Android.
 </p>
 <p align="left">
-- iOS 
+- iOS
 </p>
 <ul>
 <li><strong><code>file:///var/mobile/Media/DCIM/100APPLE/YOUR_IMAGE.JPG</code></strong></li>
@@ -146,9 +146,9 @@ buildscript {
     }
 }
 ...
-``` 
+```
 
-- open the `build.gradle (Module: android.app)` and do the following 
+- open the `build.gradle (Module: android.app)` and do the following
 
     - after `apply plugin: 'com.android.application'` add
         ```
@@ -206,6 +206,7 @@ npm run serve          // Web
 | show                        |   ✅    |  ✅  |    ❌    |  ✅ |
 | saveImageFromHttpToInternal |   ❌    |  ✅  |    ❌    |  ❌ |
 | getInternalImagePaths       |   ❌    |  ✅  |    ❌    |  ❌ |
+| customHeaders               |   ✅    |  ✅  |    ❌    |  ❌ |
 
 
 ## Documentation
@@ -236,11 +237,11 @@ npm run serve          // Web
 
 ### iOS and Android
 
-- In `Gallery` mode (Image Array with more than one Image): 
+- In `Gallery` mode (Image Array with more than one Image):
     - make a `tap` will select the image and go fullscreen
     - In Fulscreen
         - `tap` will hide the share and exit buttons and open the window for other gestures.
-        - `double tap` to zoom in and out  
+        - `double tap` to zoom in and out
         - `pinch` with your two fingers
         - `tap` will show the share and exit buttons and leave the window for other gestures.
         - `double tap` will hide the buttons and zoom in straightforward (iOS only)

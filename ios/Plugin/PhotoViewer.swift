@@ -1,6 +1,7 @@
 import Foundation
 import Capacitor
 import UIKit
+import SDWebImage
 
 enum PhotoViewerError: Error {
     case failed(message: String)
@@ -11,7 +12,7 @@ enum PhotoViewerError: Error {
     var sliderViewController: SliderViewController?
     var stFrom: Int = 0
     private var config: PhotoViewerConfig
-    
+
     init(config: PhotoViewerConfig) {
         self.config = config
         super.init()
@@ -46,6 +47,14 @@ enum PhotoViewerError: Error {
                            options: [String: Any]) -> Bool {
         stFrom = startFrom > imageList.count - 1 ? imageList.count - 1
             : startFrom
+
+        // setup custom headers on SDWebImageDownloader
+        let customHeaders = options["customHeaders"] as? [String: String] ?? [:]
+        for (key, value) in customHeaders {
+            SDWebImageDownloader.shared.setValue(value, forHTTPHeaderField: key)
+            SDWebImageDownloader().setValue(value, forHTTPHeaderField: key)
+        }
+
         if imageList.count > 1  && mode == "gallery" {
             collectionViewController = CollectionViewController()
             collectionViewController?.imageList = imageList
@@ -72,7 +81,7 @@ enum PhotoViewerError: Error {
             return false
         }
     }
-    
+
     @objc public func saveImageFromHttpToInternal(_ call: CAPPluginCall, url: String,
                                                   fileName: String) throws {
         // get image location from the config
@@ -120,6 +129,6 @@ enum PhotoViewerError: Error {
         } catch let error {
             throw PhotoViewerError.failed(message: error.localizedDescription)
         }
-        
+
     }
 }
