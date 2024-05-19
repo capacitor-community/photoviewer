@@ -12,11 +12,11 @@
 <p align="left" style="font-size:47px">Start --></p>
 <br>
 <p align="left">
-I have been dedicated to developing and maintaining this plugin for many years since the inception of Ionic Capacitor. Now, at 73+ years old, and with my MacBook Pro becoming obsolete for running Capacitor 6 for iOS, I have made the decision to cease maintenance of the plugin. If anyone wishes to take ownership of this plugin, they are welcome to do so.  
+I have been dedicated to developing and maintaining this plugin for many years since the inception of Ionic Capacitor. Now, at 73+ years old, and with my MacBook Pro becoming obsolete for running Capacitor 6 for iOS, I have made the decision to cease maintenance of the plugin. If anyone wishes to take ownership of this plugin, they are welcome to do so.
 </p>
 <br>
 <p align="left">
-It has been a great honor to be part of this development journey alongside the developer community. I am grateful to see many of you following me on this path and incorporating the plugin into your applications. Your comments and suggestions have motivated me to continuously improve it.  
+It has been a great honor to be part of this development journey alongside the developer community. I am grateful to see many of you following me on this path and incorporating the plugin into your applications. Your comments and suggestions have motivated me to continuously improve it.
 </p>
 <br>
 <p align="left">
@@ -206,7 +206,6 @@ npm run serve          // Web
 | show                        |   ✅    |  ✅  |    ❌    |  ✅ |
 | saveImageFromHttpToInternal |   ❌    |  ✅  |    ❌    |  ❌ |
 | getInternalImagePaths       |   ❌    |  ✅  |    ❌    |  ❌ |
-| customHeaders               |   ✅    |  ✅  |    ❌    |  ❌ |
 
 
 ## Documentation
@@ -248,6 +247,29 @@ npm run serve          // Web
 - In `One Image` mode (Image Array with one Image only):
     - `pinch-zoom` and `pan` with your two fingers
     - `double-tap` to zoom directly to the maximum zoom
+- You can pass customHeaders in the options object to let the plugin pass those headers to the http request for the image. For example:
+
+```ts
+PhotoViewer.show({
+  images: [
+    {
+      url: 'https://picsum.photos/id/237/200/300',
+      title: 'Title'
+    },
+    {
+      url: 'https://picsum.photos/id/238/200/300',
+      title: 'Title'
+    },
+  ],
+  options: {
+    customHeaders: {
+      accept: 'image/jpeg, image/png, image/gif, image/webp, image/svg+xml, image/*;q=0.8, */*;q=0.5',
+      cookie: 'session=foo;',
+    },
+  },
+  mode: 'slider'
+})
+```
 
 
 ## Dependencies
