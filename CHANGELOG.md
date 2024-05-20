@@ -1,3 +1,21 @@
+# 3.2.0 (2024-05-20)
+
+## Cease of Maintenance
+
+ - Update README.md
+
+## Chore
+
+ - Update to @capacitor/core 5.7.5
+ - Update to @capacitor/ios 5.7.5
+ - Update to @capacitor/android 5.7.5
+
+## Added Features
+
+ - Feat/custom headers PR#60 by Shiva Prasad
+
+
+
 # 3.0.6 (2023_12_21)
 ### Chore
 

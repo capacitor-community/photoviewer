@@ -49,10 +49,10 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@capacitor/android": "^5.5.0",
-    "@capacitor/core": "^5.5.0",
+    "@capacitor/android": "5.7.5",
+    "@capacitor/core": "5.7.5",
     "@capacitor/docgen": "^0.0.17",
-    "@capacitor/ios": "^5.5.0",
+    "@capacitor/ios": "5.7.5",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
@@ -65,7 +65,7 @@
     "typescript": "~4.1.5"
   },
   "peerDependencies": {
-    "@capacitor/core": "^5.0.0"
+    "@capacitor/core": "5.7.5"
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
@@ -81,6 +81,6 @@
     }
   },
   "dependencies": {
-    "jeep-photoviewer": "^1.2.0"
+    "jeep-photoviewer": "^1.2.3"
   }
 }
