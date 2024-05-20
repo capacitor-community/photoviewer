@@ -19,6 +19,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.getcapacitor.JSObject
 import com.getcapacitor.community.media.photoviewer.Notifications.NotificationCenter
 import com.getcapacitor.community.media.photoviewer.R
@@ -37,6 +39,7 @@ class ImageFragment : Fragment() {
     private var imageFragmentBinding: ImageFragmentBinding? = null
     private var bShare: Boolean = true
     private var maxZoomScale: Double = 3.0
+    private var customHeaders: JSObject = JSObject()
     private var compressionQuality: Double = 0.8
     private var backgroundColor: String = "black"
     private lateinit var appId: String
@@ -71,6 +74,8 @@ class ImageFragment : Fragment() {
             .getDouble("compressionquality")
         if(this.options.has("backgroundcolor")) backgroundColor = this.options
             .getString("backgroundcolor").toString()
+        if (this.options.has("customHeaders")) customHeaders = this.options
+            .getJSObject("customHeaders")!!
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -159,9 +164,15 @@ class ImageFragment : Fragment() {
         val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
 
         if (toBeLoaded is String) {
-            // load image from http
+            // load image from url
+            val lazyHeaders = LazyHeaders.Builder()
+            for (key in customHeaders.keys()) {
+                customHeaders.getString(key)?.let { lazyHeaders.addHeader(key, it) }
+            }
+            val glideUrl = GlideUrl(toBeLoaded, lazyHeaders.build())
             GlideApp.with(appContext)
-                .load(toBeLoaded)
+                .asBitmap()
+                .load(glideUrl)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivTouchImage)

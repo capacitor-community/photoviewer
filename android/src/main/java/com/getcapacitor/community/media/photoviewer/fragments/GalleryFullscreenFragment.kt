@@ -28,6 +28,7 @@ class GalleryFullscreenFragment: DialogFragment() {
     private var bShare: Boolean = true
     private var bTitle: Boolean = true
     private var maxZoomScale: Double = 3.0
+    private var customHeaders: JSObject = JSObject()
     private var compressionQuality: Double = 0.8
     private lateinit var viewPager: ViewPager2
     private lateinit var curTransf: ViewPager2.PageTransformer
@@ -54,6 +55,8 @@ class GalleryFullscreenFragment: DialogFragment() {
             .getDouble("compressionquality")
         if(this.options.has("backgroundcolor")) backgroundColor = this.options
             .getString("backgroundcolor").toString()
+        if (this.options.has("customHeaders")) customHeaders = this.options
+                .getJSObject("customHeaders")!!
     }
 
     override fun onCreateView(
@@ -121,7 +124,7 @@ class GalleryFullscreenFragment: DialogFragment() {
         override fun createFragment(position: Int): Fragment {
             val image: Image = imageList.get(position)
             return ScreenSlidePageFragment.getInstance(image, mode, position, bShare, bTitle, maxZoomScale,
-                compressionQuality, backgroundColor)
+                compressionQuality, backgroundColor, customHeaders)
 
         }
     }

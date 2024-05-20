@@ -150,6 +150,7 @@ Get the internal image path list
 | **`backgroundcolor`**    | <code>string</code>                                   | Background Color ["white", "ivory", "lightgrey", "darkgrey", "grey", "dimgrey", "black"] (default "black") |
 | **`divid`**              | <code>string</code>                                   | Div HTML Element Id (Web only) (default 'photoviewer-container')                                           |
 | **`movieoptions`**       | <code><a href="#movieoptions">MovieOptions</a></code> | Movie Options iOS only                                                                                     |
+| **`customHeaders`**      | <code>{ [key: string]: string; }</code>               | Custom Headers                                                                                             |
 
 
 #### MovieOptions
