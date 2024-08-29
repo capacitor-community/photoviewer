@@ -87,7 +87,7 @@ enum PhotoViewerError: Error {
         // get image location from the config
         guard let imageLocation = config.iosImageLocation else {
             let message = "You must have 'iosImageLocation' defined in " +
-                          "the capacitor.config.ts file"
+                "the capacitor.config.ts file"
             throw PhotoViewerError.failed(message: message)
         }
         guard let imageURL = URL(string: url) else {
@@ -96,15 +96,15 @@ enum PhotoViewerError: Error {
         }
 
         UtilsImage.downloadAndSaveImage(imageURL: imageURL,
-                                       imageName: fileName,
-                             imageLocation: imageLocation) { result in
+                                        imageName: fileName,
+                                        imageLocation: imageLocation) { result in
             switch result {
             case .success(let imagePath):
                 // convert the filepath into a Web View-friendly path.
                 if let range = imagePath.path.range(of: "/Containers/", options: .backwards) {
                     let extractedPath = imagePath.path[range.upperBound...]
                     let resultPath = "capacitor://localhost/_capacitor_file_" +
-                                     "/var/mobile/Containers/" + String(extractedPath)
+                        "/var/mobile/Containers/" + String(extractedPath)
                     call.resolve(["webPath": resultPath])
                 } else {
                     call.resolve(["message": "cannot create the Web View-friendly path"])
@@ -120,7 +120,7 @@ enum PhotoViewerError: Error {
         // get image location from the config
         guard let imageLocation = config.iosImageLocation else {
             let message = "You must have 'iosImageLocation' defined in " +
-                          "the capacitor.config.ts file"
+                "the capacitor.config.ts file"
             throw PhotoViewerError.failed(message: message)
         }
         do {

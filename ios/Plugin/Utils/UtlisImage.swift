@@ -28,7 +28,7 @@ class UtilsImage {
     class func directoryURL(for imageLocation: String) throws -> URL? {
 
         let folders = splitImageLocation(for: imageLocation)
-        switch folders[0]{
+        switch folders[0] {
         case "Library":
             if let libraryDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first {
                 let directory = libraryDirectory.appendingPathComponent(folders[1])
@@ -76,7 +76,7 @@ class UtilsImage {
                                                       options: .backwards) {
                         let extractedPath = fileURL.path[range.upperBound...]
                         let resultPath = "capacitor://localhost/_capacitor_file_" +
-                        "/var/mobile/Containers/" + String(extractedPath)
+                            "/var/mobile/Containers/" + String(extractedPath)
 
                         listPath.append(resultPath)
                     } else {
@@ -87,17 +87,17 @@ class UtilsImage {
             return listPath
         } catch {
             let msg = "\(error)"
-            throw UtilsImageError.listOfImagePathFailed(message:msg)
+            throw UtilsImageError.listOfImagePathFailed(message: msg)
         }
     }
 
     class func downloadAndSaveImage(imageURL: URL, imageName: String, imageLocation: String,
                                     completion: @escaping (Result<URL, Error>)
-                                    -> Void) {
+                                        -> Void) {
 
         let urlSession = URLSession.shared
 
-        let task = urlSession.dataTask(with: imageURL) { (data, response, error) in
+        let task = urlSession.dataTask(with: imageURL) { (data, _, error) in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -113,14 +113,14 @@ class UtilsImage {
                 guard let imageDirectory = try directoryURL(for: imageLocation)
                 else {
                     completion(.failure(NSError(domain: "InvalidImageDirectory", code: 0, userInfo: nil)))
-                   return
+                    return
                 }
                 // Create the "Images" directory if it doesn't exist
                 try FileManager.default.createDirectory(at: imageDirectory, withIntermediateDirectories: true, attributes: nil)
 
                 // Combine the directory and filename to create the full path
                 let imagePath = imageDirectory
-                                .appendingPathComponent(imageName + ".jpeg")
+                    .appendingPathComponent(imageName + ".jpeg")
 
                 // Save the image to the Library/Images folder
 

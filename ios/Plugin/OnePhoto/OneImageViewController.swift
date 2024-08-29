@@ -23,7 +23,6 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     private var _colorRange: [String] = ["white", "ivory", "lightgrey"]
     private var _btColor: UIColor = UIColor.white
 
-
     // MARK: - Set-up url
 
     var url: String {
@@ -96,7 +95,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         navigationBar.isTranslucent = true
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
-         return navigationBar
+        return navigationBar
     }()
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
@@ -221,7 +220,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: .photoviewerExit,
                                         object: nil,
                                         userInfo: vId)
-//        self.dismissWithTransition()
+        //        self.dismissWithTransition()
         //        self.dismiss(animated: true, completion: nil)
         if swipe.direction == .up {
             // Slide-up gesture
