@@ -39,7 +39,6 @@ extension UIViewController {
             transition.subtype = CATransitionSubtype.fromRight
         }
 
-
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }

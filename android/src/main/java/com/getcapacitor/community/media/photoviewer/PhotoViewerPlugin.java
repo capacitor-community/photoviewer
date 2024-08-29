@@ -18,14 +18,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @CapacitorPlugin(
-        name = "PhotoViewer",
-        permissions = {
-                @Permission(alias = PhotoViewerPlugin.MEDIAIMAGES,
-                        strings = { Manifest.permission.READ_MEDIA_IMAGES }),
-
-                @Permission(alias = PhotoViewerPlugin.READ_EXTERNAL_STORAGE,
-                        strings = { Manifest.permission.READ_EXTERNAL_STORAGE })
-        }
+    name = "PhotoViewer",
+    permissions = {
+        @Permission(alias = PhotoViewerPlugin.MEDIAIMAGES, strings = { Manifest.permission.READ_MEDIA_IMAGES }),
+        @Permission(alias = PhotoViewerPlugin.READ_EXTERNAL_STORAGE, strings = { Manifest.permission.READ_EXTERNAL_STORAGE })
+    }
 )
 public class PhotoViewerPlugin extends Plugin {
 
@@ -54,7 +51,7 @@ public class PhotoViewerPlugin extends Plugin {
             } else {
                 call.reject(PERMISSION_DENIED_ERROR);
             }
-        } else  if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
+        } else if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
             if (getPermissionState(READ_EXTERNAL_STORAGE) == PermissionState.GRANTED) {
                 isPermissions = true;
                 show(call);
@@ -70,7 +67,6 @@ public class PhotoViewerPlugin extends Plugin {
                 return false;
             }
         } else if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
-
             if (getPermissionState(READ_EXTERNAL_STORAGE) != PermissionState.GRANTED) {
                 return false;
             }
@@ -146,24 +142,24 @@ public class PhotoViewerPlugin extends Plugin {
                 AddObserversToNotificationCenter();
 
                 bridge
-                        .getActivity()
-                        .runOnUiThread(
-                                () -> {
-                                    try {
-                                        if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
-                                            String msg = "Show : imageList must be greater that one ";
-                                            msg += "for Mode " + finalMode;
-                                            rHandler.retResult(call, false, msg);
-                                            return;
-                                        }
-                                        implementation.show(images, finalMode, finalStartFrom, finalOptions);
-                                        rHandler.retResult(call, true, null);
-                                        return;
-                                    } catch (Exception e) {
-                                        rHandler.retResult(call, false, e.getMessage());
-                                    }
+                    .getActivity()
+                    .runOnUiThread(
+                        () -> {
+                            try {
+                                if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
+                                    String msg = "Show : imageList must be greater that one ";
+                                    msg += "for Mode " + finalMode;
+                                    rHandler.retResult(call, false, msg);
+                                    return;
                                 }
-                        );
+                                implementation.show(images, finalMode, finalStartFrom, finalOptions);
+                                rHandler.retResult(call, true, null);
+                                return;
+                            } catch (Exception e) {
+                                rHandler.retResult(call, false, e.getMessage());
+                            }
+                        }
+                    );
             } catch (Exception e) {
                 String msg = "Show: " + e.getMessage();
                 rHandler.retResult(call, false, msg);
@@ -171,6 +167,7 @@ public class PhotoViewerPlugin extends Plugin {
             }
         }
     }
+
     @PluginMethod
     public void saveImageFromHttpToInternal(PluginCall call) {
         call.unimplemented("Not implemented on Android.");
@@ -178,26 +175,26 @@ public class PhotoViewerPlugin extends Plugin {
 
     @PluginMethod
     public void getInternalImagePaths(PluginCall call) {
-       call.unimplemented("Not implemented on Android.");
+        call.unimplemented("Not implemented on Android.");
     }
 
     private void AddObserversToNotificationCenter() {
         NotificationCenter
-                .defaultCenter()
-                .addMethodForNotification(
-                        "photoviewerExit",
-                        new MyRunnable() {
-                            @Override
-                            public void run() {
-                                JSObject data = new JSObject();
-                                data.put("result", this.getInfo().get("result"));
-                                data.put("imageIndex", this.getInfo().get("imageIndex"));
-                                data.put("message", this.getInfo().get("message"));
-                                NotificationCenter.defaultCenter().removeAllNotifications();
-                                notifyListeners("jeepCapPhotoViewerExit", data);
-                                return;
-                            }
-                        }
-                );
+            .defaultCenter()
+            .addMethodForNotification(
+                "photoviewerExit",
+                new MyRunnable() {
+                    @Override
+                    public void run() {
+                        JSObject data = new JSObject();
+                        data.put("result", this.getInfo().get("result"));
+                        data.put("imageIndex", this.getInfo().get("imageIndex"));
+                        data.put("message", this.getInfo().get("message"));
+                        NotificationCenter.defaultCenter().removeAllNotifications();
+                        notifyListeners("jeepCapPhotoViewerExit", data);
+                        return;
+                    }
+                }
+            );
     }
 }

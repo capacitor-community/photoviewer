@@ -81,40 +81,40 @@ public class PhotoViewerPlugin: CAPPlugin {
                 return
             }
             if mode == "gallery" {
-                guard ((self?.implementation?.show(imageList, mode: mode,
-                                                  startFrom: startFrom,
-                                                  options: options)) != nil),
+                guard (self?.implementation?.show(imageList, mode: mode,
+                                                   startFrom: startFrom,
+                                                   options: options)) != nil,
                       let collectionController = self?.implementation?
-                                            .collectionController else {
+                        .collectionController else {
                     call.reject("Show : Unable to show the CollectionViewController")
                     return
                 }
                 collectionController.modalPresentationStyle = .fullScreen
                 self?.bridge?.viewController?.present(collectionController,
                                                       animated: true, completion: {
-                    call.resolve(["result": true])
-                })
+                                                        call.resolve(["result": true])
+                                                      })
             } else if mode == "one" {
-                guard ((self?.implementation?.show(imageList, mode: mode,
-                                                  startFrom: startFrom,
-                                                  options: options)) != nil),
+                guard (self?.implementation?.show(imageList, mode: mode,
+                                                   startFrom: startFrom,
+                                                   options: options)) != nil,
                       let oneImageController = self?.implementation?
-                                                .oneImageController else {
+                        .oneImageController else {
                     call.reject("Show : Unable to show the OneImageViewController")
                     return
                 }
                 oneImageController.modalPresentationStyle = .fullScreen
                 self?.bridge?.viewController?.present(oneImageController,
                                                       animated: true, completion: {
-                    call.resolve(["result": true])
-                })
+                                                        call.resolve(["result": true])
+                                                      })
 
             } else if mode == "slider" {
-                guard ((self?.implementation?.show(imageList, mode: mode,
-                                                  startFrom: startFrom,
-                                                  options: options)) != nil),
+                guard (self?.implementation?.show(imageList, mode: mode,
+                                                   startFrom: startFrom,
+                                                   options: options)) != nil,
                       let sliderController = self?.implementation?
-                                                    .sliderController else {
+                        .sliderController else {
                     call.reject("Show : Unable to show the SliderViewController")
                     return
                 }
@@ -171,22 +171,22 @@ public class PhotoViewerPlugin: CAPPlugin {
     @objc func getInternalImagePaths(_ call: CAPPluginCall) {
         do {
             if let pathList: [String] = try self.implementation?
-                                                .getInternalImagePaths() {
+                .getInternalImagePaths() {
                 call.resolve(["pathList": pathList])
                 return
             } else {
                 call.reject("GetInternalImagePaths : no image path list")
                 return
             }
-       } catch PhotoViewerError.failed(let message) {
+        } catch PhotoViewerError.failed(let message) {
             call.reject("GetInternalImagePaths : \(message)")
             return
-       } catch let error {
+        } catch let error {
             let msg = "GetInternalImagePaths : " +
                 "\(error.localizedDescription)"
             call.reject("\(msg)")
             return
-       }
+        }
 
     }
     @objc func addObserversToNotificationCenter() {
