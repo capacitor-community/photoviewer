@@ -8,3 +8,4 @@ const PhotoViewer = registerPlugin<PhotoViewerPlugin>('PhotoViewer', {
 
 export * from './definitions';
 export { PhotoViewer };
+

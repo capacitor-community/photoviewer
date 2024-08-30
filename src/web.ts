@@ -2,15 +2,15 @@ import { WebPlugin } from '@capacitor/core';
 import { defineCustomElements as jeepPhotoviewer } from 'jeep-photoviewer/loader';
 
 import type {
-  PhotoViewerPlugin,
   capEchoOptions,
   capEchoResult,
-  capShowOptions,
-  capShowResult,
   capHttpOptions,
   capHttpResult,
   capPaths,
+  capShowOptions,
+  capShowResult,
   Image,
+  PhotoViewerPlugin,
   ViewerOptions,
 } from './definitions';
 
