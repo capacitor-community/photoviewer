@@ -55,8 +55,8 @@ public class PhotoViewer extends BridgeActivity {
             FrameLayout frameLayoutView = new FrameLayout(context);
             frameLayoutView.setId(frameLayoutViewId);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
@@ -67,11 +67,11 @@ public class PhotoViewer extends BridgeActivity {
             mainFragment.setOptions(options);
 
             bridge
-                    .getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(frameLayoutViewId, mainFragment, "mainfragment")
-                    .commit();
+                .getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayoutViewId, mainFragment, "mainfragment")
+                .commit();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -83,8 +83,8 @@ public class PhotoViewer extends BridgeActivity {
             FrameLayout frameLayoutView = new FrameLayout(context);
             frameLayoutView.setId(frameLayoutViewId);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
@@ -96,11 +96,11 @@ public class PhotoViewer extends BridgeActivity {
             imageFragment.setStartFrom(startFrom);
 
             bridge
-                    .getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(frameLayoutViewId, imageFragment, "imagefragment")
-                    .commit();
+                .getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayoutViewId, imageFragment, "imagefragment")
+                .commit();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -112,8 +112,8 @@ public class PhotoViewer extends BridgeActivity {
             FrameLayout frameLayoutView = new FrameLayout(context);
             frameLayoutView.setId(frameLayoutViewId);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
@@ -127,11 +127,11 @@ public class PhotoViewer extends BridgeActivity {
             galleryFragment.setStartFrom(startFrom);
 
             bridge
-                    .getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(frameLayoutViewId, galleryFragment, "gallery")
-                    .commit();
+                .getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayoutViewId, galleryFragment, "gallery")
+                .commit();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

@@ -199,7 +199,7 @@ class ImagesToVideo {
             let mediaQueue = DispatchQueue(label: "mediaInputQueue")
             videoWriterInput
                 .requestMediaDataWhenReady(on: mediaQueue,
-                                           using: { () -> Void in
+                                           using: { () in
                                             let fps: Int32 = 1
                                             let framePerSecond: Int64 = Int64(imagesPerSecond)
                                             let frameDuration =
@@ -253,7 +253,7 @@ class ImagesToVideo {
                                                         let verticalRatio = CGFloat(movieSize.height) /
                                                             nextPhoto.size.height
 
-                                                        //let aspectRatio = max(horizontalRatio,
+                                                        // let aspectRatio = max(horizontalRatio,
                                                         //                  verticalRatio) // ScaleAspectFill
 
                                                         // ScaleAspectFit
@@ -295,7 +295,7 @@ class ImagesToVideo {
                                                 }
                                             }
                                             videoWriterInput.markAsFinished()
-                                            videoWriter.finishWriting { [self] () -> Void in
+                                            videoWriter.finishWriting { [self] () in
 
                                                 if videoWriter.status == .completed {
                                                     self._asset = AVAsset(url: videoURL as URL)
