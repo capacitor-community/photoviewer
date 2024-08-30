@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Photo Viewer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-button (click)="showSingle()">Single Mode</ion-button>
+    <ion-button (click)="showMultiple()">Multiple Mode</ion-button>
+    <ion-button (click)="showGallery()">Gallery Mode</ion-button>
+    <ion-button (click)="showWithCustomHeaders()">Custom Headers</ion-button>
+  </div>
+</ion-content>
