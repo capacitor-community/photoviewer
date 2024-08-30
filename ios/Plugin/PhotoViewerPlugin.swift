@@ -82,8 +82,8 @@ public class PhotoViewerPlugin: CAPPlugin {
             }
             if mode == "gallery" {
                 guard (self?.implementation?.show(imageList, mode: mode,
-                                                   startFrom: startFrom,
-                                                   options: options)) != nil,
+                                                  startFrom: startFrom,
+                                                  options: options)) != nil,
                       let collectionController = self?.implementation?
                         .collectionController else {
                     call.reject("Show : Unable to show the CollectionViewController")
@@ -96,8 +96,8 @@ public class PhotoViewerPlugin: CAPPlugin {
                                                       })
             } else if mode == "one" {
                 guard (self?.implementation?.show(imageList, mode: mode,
-                                                   startFrom: startFrom,
-                                                   options: options)) != nil,
+                                                  startFrom: startFrom,
+                                                  options: options)) != nil,
                       let oneImageController = self?.implementation?
                         .oneImageController else {
                     call.reject("Show : Unable to show the OneImageViewController")
@@ -111,8 +111,8 @@ public class PhotoViewerPlugin: CAPPlugin {
 
             } else if mode == "slider" {
                 guard (self?.implementation?.show(imageList, mode: mode,
-                                                   startFrom: startFrom,
-                                                   options: options)) != nil,
+                                                  startFrom: startFrom,
+                                                  options: options)) != nil,
                       let sliderController = self?.implementation?
                         .sliderController else {
                     call.reject("Show : Unable to show the SliderViewController")
