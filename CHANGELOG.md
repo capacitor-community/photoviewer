@@ -9,8 +9,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * This plugin now only supports Capacitor 6.
 
-Co-authored-by: Robin Genz <mail@robingenz.dev>
-
 ### Features
 
 * update to Capacitor 6 ([#63](https://github.com/capacitor-community/photoviewer/issues/63)) ([809ae22](https://github.com/capacitor-community/photoviewer/commit/809ae225196c1df44735f590bda74c44128cd72f))
