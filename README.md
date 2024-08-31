@@ -46,21 +46,9 @@ On iOS plugin, the creation of a movie from the pictures stored in the <strong>A
 
 ## Maintainers
 
-| Maintainer        | GitHub                                    | Social |
-| ----------------- | ----------------------------------------- | ------ |
-| Quéau Jean Pierre | [jepiqueau](https://github.com/jepiqueau) |        |
-
-## CAPACITOR 5 (Master)
-
-For more info on releases:
-
- - [info_releases](https://github.com/capacitor-community/photoviewer/blob/master/info_releases.md)
-
- - [changelog](https://github.com/capacitor-community/photoviewer/blob/main/CHANGELOG.md)
-
- - [issues](https://github.com/capacitor-community/photoviewer/issues)
-
-
+| Maintainer | GitHub                                    | Social                                        |
+| ---------- | ----------------------------------------- | --------------------------------------------- |
+| Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
 
 ## Browser Support
 
