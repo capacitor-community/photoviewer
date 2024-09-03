@@ -164,18 +164,27 @@ class ImageFragment : Fragment() {
         val toBeLoaded = image.url?.let { mImageToBeLoaded.getToBeLoaded(it) }
 
         if (toBeLoaded is String) {
-            // load image from url
-            val lazyHeaders = LazyHeaders.Builder()
-            for (key in customHeaders.keys()) {
-                customHeaders.getString(key)?.let { lazyHeaders.addHeader(key, it) }
+            if (toBeLoaded.contains("base64")) {
+                GlideApp.with(appContext)
+                    .asBitmap()
+                    .load(toBeLoaded)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivTouchImage)
+            } else {
+                // load image from url
+                val lazyHeaders = LazyHeaders.Builder()
+                for (key in customHeaders.keys()) {
+                    customHeaders.getString(key)?.let { lazyHeaders.addHeader(key, it) }
+                }
+                val glideUrl = GlideUrl(toBeLoaded, lazyHeaders.build())
+                GlideApp.with(appContext)
+                    .asBitmap()
+                    .load(glideUrl)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivTouchImage)
             }
-            val glideUrl = GlideUrl(toBeLoaded, lazyHeaders.build())
-            GlideApp.with(appContext)
-                .asBitmap()
-                .load(glideUrl)
-                .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(ivTouchImage)
         }
         if (toBeLoaded is File) {
             // load image from file
