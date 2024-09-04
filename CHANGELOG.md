@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/capacitor-community/photoviewer/compare/v4.0.0...v4.0.1) (2024-09-04)
+
+
+### Bug Fixes
+
+* base64 string support ([#69](https://github.com/capacitor-community/photoviewer/issues/69)) ([92aea3c](https://github.com/capacitor-community/photoviewer/commit/92aea3c3cca3a07c480906e0b672e268197c4f53))
+
 ## [4.0.0](https://github.com/capacitor-community/photoviewer/compare/v3.2.0...v4.0.0) (2024-08-31)
 
 
