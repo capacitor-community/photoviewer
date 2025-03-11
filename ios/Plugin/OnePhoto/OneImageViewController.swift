@@ -241,7 +241,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: .photoviewerExit,
                                         object: nil,
                                         userInfo: vId)
-        self.dismissWithTransition(swipeDirection: "no")
+        self.dismissWithTransition(swipeDirection: "down")
         //        self.dismiss(animated: true, completion: nil)
     }
 
