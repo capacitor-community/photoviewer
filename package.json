@@ -50,10 +50,10 @@
     "release": "standard-version"
   },
   "devDependencies": {
-    "@capacitor/android": "^7.0.0",
-    "@capacitor/core": "^7.0.0",
+    "@capacitor/android": "^7.1.0",
+    "@capacitor/core": "^7.1.0",
     "@capacitor/docgen": "^0.0.17",
-    "@capacitor/ios": "^7.0.0",
+    "@capacitor/ios": "^7.1.0",
     "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
