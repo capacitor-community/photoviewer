@@ -25,11 +25,7 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
 
   constructor() {
     super();
-    document.addEventListener(
-      'jeepPhotoViewerResult',
-      this.jeepPhotoViewerResult,
-      false,
-    );
+    document.addEventListener('jeepPhotoViewerResult', this.jeepPhotoViewerResult, false);
   }
 
   async echo(options: capEchoOptions): Promise<capEchoResult> {
@@ -88,9 +84,7 @@ export class PhotoViewerWeb extends WebPlugin implements PhotoViewerPlugin {
       return Promise.reject("Div id='photoviewer-container' not found");
     }
   }
-  async saveImageFromHttpToInternal(
-    options: capHttpOptions,
-  ): Promise<capHttpResult> {
+  async saveImageFromHttpToInternal(options: capHttpOptions): Promise<capHttpResult> {
     console.log('saveImageFromHttpToInternal', options);
     throw this.unimplemented('Not implemented on web.');
   }
