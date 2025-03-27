@@ -143,23 +143,21 @@ public class PhotoViewerPlugin extends Plugin {
 
                 bridge
                     .getActivity()
-                    .runOnUiThread(
-                        () -> {
-                            try {
-                                if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
-                                    String msg = "Show : imageList must be greater that one ";
-                                    msg += "for Mode " + finalMode;
-                                    rHandler.retResult(call, false, msg);
-                                    return;
-                                }
-                                implementation.show(images, finalMode, finalStartFrom, finalOptions);
-                                rHandler.retResult(call, true, null);
+                    .runOnUiThread(() -> {
+                        try {
+                            if (images.length() <= 1 && (finalMode.equals("gallery") || finalMode.equals("slider"))) {
+                                String msg = "Show : imageList must be greater that one ";
+                                msg += "for Mode " + finalMode;
+                                rHandler.retResult(call, false, msg);
                                 return;
-                            } catch (Exception e) {
-                                rHandler.retResult(call, false, e.getMessage());
                             }
+                            implementation.show(images, finalMode, finalStartFrom, finalOptions);
+                            rHandler.retResult(call, true, null);
+                            return;
+                        } catch (Exception e) {
+                            rHandler.retResult(call, false, e.getMessage());
                         }
-                    );
+                    });
             } catch (Exception e) {
                 String msg = "Show: " + e.getMessage();
                 rHandler.retResult(call, false, msg);
@@ -179,8 +177,7 @@ public class PhotoViewerPlugin extends Plugin {
     }
 
     private void AddObserversToNotificationCenter() {
-        NotificationCenter
-            .defaultCenter()
+        NotificationCenter.defaultCenter()
             .addMethodForNotification(
                 "photoviewerExit",
                 new MyRunnable() {
