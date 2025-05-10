@@ -33,7 +33,7 @@ On iOS plugin, the creation of a movie from the pictures stored in the <strong>A
 
 <br>
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2024?style=flat-square" />
+  <img src="https://img.shields.io/maintenance/yes/2025?style=flat-square" />
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/l/@capacitor-community/photoviewer?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/@capacitor-community/photoviewer"><img src="https://img.shields.io/npm/dw/@capacitor-community/photoviewer?style=flat-square" /></a>
@@ -100,11 +100,11 @@ export default config;
 ```js
 ...
 buildscript {
-    ext.kotlin_version = '1.8.20'
+    ext.kotlin_version = '1.9.25'
     dependencies {
         ...
-        classpath 'com.android.tools.build:gradle:8.0.0'
-        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.android.tools.build:gradle:8.8.1'
+        classpath 'com.google.gms:google-services:4.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -132,7 +132,7 @@ buildscript {
         ```
     - in the `dependencies` block add
         ```
-        implementation "androidx.core:core-ktx:1.10.0"
+        implementation "androidx.core:core-ktx:1.15.0"
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         ```
 
