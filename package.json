@@ -1,85 +1,87 @@
 {
-  "name": "@capacitor-community/photoviewer",
-  "version": "7.0.0",
-  "description": "PhotoViewer table images with fullscreen and sharing capabilities",
-  "main": "dist/plugin.cjs.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
-  "unpkg": "dist/plugin.js",
-  "files": [
-    "android/src/main/",
-    "android/build.gradle",
-    "dist/",
-    "ios/Plugin/",
-    "CapacitorCommunityPhotoviewer.podspec"
-  ],
-  "author": "Jean Pierre Quéau",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/capacitor-community/photoviewer.git"
+  "main" : "dist/plugin.cjs.js",
+  "types" : "dist/esm/index.d.ts",
+  "name" : "@capacitor-community/photoviewer",
+  "repository" : {
+    "url" : "git+https://github.com/capacitor-community/photoviewer.git",
+    "type" : "git"
   },
-  "bugs": {
-    "url": "https://github.com/capacitor-community/photoviewer/issues"
+  "peerDependencies" : {
+    "@capacitor/core" : ">=7.0.0"
   },
-  "keywords": [
+  "keywords" : [
     "capacitor",
     "plugin",
     "native",
     "photoviewer"
   ],
-  "scripts": {
-    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
-    "verify:android": "cd android && ./gradlew clean build test && cd ..",
-    "verify:web": "npm run build",
-    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
-    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
-    "eslint": "eslint . --ext ts",
-    "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
-    "swiftlint": "node-swiftlint",
-    "docgen": "docgen --api PhotoViewerPlugin --output-readme docs/API.md --output-json dist/docs.json",
-    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
-    "clean": "rimraf ./dist",
-    "watch": "tsc --watch",
-    "test": "echo \"No test specified\"",
-    "prepublishOnly": "npm run build",
-    "release": "standard-version"
+  "bugs" : {
+    "url" : "https://github.com/capacitor-community/photoviewer/issues"
   },
-  "devDependencies": {
-    "@capacitor/android": "^7.0.0",
-    "@capacitor/core": "^7.0.0",
-    "@capacitor/docgen": "^0.3.0",
-    "@capacitor/ios": "^7.0.0",
-    "@ionic/eslint-config": "^0.4.0",
-    "@ionic/prettier-config": "^4.0.0",
-    "@ionic/swiftlint-config": "^2.0.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-java": "^2.6.6",
-    "rimraf": "^6.0.1",
-    "rollup": "^4.30.1",
-    "standard-version": "^9.5.0",
-    "swiftlint": "^2.0.0",
-    "typescript": "~4.1.5"
+  "version" : "7.0.0",
+  "license" : "MIT",
+  "prettier" : "@ionic/prettier-config",
+  "unpkg" : "dist/plugin.js",
+  "swiftlint" : "@ionic/swiftlint-config",
+  "module" : "dist/esm/index.js",
+  "files" : [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "CapacitorCommunityPhotoviewer.podspec",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift"
+  ],
+  "eslintConfig" : {
+    "extends" : "@ionic/eslint-config/recommended"
   },
-  "peerDependencies": {
-    "@capacitor/core": ">=7.0.0"
+  "description" : "PhotoViewer table images with fullscreen and sharing capabilities",
+  "author" : "Jean Pierre Quéau",
+  "devDependencies" : {
+    "@capacitor/ios" : "^7.0.0",
+    "standard-version" : "^9.5.0",
+    "@capacitor/core" : "^7.0.0",
+    "@ionic/prettier-config" : "^4.0.0",
+    "@ionic/swiftlint-config" : "^2.0.0",
+    "swiftlint" : "^2.0.0",
+    "prettier-plugin-java" : "^2.6.6",
+    "prettier" : "^3.4.2",
+    "rollup" : "^4.30.1",
+    "@capacitor/docgen" : "^0.3.0",
+    "@ionic/eslint-config" : "^0.4.0",
+    "rimraf" : "^6.0.1",
+    "@capacitor/android" : "^7.0.0",
+    "typescript" : "~4.1.5",
+    "eslint" : "^8.57.0"
   },
-  "prettier": "@ionic/prettier-config",
-  "swiftlint": "@ionic/swiftlint-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
-  },
-  "capacitor": {
-    "ios": {
-      "src": "ios"
+  "capacitor" : {
+    "ios" : {
+      "src" : "ios"
     },
-    "android": {
-      "src": "android"
+    "android" : {
+      "src" : "android"
     }
   },
-  "dependencies": {
-    "jeep-photoviewer": "^1.2.3"
+  "dependencies" : {
+    "jeep-photoviewer" : "^1.2.3"
+  },
+  "scripts" : {
+    "verify:android" : "cd android && ./gradlew clean build test && cd ..",
+    "fmt" : "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
+    "verify:ios" : "xcodebuild -scheme CapacitorCommunityPhotoviewer -destination generic/platform=iOS",
+    "verify" : "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "test" : "echo \"No test specified\"",
+    "release" : "standard-version",
+    "prepublishOnly" : "npm run build",
+    "docgen" : "docgen --api PhotoViewerPlugin --output-readme docs/API.md --output-json dist/docs.json",
+    "swiftlint" : "node-swiftlint",
+    "prettier" : "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
+    "lint" : "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "verify:web" : "npm run build",
+    "watch" : "tsc --watch",
+    "clean" : "rimraf ./dist",
+    "eslint" : "eslint . --ext ts",
+    "build" : "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs"
   }
 }
