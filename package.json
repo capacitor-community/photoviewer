@@ -10,7 +10,6 @@
     "android/src/main/",
     "android/build.gradle",
     "dist/",
-    "ios/Plugin/",
     "CapacitorCommunityPhotoviewer.podspec",
     "ios/Sources",
     "ios/Tests",
