@@ -40,20 +40,23 @@ public class NotificationCenter {
     }
 
     public synchronized void removeAllNotifications() {
-        for (Iterator<Map.Entry<String, ArrayList<MyRunnable>>> entry = registeredObjects.entrySet().iterator(); entry.hasNext();) {
-            Map.Entry<String, ArrayList<MyRunnable>> e = entry.next();
-            String key = e.getKey();
-            ArrayList<MyRunnable> value = e.getValue();
-            removeMethodForNotification(key, value.get(0));
-            entry.remove();
+        Iterator<Map.Entry<String, ArrayList<MyRunnable>>> entryIterator = registeredObjects.entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            Map.Entry<String, ArrayList<MyRunnable>> entry = entryIterator.next();
+            ArrayList<MyRunnable> value = entry.getValue();
+            if (!value.isEmpty()) {
+                removeMethodForNotification(entry.getKey(), value.get(0));
+            }
+            entryIterator.remove();
         }
     }
 
     public synchronized void postNotification(String notificationName, Map<String, Object> _info) {
         ArrayList<MyRunnable> list = registeredObjects.get(notificationName);
         if (list != null) {
-            for (Iterator<MyRunnable> itr = list.iterator(); itr.hasNext();) {
-                MyRunnable r = itr.next();
+            ArrayList<MyRunnable> listCopy = new ArrayList<>(list);
+
+            for (MyRunnable r : listCopy) {
                 if (r != null) {
                     r.setInfo(_info);
                     r.run();
