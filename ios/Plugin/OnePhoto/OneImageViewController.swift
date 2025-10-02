@@ -100,20 +100,10 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "multiply",
-                            withConfiguration: configuration)
-            bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-
-            bClose.title = "Close"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "multiply",
+                        withConfiguration: configuration)
+        bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bClose.tintColor = _btColor
         bClose.action = #selector(closeButtonTapped)
         return bClose
@@ -121,19 +111,10 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
     lazy var mShare: UIBarButtonItem = {
         let bShare = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "square.and.arrow.up",
-                            withConfiguration: configuration)
-            bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-            bShare.title = "Share"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bShare.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "square.and.arrow.up",
+                        withConfiguration: configuration)
+        bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bShare.tintColor = _btColor
         bShare.action = #selector(shareButtonTapped)
         return bShare
@@ -148,11 +129,7 @@ class OneImageViewController: UIViewController, UIScrollViewDelegate {
 
         if url.prefix(4) == "http" || url.contains("base64") {
             let imgPlaceHolder: UIImage?
-            if #available(iOS 13, *) {
-                imgPlaceHolder = UIImage(systemName: "livephoto.slash")
-            } else {
-                imgPlaceHolder = nil
-            }
+            imgPlaceHolder = UIImage(systemName: "livephoto.slash")
             mImageView.sd_setImage(with: URL(string: url), placeholderImage: imgPlaceHolder, completed: {image, error, _, url in
                 if let err = error {
                     print("Error: \(err)")

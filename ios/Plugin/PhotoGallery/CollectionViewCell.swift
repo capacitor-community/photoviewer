@@ -33,10 +33,6 @@ class CollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
 
         contentView.backgroundColor = .lightGray
-        if #available(iOS 13, *) {
-        } else {
-            contentView.addSubview(mPlaceholder)
-        }
         contentView.addSubview(mImageView)
         contentView.clipsToBounds = true
     }
@@ -48,11 +44,6 @@ class CollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        if #available(iOS 13, *) {
-        } else {
-            mPlaceholder.frame = CGRect(x: 5, y: (contentView.frame.size.height/2)-20,
-                                        width: contentView.frame.size.width-10, height: 40)
-        }
         mImageView.frame = CGRect(x: 0, y: 0,
                                   width: contentView.frame.size.width,
                                   height: contentView.frame.size.height)
@@ -63,11 +54,7 @@ class CollectionViewCell: UICollectionViewCell {
     func configure(imageUrl: String) {
         if imageUrl.prefix(4) == "http" || imageUrl.contains("base64") {
             let imgPlaceHolder: UIImage?
-            if #available(iOS 13, *) {
-                imgPlaceHolder = UIImage(systemName: "livephoto.slash")
-            } else {
-                imgPlaceHolder = nil
-            }
+            imgPlaceHolder = UIImage(systemName: "livephoto.slash")
             mImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: imgPlaceHolder)
         }
         if imageUrl.prefix(38) ==

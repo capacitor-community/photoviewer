@@ -118,14 +118,7 @@ class ImageScrollViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if #available(iOS 11.0, *) {
-            mScrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            // Fallback on earlier versions
-            self.showToast( message: "not implemented for iOS < 11 ",
-                            font: .boldSystemFont(ofSize: 14.0))
-        }
-
+        mScrollView.contentInsetAdjustmentBehavior = .never
         view.addSubview(mScrollView)
         mScrollView.addSubview(mImageView)
         if url.prefix(4) == "http" || url.contains("base64") {

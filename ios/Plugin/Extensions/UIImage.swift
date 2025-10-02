@@ -56,12 +56,8 @@ extension UIImage {
     private func errorImage(message: String, placeHolder: String?) -> UIImage? {
         print("Error: \(message)")
         var retImg: UIImage?
-        if #available(iOS 13, *) {
-            if let pHolder = placeHolder {
-                retImg = .init(systemName: pHolder)
-            } else {
-                retImg = .init()
-            }
+        if let pHolder = placeHolder {
+            retImg = .init(systemName: pHolder)
         } else {
             retImg = .init()
         }

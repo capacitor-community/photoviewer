@@ -139,20 +139,10 @@ class SliderViewController: UIViewController {
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "multiply",
-                            withConfiguration: configuration)
-            bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-
-            bClose.title = "Close"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "multiply",
+                        withConfiguration: configuration)
+        bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bClose.tintColor = _btColor
         bClose.action = #selector(closeButtonTapped)
         return bClose
@@ -160,19 +150,10 @@ class SliderViewController: UIViewController {
     lazy var  mShare: UIBarButtonItem = {
         let bShare = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "square.and.arrow.up",
-                            withConfiguration: configuration)
-            bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-            bShare.title = "Share"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bShare.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "square.and.arrow.up",
+                        withConfiguration: configuration)
+        bShare.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bShare.tintColor = _btColor
         bShare.action = #selector(shareButtonTapped)
         return bShare
@@ -182,19 +163,10 @@ class SliderViewController: UIViewController {
     lazy var  mFilm: UIBarButtonItem = {
         let bFilm = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "film",
-                            withConfiguration: configuration)
-            bFilm.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-            bFilm.title = "Film"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bFilm.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "film",
+                        withConfiguration: configuration)
+        bFilm.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bFilm.tintColor = _btColor
         bFilm.action = #selector(filmButtonTapped)
         return bFilm
