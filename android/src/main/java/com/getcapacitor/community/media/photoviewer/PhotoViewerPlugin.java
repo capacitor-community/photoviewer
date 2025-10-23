@@ -31,8 +31,6 @@ public class PhotoViewerPlugin extends Plugin {
     static final String MEDIAIMAGES = "images";
     static final String READ_EXTERNAL_STORAGE = "read_external_storage";
 
-    private static final String TAG = "CapacitorPhotoViewer";
-
     private PhotoViewer implementation;
     private RetHandler rHandler = new RetHandler();
     private Boolean isPermissions = false;
@@ -51,7 +49,7 @@ public class PhotoViewerPlugin extends Plugin {
             } else {
                 call.reject(PERMISSION_DENIED_ERROR);
             }
-        } else if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
+        } else if (Build.VERSION.SDK_INT >= 29) {
             if (getPermissionState(READ_EXTERNAL_STORAGE) == PermissionState.GRANTED) {
                 isPermissions = true;
                 show(call);
@@ -63,13 +61,9 @@ public class PhotoViewerPlugin extends Plugin {
 
     private boolean isImagesPermissions() {
         if (Build.VERSION.SDK_INT >= 33) {
-            if (getPermissionState(MEDIAIMAGES) != PermissionState.GRANTED) {
-                return false;
-            }
-        } else if (Build.VERSION.SDK_INT >= 29 && Build.VERSION.SDK_INT < 33) {
-            if (getPermissionState(READ_EXTERNAL_STORAGE) != PermissionState.GRANTED) {
-                return false;
-            }
+            return getPermissionState(MEDIAIMAGES) == PermissionState.GRANTED;
+        } else if (Build.VERSION.SDK_INT >= 29) {
+            return getPermissionState(READ_EXTERNAL_STORAGE) == PermissionState.GRANTED;
         }
         return true;
     }
@@ -85,7 +79,6 @@ public class PhotoViewerPlugin extends Plugin {
 
     @PluginMethod
     public void show(PluginCall call) {
-        final AppCompatActivity activity = this.getActivity();
         if (!call.getData().has("images")) {
             String msg = "Show: Must provide an image list";
             rHandler.retResult(call, false, msg);
@@ -153,7 +146,6 @@ public class PhotoViewerPlugin extends Plugin {
                             }
                             implementation.show(images, finalMode, finalStartFrom, finalOptions);
                             rHandler.retResult(call, true, null);
-                            return;
                         } catch (Exception e) {
                             rHandler.retResult(call, false, e.getMessage());
                         }
@@ -161,7 +153,6 @@ public class PhotoViewerPlugin extends Plugin {
             } catch (Exception e) {
                 String msg = "Show: " + e.getMessage();
                 rHandler.retResult(call, false, msg);
-                return;
             }
         }
     }
