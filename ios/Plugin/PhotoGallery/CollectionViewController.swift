@@ -61,20 +61,10 @@ class CollectionViewController: UIViewController {
     lazy var mClose: UIBarButtonItem = {
         let bClose = UIBarButtonItem()
         let image: UIImage?
-        if #available(iOS 13, *) {
-            let configuration = UIImage.SymbolConfiguration(scale: .large)
-            image = UIImage(systemName: "multiply.circle.fill",
-                            withConfiguration: configuration)
-            bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
-        } else {
-
-            bClose.title = "Close"
-            let fontSize: CGFloat = 18
-            let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
-            bClose.setTitleTextAttributes(
-                [NSAttributedString.Key.foregroundColor: _btColor,
-                 NSAttributedString.Key.font: font], for: .normal)
-        }
+        let configuration = UIImage.SymbolConfiguration(scale: .large)
+        image = UIImage(systemName: "multiply.circle.fill",
+                        withConfiguration: configuration)
+        bClose.image = image?.withTintColor(_btColor, renderingMode: .alwaysOriginal)
         bClose.tintColor = _btColor
         bClose.action = #selector(closeButtonTapped)
         return bClose
