@@ -1,8 +1,6 @@
 package com.getcapacitor.community.media.photoviewer.helper
 
-import android.widget.RelativeLayout;
-import android.os.Build
-import android.annotation.TargetApi
+import android.widget.RelativeLayout
 import android.content.Context
 import android.util.AttributeSet
 
@@ -13,7 +11,6 @@ class SquareLayout: RelativeLayout {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) :
             super(context, attrs, defStyleAttr, defStyleRes)
 
