@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.os.StrictMode
 import android.view.Gravity
 import android.widget.Toast
@@ -47,10 +46,7 @@ class ShareImage {
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "\"image/*\""
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                shareIntent.setClipData(ClipData.newRawUri(null, uri));
-            }
-
+            shareIntent.clipData = ClipData.newRawUri(null, uri)
             shareIntent.addFlags(
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
