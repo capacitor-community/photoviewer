@@ -30,7 +30,7 @@ extension UIViewController {
         let transition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        transition.type = CATransitionType.push
+        transition.type = CATransitionType.reveal
         if swipeDirection == "up" {
             transition.subtype = CATransitionSubtype.fromTop
         } else if swipeDirection == "down" {

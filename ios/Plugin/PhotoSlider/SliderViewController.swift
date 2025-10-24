@@ -315,7 +315,7 @@ class SliderViewController: UIViewController {
                                             object: nil,
                                             userInfo: vId)
         }
-        self.dismissWithTransition(swipeDirection: "no")
+        self.dismissWithTransition(swipeDirection: "down")
     }
 
     // MARK: - shareButtonTapped
