@@ -40,7 +40,7 @@ public class NotificationCenter {
     }
 
     public synchronized void removeAllNotifications() {
-        for (Iterator<Map.Entry<String, ArrayList<MyRunnable>>> entry = registeredObjects.entrySet().iterator(); entry.hasNext();) {
+        for (Iterator<Map.Entry<String, ArrayList<MyRunnable>>> entry = registeredObjects.entrySet().iterator(); entry.hasNext(); ) {
             Map.Entry<String, ArrayList<MyRunnable>> e = entry.next();
             String key = e.getKey();
             ArrayList<MyRunnable> value = e.getValue();
@@ -52,7 +52,7 @@ public class NotificationCenter {
     public synchronized void postNotification(String notificationName, Map<String, Object> _info) {
         ArrayList<MyRunnable> list = registeredObjects.get(notificationName);
         if (list != null) {
-            for (Iterator<MyRunnable> itr = list.iterator(); itr.hasNext();) {
+            for (Iterator<MyRunnable> itr = list.iterator(); itr.hasNext(); ) {
                 MyRunnable r = itr.next();
                 if (r != null) {
                     r.setInfo(_info);

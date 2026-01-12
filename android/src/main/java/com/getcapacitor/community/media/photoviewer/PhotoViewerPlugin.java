@@ -168,21 +168,20 @@ public class PhotoViewerPlugin extends Plugin {
     }
 
     private void AddObserversToNotificationCenter() {
-        NotificationCenter.defaultCenter()
-            .addMethodForNotification(
-                "photoviewerExit",
-                new MyRunnable() {
-                    @Override
-                    public void run() {
-                        JSObject data = new JSObject();
-                        data.put("result", this.getInfo().get("result"));
-                        data.put("imageIndex", this.getInfo().get("imageIndex"));
-                        data.put("message", this.getInfo().get("message"));
-                        NotificationCenter.defaultCenter().removeAllNotifications();
-                        notifyListeners("jeepCapPhotoViewerExit", data);
-                        return;
-                    }
+        NotificationCenter.defaultCenter().addMethodForNotification(
+            "photoviewerExit",
+            new MyRunnable() {
+                @Override
+                public void run() {
+                    JSObject data = new JSObject();
+                    data.put("result", this.getInfo().get("result"));
+                    data.put("imageIndex", this.getInfo().get("imageIndex"));
+                    data.put("message", this.getInfo().get("message"));
+                    NotificationCenter.defaultCenter().removeAllNotifications();
+                    notifyListeners("jeepCapPhotoViewerExit", data);
+                    return;
                 }
-            );
+            }
+        );
     }
 }

@@ -10,14 +10,14 @@ extension NSNotification.Name {
  */
 @objc(PhotoViewerPlugin)
 public class PhotoViewerPlugin: CAPPlugin, CAPBridgedPlugin {
-    public let identifier = "PhotoViewerPlugin" 
-    public let jsName = "PhotoViewer" 
+    public let identifier = "PhotoViewerPlugin"
+    public let jsName = "PhotoViewer"
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "show", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "saveImageFromHttpToInternal", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getInternalImagePaths", returnType: CAPPluginReturnPromise),
-    ] 
+        CAPPluginMethod(name: "getInternalImagePaths", returnType: CAPPluginReturnPromise)
+    ]
     private var implementation: PhotoViewer?
     var exitObserver: Any?
     var config: PhotoViewerConfig?
