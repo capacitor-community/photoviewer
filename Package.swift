@@ -3,14 +3,14 @@ import PackageDescription
 
 let package = Package(
     name: "CapacitorCommunityPhotoviewer",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "CapacitorCommunityPhotoviewer",
             targets: ["PhotoViewerPlugin"])
     ],
     dependencies: [
-        .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "7.0.0"),
+        .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "8.0.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.20.0"),
         .package(url: "https://github.com/yuriiik/ISVImageScrollView.git", from: "0.3.0")
     ],
