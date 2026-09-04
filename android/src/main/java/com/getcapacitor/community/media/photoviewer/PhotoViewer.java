@@ -3,6 +3,9 @@ package com.getcapacitor.community.media.photoviewer;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.getcapacitor.Bridge;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.JSArray;
@@ -60,6 +63,13 @@ public class PhotoViewer extends BridgeActivity {
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
+            // Account for edge-to-edge status bar (Android 15/API 35+) so close/share
+            // buttons aren't drawn under the status bar and become untappable.
+            ViewCompat.setOnApplyWindowInsetsListener(frameLayoutView, (v, windowInsets) -> {
+                Insets sb = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+                v.setPadding(v.getPaddingLeft(), sb.top, v.getPaddingRight(), v.getPaddingBottom());
+                return windowInsets;
+            });
             // Add FrameLayout to bridge_layout_main
             ((ViewGroup) bridge.getWebView().getParent()).addView(frameLayoutView);
             final MainFragment mainFragment = new MainFragment();
@@ -88,6 +98,13 @@ public class PhotoViewer extends BridgeActivity {
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
+            // Account for edge-to-edge status bar (Android 15/API 35+) so close/share
+            // buttons aren't drawn under the status bar and become untappable.
+            ViewCompat.setOnApplyWindowInsetsListener(frameLayoutView, (v, windowInsets) -> {
+                Insets sb = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+                v.setPadding(v.getPaddingLeft(), sb.top, v.getPaddingRight(), v.getPaddingBottom());
+                return windowInsets;
+            });
             // Add FrameLayout to bridge_layout_main
             ((ViewGroup) bridge.getWebView().getParent()).addView(frameLayoutView);
             final ImageFragment imageFragment = new ImageFragment();
@@ -117,6 +134,13 @@ public class PhotoViewer extends BridgeActivity {
             );
             // Apply the Layout Parameters to frameLayout
             frameLayoutView.setLayoutParams(lp);
+            // Account for edge-to-edge status bar (Android 15/API 35+) so close/share
+            // buttons aren't drawn under the status bar and become untappable.
+            ViewCompat.setOnApplyWindowInsetsListener(frameLayoutView, (v, windowInsets) -> {
+                Insets sb = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+                v.setPadding(v.getPaddingLeft(), sb.top, v.getPaddingRight(), v.getPaddingBottom());
+                return windowInsets;
+            });
             // Add FrameLayout to bridge_layout_main
             ((ViewGroup) bridge.getWebView().getParent()).addView(frameLayoutView);
             final GalleryFullscreenFragment galleryFragment = new GalleryFullscreenFragment();
